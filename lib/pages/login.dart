@@ -1,7 +1,9 @@
 import 'package:choice_bussiness/logincontroller.dart';
+import 'package:choice_bussiness/pages/register.dart';
 import 'package:choice_bussiness/styles/button_style.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../styles/app_colors.dart';
 
@@ -123,6 +125,9 @@ backgroundColor: AppColors.themeColorTwo,
               ),
             ),
             InkWell(
+              onTap: (){
+                Get.to(RegisterView());
+              },
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),

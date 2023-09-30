@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/controller/user.dart';
 import 'package:choice_bussiness/logincontroller.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/button_style.dart';
@@ -15,8 +16,8 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
-  List<String> _locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
-  String? _selectedLocation;
+
+  UserController userController = UserController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +28,13 @@ class _RegisterViewState extends State<RegisterView> {
         child: ListView(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              scale: 1,
-              color: AppColors.themeColor,
+            SizedBox(
+              height: 200,
+              child: Image.asset(
+                'assets/images/logo.png',
+                scale: 1,
+                color: AppColors.themeColor,
+              ),
             ),
             //SizedBox(height: 20),
             MyWidgets.textView('Welcome to Choice 99\nRegister as an merchant', AppColors.themeColorLight, 20),
@@ -40,9 +44,9 @@ class _RegisterViewState extends State<RegisterView> {
               child: Column(
                 children: [
 
-                  TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                  TextFormField(
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.businessTec,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter your business name'
                           : null,
@@ -75,10 +79,39 @@ class _RegisterViewState extends State<RegisterView> {
                                   color: Colors.orangeAccent))
                       )),
                   const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    height: 55,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.white,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      style: TextStyle(color: Colors.white),
+                      hint: MyWidgets.textView('Please select your location', Colors.white, 16), // Not necessary for Option 1
+                      value: userController.selectedLocation,
+                      onChanged: (newValue) {
+                        setState(() {
+                          userController.selectedLocation = newValue.toString();
+                        });
+                      },
+                      items: userController.locations.map((location) {
+                        return DropdownMenuItem(
+                          child: MyWidgets.textView(location, Colors.black, 16),
+                          value: location,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   //Password TextField
                   TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.mobileTec,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter mobile number'
                           : value.length < 8
@@ -113,9 +146,9 @@ class _RegisterViewState extends State<RegisterView> {
                                   color: Colors.orangeAccent))
                       )),
                   const SizedBox(height: 20),
-                  TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                  TextFormField(
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.passTec,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter password':null,
                       decoration: InputDecoration(
@@ -147,9 +180,9 @@ class _RegisterViewState extends State<RegisterView> {
                                   color: Colors.orangeAccent))
                       )),
                   const SizedBox(height: 20),
-                  TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                  TextFormField(
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.descriptionTec,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter description'
                           : null,
@@ -182,27 +215,12 @@ class _RegisterViewState extends State<RegisterView> {
                                   color: Colors.orangeAccent))
                       )),
                   const SizedBox(height: 20),
-                  DropdownButton(
-                    hint: Text('Please choose a location'), // Not necessary for Option 1
-                    value: _selectedLocation,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedLocation = newValue.toString();
-                      });
-                    },
-                    items: _locations.map((location) {
-                      return DropdownMenuItem(
-                        child: MyWidgets.textView(location, AppColors.white, 16),
-                        value: location,
-                      );
-                    }).toList(),
-                  ),
-
-
                   ElevatedButton(
                       style: elevatedButtonStyleWhiteCurve,
                       onPressed: (){
-
+                        if (_formKey.currentState!.validate()) {
+                         userController.registerUser();
+                        }
                       }, child: Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: MyWidgets.textView('Continue', AppColors.themeColorTwo, 15),
@@ -223,6 +241,7 @@ class _RegisterViewState extends State<RegisterView> {
               ),
             ),
             const SizedBox(height: 20),
+
           ],
         ),
       ),

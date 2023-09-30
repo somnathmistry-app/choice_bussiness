@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/controller/user.dart';
 import 'package:choice_bussiness/logincontroller.dart';
 import 'package:choice_bussiness/pages/register.dart';
 import 'package:choice_bussiness/styles/button_style.dart';
@@ -16,6 +17,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
+  UserController userController = UserController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +44,8 @@ backgroundColor: AppColors.themeColorTwo,
                   const SizedBox(height: 20),
                   //Password TextField
                   TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.mobileTec_login,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter mobile number'
                           : value.length < 8
@@ -78,9 +80,9 @@ backgroundColor: AppColors.themeColorTwo,
                                   color: Colors.orangeAccent))
                       )),
                   const SizedBox(height: 20),
-                  TextFormField(keyboardType: TextInputType.number,
-                      style: TextStyle(color: AppColors.themeColorTwo, fontSize: 18),
-                      controller: LoginController.passwordTec,
+                  TextFormField(
+                      style: TextStyle(color: AppColors.white, fontSize: 18),
+                      controller: UserController.passTec_login,
                       validator: (value) => value!.isEmpty
                           ? 'Please enter password':null,
                       decoration: InputDecoration(
@@ -115,7 +117,9 @@ backgroundColor: AppColors.themeColorTwo,
                   ElevatedButton(
                       style: elevatedButtonStyleWhiteCurve,
                       onPressed: (){
-                    
+                        if (_formKey.currentState!.validate()) {
+                          userController.loginUser();
+                        }
                   }, child: Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: MyWidgets.textView('Continue', AppColors.themeColorTwo, 15),

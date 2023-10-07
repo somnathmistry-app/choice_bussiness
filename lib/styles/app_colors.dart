@@ -11,6 +11,4 @@ class AppColors {
   static final Color blackLight = Color(0xff131313);
   static final Color offWhite = Color(0xffF2F2F2);
   static final Color offWhiteGray = Color(0xffefebe7);
-  //efebe7
-//sucessgif.gif
 }

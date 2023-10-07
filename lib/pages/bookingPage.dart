@@ -12,7 +12,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Choice vendor'),
+        child: Text('Booking'),
       ),
     );
   }

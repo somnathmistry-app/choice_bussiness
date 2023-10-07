@@ -12,7 +12,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Choice vendor'),
+        child: Text('Profile'),
       ),
     );
   }

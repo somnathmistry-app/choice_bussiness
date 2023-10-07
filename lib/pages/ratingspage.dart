@@ -12,7 +12,7 @@ class _RatingPageState extends State<RatingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Choice vendor'),
+        child: Text('Rating'),
       ),
     );
   }

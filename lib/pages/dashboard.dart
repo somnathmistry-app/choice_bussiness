@@ -1,5 +1,8 @@
+import 'package:choice_bussiness/pages/addService.dart';
+import 'package:choice_bussiness/pages/bookingPage.dart';
+import 'package:choice_bussiness/pages/portfolio.dart';
+import 'package:choice_bussiness/pages/ratingspage.dart';
 import 'package:choice_bussiness/pages/services.dart';
-import 'package:choice_bussiness/pages/login.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +18,11 @@ class _DashboardState extends State<Dashboard> {
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   final List<Widget> bottomBarPages = [
-    const Page1(),
-    const Page2(),
-    const Page3(),
-    const Page4(),
-    const Page5(),
+    const ServicesPage(),
+    const BookingPage(),
+    const AddService(),
+    const RatingPage(),
+    const PortfolioPage(),
   ];
   final _pageController = PageController(initialPage: 0);
 
@@ -48,12 +51,11 @@ class _DashboardState extends State<Dashboard> {
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.perm_identity),
-            label: 'Portfolio',
+            label: 'Profile',
           ),
         ],
         color: Colors.white,
-        buttonBackgroundColor: Colors.white,
-        backgroundColor: Colors.blueAccent,
+
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 600),
         onTap: (index) {
@@ -72,57 +74,5 @@ class _DashboardState extends State<Dashboard> {
             bottomBarPages.length, (index) => bottomBarPages[index]),
       ),
     );
-  }
-}
-
-
-class Page1 extends StatelessWidget {
-  const Page1({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.yellow, child: const Center(child: Text('Page 1')));
-  }
-}
-
-class Page2 extends StatelessWidget {
-  const Page2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.green, child: const Center(child: Text('Page 2')));
-  }
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.red, child: const Center(child: Text('Page 3')));
-  }
-}
-
-class Page4 extends StatelessWidget {
-  const Page4({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.blue, child: const Center(child: Text('Page 4')));
-  }
-}
-
-class Page5 extends StatelessWidget {
-  const Page5({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.lightGreenAccent,
-        child: const Center(child: Text('Page 5')));
   }
 }

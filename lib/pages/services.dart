@@ -12,7 +12,7 @@ class _ServicesPageState extends State<ServicesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Choice vendor'),
+        child: Text('Service'),
       ),
     );
   }

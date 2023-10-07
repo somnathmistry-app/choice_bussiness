@@ -1,20 +1,28 @@
 import 'dart:async';
+import 'package:choice_bussiness/pages/services.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../styles/app_colors.dart';
+import 'dashboard.dart';
 class SplashView extends StatelessWidget {
   //const SplashView({Key? key}) : super(key: key);
-
+var box = GetStorage();
   @override
   Widget build(BuildContext context) {
 //    print('userId`````````````: ${box.read('userId')}');
 //HomeController homeController = Get.put(HomeController());
     Timer(const Duration(seconds: 4), () {
-     Get.offAll(LoginView());
+      if(box.hasData('userId')){
+        Get.offAll(Dashboard());
+      }else{
+        Get.offAll(LoginView());
+      }
+
       //homeController.getSliderList();
     });
 

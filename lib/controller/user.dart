@@ -1,4 +1,4 @@
-import 'package:choice_bussiness/pages/home.dart';
+import 'package:choice_bussiness/pages/services.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,8 +10,6 @@ import '../styles/commonmodule/my_snack_bar.dart';
 class UserController extends GetxController {
   static TextEditingController mobileTec_login = TextEditingController();
   static TextEditingController passTec_login = TextEditingController();
-
-
   static TextEditingController businessTec = TextEditingController();
   static TextEditingController mobileTec = TextEditingController();
   static TextEditingController passTec = TextEditingController();
@@ -28,55 +26,6 @@ class UserController extends GetxController {
 
     //print('date is: ${dobController.text}');
   }
-
-/*  getRegister() async {
-    MyAlertDialog.circularProgressDialog();
-
-    //   //email:sam2@gmail.com
-    //     // passwd:123456
-    //     // FName:Sam2
-    //     // LName:Smith
-    //     // phno:9876543210
-    var response = await RegisterApi.verifyOTP(
-        mobileController.text
-    );
-
-    print('register controller response: ${response.message}');
-    if (response != null) {
-      if (response.message == 'otp sent success') {
-        Get.back();
-        Get.to(OTPVerifyPage(response.oto, response.usertype!));
-        box.write('userId', response.userId);
-        box.write('mobile', mobileController.text);
-        box.write('name', nameController.text);
-      } else {
-        Get.back();
-        MySnackbar.errorSnackBar(
-            'Registration failed', 'Server down, please try again later');
-
-      }
-    }
-  }
-
-  verifyAndRegisterUser (int apiOTP, int userOTP, String userType){
-    print('apiOTP $apiOTP, userOTP: $userOTP, userType: $userType');
-    if(apiOTP==userOTP){
-      if(userType=='new'){
-        registerUser();
-      }else{
-        Get.offAll(PagesView());
-      }
-      //
-    }else{
-      MySnackbar.infoSnackBar('OTP did not match', '');
-    }
-  }*/
-
-  //number:7029869895
-  // business_name:abc
-  // password:12345678
-  // location:durgapur
-  // description:demo test
 
   registerUser() async{
     MyAlertDialog.circularProgressDialog();
@@ -117,7 +66,9 @@ class UserController extends GetxController {
       if (response.response == 'ok') {
         MySnackbar.successSnackBar(
             'Login Success', 'Welcome to choice 99');
-        Get.offAll(HomePage());
+        Get.offAll(ServicesPage());
+        box.write('userId', response.data!.id.toString());
+        box.write('email', response.data!..toString());
 
       } else {
         Get.back();

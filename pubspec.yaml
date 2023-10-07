@@ -39,6 +39,8 @@ dependencies:
   get_storage: ^2.0.3
   global_configuration: ^2.0.0-nullsafety.1
   http: ^0.13.5
+  curved_labeled_navigation_bar: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:

@@ -1,14 +1,17 @@
+import 'package:choice_bussiness/controllers.dart';
 import 'package:choice_bussiness/pages/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:global_configuration/global_configuration.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GlobalConfiguration().loadFromAsset("config");
   await GetStorage.init();
-
+  Get.put<AddServiceController>(AddServiceController());
+  Get.put<UploadMediaController>(UploadMediaController());
   runApp(MyApp());
 }
 

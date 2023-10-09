@@ -20,7 +20,7 @@ var box = GetStorage();
       if(box.hasData('userId')){
         Get.offAll(Dashboard());
       }else{
-        Get.offAll(LoginView());
+        Get.offAll(const LoginView());
       }
 
       //homeController.getSliderList();

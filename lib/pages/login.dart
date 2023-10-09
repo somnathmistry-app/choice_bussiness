@@ -22,9 +22,9 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-backgroundColor: AppColors.themeColorTwo,
+      backgroundColor: AppColors.themeColorTwo,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -35,12 +35,11 @@ backgroundColor: AppColors.themeColorTwo,
             ),
             //SizedBox(height: 20),
             MyWidgets.textView('Welcome Back to Choice 99', AppColors.themeColorLight, 22),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Form(
               key: _formKey,
               child: Column(
                 children: [
-
                   const SizedBox(height: 20),
                   //Password TextField
                   TextFormField(keyboardType: TextInputType.number,
@@ -130,7 +129,7 @@ backgroundColor: AppColors.themeColorTwo,
             ),
             InkWell(
               onTap: (){
-                Get.to(RegisterView());
+                Get.to(const RegisterView());
               },
               child: Center(
                 child: Padding(

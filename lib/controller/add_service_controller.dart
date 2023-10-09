@@ -1,0 +1,68 @@
+import 'package:choice_bussiness/api/api_end_path.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import '../pages/upload_media.dart';
+import '../styles/commonmodule/my_alert_dilog.dart';
+import '../styles/commonmodule/my_snack_bar.dart';
+
+
+
+class AddServiceController extends GetxController{
+  static AddServiceController to = Get.find();
+
+  final box = GetStorage();
+
+  TextEditingController serviceName = TextEditingController();
+  TextEditingController price = TextEditingController();
+  TextEditingController description = TextEditingController();
+  TextEditingController about = TextEditingController();
+  List<String> categoryList = ['1', '2', '3', '4'];
+  List<String> subCategoryList = ['1', '2', '3', '4'];
+  String? category;
+  String? subCategory;
+  List<String> locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
+  String? selectedLocation;
+
+
+  addService () async {
+
+    print('my id :${box.read('userId')}');
+    print(category);
+    print(subCategory);
+    print(serviceName.text);
+    print(price.text);
+    print(selectedLocation);
+    print(description.text);
+    print(about.text);
+    MyAlertDialog.circularProgressDialog();
+    var apiResponse = await ApiEndPath.addService(
+        box.read('userId'), category, subCategory, serviceName.text, price.text, selectedLocation, description.text, about.text
+    );
+
+    if(apiResponse!=null){
+      if(apiResponse.response=='ok'){
+        Get.back();
+        box.write('service_id', category);
+        MySnackbar.successSnackBar(
+          'Success', 'Service has been added',
+        );
+        Get.off(()=> UploadMedia());
+      }
+      // else if(apiResponse.response != 'ok') {
+      //   Get.back();
+      //   MySnackbar.errorSnackBar('Failed', apiResponse.response.toString());
+      //   print('Response ------ ${apiResponse.response}');
+      // }
+        else{
+        Get.back();
+        MySnackbar.errorSnackBar('Server Down', 'Please try again later');
+        print('Response ------ ${apiResponse.response}');
+      }
+
+    }else{
+      Get.back();
+      MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
+    }
+  }
+}

@@ -4,6 +4,7 @@ import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/ResponseModel.dart';
+import '../models/sub_categoy_model.dart';
 import '../models/upload_media_model.dart';
 
 class ApiEndPath{
@@ -115,5 +116,21 @@ class ApiEndPath{
       return uploadMediaModelFromJson(jsonString);
     }
     return uploadMediaModelFromJson(response.reasonPhrase.toString());
+  }
+
+  static Future<SubCategoryModel> getSubCategories() async {
+    var baseurl = GlobalConfiguration().get('base_url');
+
+
+
+    var response = await client.post(Uri.parse('${baseurl}get-cat-subcat-service'));
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return subCategoryModelFromJson(jsonString);
+    }
+    return subCategoryModelFromJson(response.body);
   }
 }

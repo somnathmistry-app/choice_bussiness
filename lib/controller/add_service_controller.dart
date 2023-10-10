@@ -1,4 +1,5 @@
 import 'package:choice_bussiness/api/api_end_path.dart';
+import 'package:choice_bussiness/models/sub_categoy_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,6 +13,8 @@ class AddServiceController extends GetxController{
   static AddServiceController to = Get.find();
 
   final box = GetStorage();
+  var categoryy = '1';
+  var subCategoryy = '';
 
   TextEditingController serviceName = TextEditingController();
   TextEditingController price = TextEditingController();
@@ -63,6 +66,39 @@ class AddServiceController extends GetxController{
     }else{
       Get.back();
       MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
+    }
+  }
+
+
+  var isLoading = false.obs;
+  var allCatList = <Subcat>[].obs;
+  var allSubCatList = [].obs;
+  var allSubCatListID = [].obs;
+  getSubCategory () async {
+    try {
+      isLoading(true);
+      var apiResponse = await ApiEndPath.getSubCategories();
+
+      if (apiResponse != null) {
+        if (apiResponse.response == 'ok') {
+          allCatList.assignAll(apiResponse.catsubcat);
+          print(apiResponse.catsubcat[0].subcat![0].photo);
+          for (var element in allCatList) {
+            if(element.subcat!.isEmpty){
+
+            }else{
+              allSubCatListID.add(element.subcat![0].id);
+              allSubCatList.add(element.subcat);
+            }
+            //print(element.subcat);
+           // element.subcat!.map((e) => print(e));
+
+
+          }
+        }
+      }
+    } finally {
+      isLoading(false);
     }
   }
 }

@@ -44,140 +44,140 @@ class _AddServiceState extends State<AddService> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    // Container(
+                    //   //height: 50,
+                    //
+                    //   child: DropdownButtonFormField(
+                    //     validator: (input) =>
+                    //     input == null ? "Please Enter a category" : null,
+                    //    // iconSize: 0,
+                    //     decoration: InputDecoration(
+                    //       //suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                    //       contentPadding:
+                    //       const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                    //       hintText: '     Select Entry category',
+                    //       hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
+                    //       border: OutlineInputBorder(
+                    //           borderSide: const BorderSide(color: Colors.black),
+                    //           borderRadius: BorderRadius.circular(8)),
+                    //     ),
+                    //     items: controller.allCatList.map((var value) {
+                    //       print(value.subcat!.length);
+                    //       return DropdownMenuItem(
+                    //           value: value.id,
+                    //           child: Text('     ${value.title}'));
+                    //     }).toList(),
+                    //     onChanged: (var value) {
+                    //       setState(() {
+                    //         count = int.parse(value.toString()) -1;
+                    //         print(count);
+                    //         controller.categoryy = value.toString();
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 20),
+                    //  controller.allCatList[count].subcat!.isEmpty?
+                    //     SizedBox():
+                    // Container(
+                    //   child: DropdownButtonFormField(
+                    //     validator: (input) =>
+                    //     input == null ? "Please Enter Sub category" : null,
+                    //     // iconSize: 0,
+                    //     decoration: InputDecoration(
+                    //       //suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
+                    //       contentPadding:
+                    //       const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                    //       hintText: '     Select Entry Sub category',
+                    //       hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
+                    //       border: OutlineInputBorder(
+                    //           borderSide: const BorderSide(color: Colors.black),
+                    //           borderRadius: BorderRadius.circular(8)),
+                    //     ),
+                    //     items: controller.allSubCatList.map((var value) {
+                    //       return DropdownMenuItem(
+                    //           value: value.id,
+                    //           child: Text('   ${value.title}'));
+                    //     }).toList(),
+                    //     onChanged: (var value) {
+                    //       setState(() {
+                    //         print(value);
+                    //         controller.categoryy = value.toString();
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
+                    const SizedBox(height: 20),
                     Container(
-                      //height: 50,
-
-                      child: DropdownButtonFormField(
-                        validator: (input) =>
-                        input == null ? "Please Enter a category" : null,
-                       // iconSize: 0,
-                        decoration: InputDecoration(
-                          //suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
-                          contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                          hintText: '     Select Entry category',
-                          hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        items: controller.allCatList.map((var value) {
-                          print(value.subcat!.length);
-                          return DropdownMenuItem(
-                              value: value.id,
-                              child: Text('     ${value.title}'));
-                        }).toList(),
-                        onChanged: (var value) {
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.themeColorTwo,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5))),
+                      child: DropdownButton(
+                        underline: const SizedBox(),
+                        style: TextStyle(color: AppColors.themeColorTwo),
+                        hint: MyWidgets.textView(
+                            'Please select your business category',
+                            AppColors.themeColorTwo,
+                            16),
+                        // Not necessary for Option 1
+                        value: addServiceController.category,
+                        onChanged: (newValue) {
                           setState(() {
-                            count = int.parse(value.toString()) -1;
-                            print(count);
-                            controller.categoryy = value.toString();
+                            addServiceController.category = newValue.toString();
                           });
                         },
+                        items:
+                            addServiceController.categoryList.map((location) {
+                          return DropdownMenuItem(
+                            value: location,
+                            child:
+                                MyWidgets.textView(location, Colors.black, 16),
+                          );
+                        }).toList(),
                       ),
                     ),
                     const SizedBox(height: 20),
-                     controller.allCatList[count].subcat!.isEmpty?
-                        SizedBox():
                     Container(
-                      child: DropdownButtonFormField(
-                        validator: (input) =>
-                        input == null ? "Please Enter Sub category" : null,
-                        // iconSize: 0,
-                        decoration: InputDecoration(
-                          //suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
-                          contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                          hintText: '     Select Entry Sub category',
-                          hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        items: controller.allSubCatList.map((var value) {
-                          return DropdownMenuItem(
-                              value: value.id,
-                              child: Text('   ${value.title}'));
-                        }).toList(),
-                        onChanged: (var value) {
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.themeColorTwo,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5))),
+                      child: DropdownButton(
+                        underline: const SizedBox(),
+                        style: TextStyle(color: AppColors.themeColorTwo),
+                        hint: MyWidgets.textView(
+                            'Please select your Subcategory',
+                            AppColors.themeColorTwo,
+                            16),
+                        // Not necessary for Option 1
+                        value: addServiceController.subCategory,
+                        onChanged: (newValue) {
                           setState(() {
-                            print(value);
-                            controller.categoryy = value.toString();
+                            addServiceController.subCategory =
+                                newValue.toString();
                           });
                         },
+                        items: addServiceController.subCategoryList
+                            .map((location) {
+                          return DropdownMenuItem(
+                            value: location,
+                            child:
+                                MyWidgets.textView(location, Colors.black, 16),
+                          );
+                        }).toList(),
                       ),
                     ),
-                    // const SizedBox(height: 20),
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                    //   height: 55,
-                    //   width: double.infinity,
-                    //   decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         color: AppColors.themeColorTwo,
-                    //       ),
-                    //       borderRadius:
-                    //           const BorderRadius.all(Radius.circular(5))),
-                    //   child: DropdownButton(
-                    //     underline: const SizedBox(),
-                    //     style: TextStyle(color: AppColors.themeColorTwo),
-                    //     hint: MyWidgets.textView(
-                    //         'Please select your business category',
-                    //         AppColors.themeColorTwo,
-                    //         16),
-                    //     // Not necessary for Option 1
-                    //     value: addServiceController.category,
-                    //     onChanged: (newValue) {
-                    //       setState(() {
-                    //         addServiceController.category = newValue.toString();
-                    //       });
-                    //     },
-                    //     items:
-                    //         addServiceController.categoryList.map((location) {
-                    //       return DropdownMenuItem(
-                    //         value: location,
-                    //         child:
-                    //             MyWidgets.textView(location, Colors.black, 16),
-                    //       );
-                    //     }).toList(),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 20),
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                    //   height: 55,
-                    //   width: double.infinity,
-                    //   decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         color: AppColors.themeColorTwo,
-                    //       ),
-                    //       borderRadius:
-                    //           const BorderRadius.all(Radius.circular(5))),
-                    //   child: DropdownButton(
-                    //     underline: const SizedBox(),
-                    //     style: TextStyle(color: AppColors.themeColorTwo),
-                    //     hint: MyWidgets.textView(
-                    //         'Please select your Subcategory',
-                    //         AppColors.themeColorTwo,
-                    //         16),
-                    //     // Not necessary for Option 1
-                    //     value: addServiceController.subCategory,
-                    //     onChanged: (newValue) {
-                    //       setState(() {
-                    //         addServiceController.subCategory =
-                    //             newValue.toString();
-                    //       });
-                    //     },
-                    //     items: addServiceController.subCategoryList
-                    //         .map((location) {
-                    //       return DropdownMenuItem(
-                    //         value: location,
-                    //         child:
-                    //             MyWidgets.textView(location, Colors.black, 16),
-                    //       );
-                    //     }).toList(),
-                    //   ),
-                    // ),
                     const SizedBox(height: 20),
                     TextFormField(
                         style: TextStyle(

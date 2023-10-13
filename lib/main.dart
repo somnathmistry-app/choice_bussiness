@@ -12,6 +12,8 @@ Future<void> main() async {
   await GetStorage.init();
   Get.put<AddServiceController>(AddServiceController());
   Get.put<UploadMediaController>(UploadMediaController());
+  Get.put<ServiceListController>(ServiceListController());
+  Get.put<PortfolioController>(PortfolioController());
   runApp(MyApp());
 }
 

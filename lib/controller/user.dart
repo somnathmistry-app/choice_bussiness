@@ -1,4 +1,4 @@
-import 'package:choice_bussiness/pages/services.dart';
+import 'package:choice_bussiness/pages/dashboard.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,8 +66,10 @@ class UserController extends GetxController {
       if (response.response == 'ok') {
         MySnackbar.successSnackBar(
             'Login Success', 'Welcome to choice 99');
-        Get.offAll(ServicesPage());
+        Get.offAll(()=>Dashboard());
         box.write('userId', response.data!.id.toString());
+        box.write('userPhoto', response.data!.profilePhoto.toString());
+        box.write('userLocation', response.data!.location.toString());
         box.write('email', response.data!..toString());
 
       } else {

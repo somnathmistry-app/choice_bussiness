@@ -7,6 +7,8 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 
+import '../styles/app_colors.dart';
+
 
 class Dashboard extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
     const BookingPage(),
     const AddService(),
     const RatingPage(),
-    const PortfolioPage(),
+     PortfolioPage(),
   ];
   final _pageController = PageController(initialPage: 0);
 
@@ -55,6 +57,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
         color: Colors.white,
+        backgroundColor: AppColors.themeColor,
 
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 600),

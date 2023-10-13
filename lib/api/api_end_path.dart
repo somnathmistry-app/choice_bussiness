@@ -1,9 +1,11 @@
 import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
+import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/ResponseModel.dart';
+import '../models/service_list_model.dart';
 import '../models/sub_categoy_model.dart';
 import '../models/upload_media_model.dart';
 
@@ -132,5 +134,36 @@ class ApiEndPath{
       return subCategoryModelFromJson(jsonString);
     }
     return subCategoryModelFromJson(response.body);
+  }
+
+
+  static Future<ServiceListModel> getAllServices(String artistId) async {
+    var baseurl = GlobalConfiguration().get('base_url');
+
+
+
+    var response = await client.get(Uri.parse('${baseurl}getUserBookingData?artist_id=$artistId'));
+    print('base url: $baseurl, response: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return serviceListModelFromJson(jsonString);
+    }
+    return serviceListModelFromJson(response.body);
+  }
+
+
+  static Future<FetchPortfolioModel> getPortfolioDetails(String artistId) async {
+    var baseurl = GlobalConfiguration().get('base_url');
+
+    var response = await client.get(Uri.parse('${baseurl}getArtistPortfolio/$artistId'));
+    print('base url: $baseurl, response: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return fetchPortfolioModelFromJson(jsonString);
+    }
+    return fetchPortfolioModelFromJson(response.body);
   }
 }

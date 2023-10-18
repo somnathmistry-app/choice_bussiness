@@ -41,6 +41,7 @@ dependencies:
   http: ^0.13.5
   curved_labeled_navigation_bar: ^2.0.2
   file_picker: ^5.5.0
+  flutter_calendar_carousel: ^2.4.2
 
 
 dev_dependencies:

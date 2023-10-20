@@ -185,7 +185,7 @@ class _ServicesPageState extends State<ServicesPage> {
                   )));
         } else {
           return  ListView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             children: [
               Container(
                 margin: const EdgeInsets.only(
@@ -235,22 +235,22 @@ class _ServicesPageState extends State<ServicesPage> {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 //height: 270,
                 color: Colors.grey[200],
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, // Adjust the number of columns
                   ),
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 5 - 1) {
                       // Add your custom widget at the last index
                       return Container(height: 20,width: 20,
-                        margin:EdgeInsets.all(2),color: Colors.white,
+                        margin:const EdgeInsets.all(2),color: Colors.white,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -266,7 +266,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       return GestureDetector(
                           onTap: () {
                           },
-                          child: Container(height: 20,width: 20,margin:EdgeInsets.all(2),color: Colors.white,)
+                          child: Container(height: 20,width: 20,margin:const EdgeInsets.all(2),color: Colors.white,)
 
                         //Image.network(uploadedImages[index]),
                       );
@@ -280,12 +280,12 @@ class _ServicesPageState extends State<ServicesPage> {
                 children: [
                   TextButton(onPressed: () {
 
-                  }, child: Text('View more')),
-                  SizedBox(width: 20,)
+                  }, child: const Text('View more')),
+                  const SizedBox(width: 20,)
                 ],
               ),
               ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(bottom: 30),
                 itemCount: serviceListController.bookingList.length,
                 shrinkWrap: true,
@@ -319,7 +319,7 @@ class _ServicesPageState extends State<ServicesPage> {
                             color: Colors.grey[200],
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text('     ${controller.serviceList[index].place}'),
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -348,18 +348,18 @@ class _ServicesPageState extends State<ServicesPage> {
                         //     )
                         //   ],
                         // ),
-                        SizedBox(height: 5),
-                        Text('    ${controller.serviceList[index].serviceName}',style:TextStyle(fontSize: 17)),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 5),
+                        Text('    ${controller.serviceList[index].serviceName}',style:const TextStyle(fontSize: 17)),
+                        const SizedBox(height: 2),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('     ${controller.bookingList[index].username}'),
-                            Text('     ₹ ${controller.serviceList[index].price}     ',style:TextStyle(fontWeight: FontWeight.bold)),
+                            Text('     ₹ ${controller.serviceList[index].price}     ',style:const TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                       ],),
                   );

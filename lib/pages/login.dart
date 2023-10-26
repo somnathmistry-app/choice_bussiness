@@ -1,5 +1,4 @@
 import 'package:choice_bussiness/controller/user.dart';
-import 'package:choice_bussiness/logincontroller.dart';
 import 'package:choice_bussiness/pages/register.dart';
 import 'package:choice_bussiness/styles/button_style.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';

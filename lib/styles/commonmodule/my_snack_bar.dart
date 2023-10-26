@@ -7,7 +7,7 @@ class MySnackbar {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
-        margin: EdgeInsets.all(6.0)
+        margin: const EdgeInsets.all(6.0)
     );
   }
 
@@ -16,7 +16,7 @@ class MySnackbar {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
-        margin: EdgeInsets.all(6.0)
+        margin: const EdgeInsets.all(6.0)
     );
   }
 
@@ -25,7 +25,7 @@ class MySnackbar {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.blue,
         colorText: Colors.white,
-        margin: EdgeInsets.all(6.0)
+        margin: const EdgeInsets.all(6.0)
     );
   }
 }

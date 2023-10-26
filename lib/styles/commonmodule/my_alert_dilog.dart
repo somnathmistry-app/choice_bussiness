@@ -5,11 +5,11 @@ class MyAlertDialog {
   static alertDialog(String title, String middleText) {
     Get.defaultDialog(
       title: title,
-      titleStyle: TextStyle(fontSize: 20),
+      titleStyle: const TextStyle(fontSize: 20),
       middleText: middleText,
       radius: 2.0,
       // To Customize the middle text
-      content: CircularProgressIndicator(),
+      content: const CircularProgressIndicator(),
       // cancel: RaisedButton(onPressed: (){}),
       // confirm: RaisedButton(onPressed: (){})
       barrierDismissible: false,
@@ -17,7 +17,7 @@ class MyAlertDialog {
   }
 
   static circularProgressDialog() {
-    Get.dialog(Center(child: CircularProgressIndicator()),
+    Get.dialog(const Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:choice_bussiness/controller/user.dart';
-import 'package:choice_bussiness/logincontroller.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/button_style.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
@@ -24,7 +23,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       backgroundColor: AppColors.themeColorTwo,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,7 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             //SizedBox(height: 20),
             MyWidgets.textView('Welcome to Choice 99\nRegister as an merchant', AppColors.themeColorLight, 20),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Form(
               key: _formKey,
               child: Column(
@@ -80,18 +79,18 @@ class _RegisterViewState extends State<RegisterView> {
                       )),
                   const SizedBox(height: 20),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 55,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: AppColors.white,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(5))
+                        borderRadius: const BorderRadius.all(Radius.circular(5))
                     ),
                     child: DropdownButton(
-                      underline: SizedBox(),
-                      style: TextStyle(color: Colors.white),
+                      underline: const SizedBox(),
+                      style: const TextStyle(color: Colors.white),
                       hint: MyWidgets.textView('Please select your location', Colors.white, 16), // Not necessary for Option 1
                       value: userController.selectedLocation,
                       onChanged: (newValue) {
@@ -231,7 +230,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             InkWell(
               onTap: (){
-                Get.to(LoginView());
+                Get.to(const LoginView());
               },
               child: Center(
                 child: Padding(

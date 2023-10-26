@@ -43,7 +43,7 @@ class UserController extends GetxController {
       if (response.response == 'ok') {
         MySnackbar.successSnackBar(
             'Registration Success', 'please login to enter');
-        Get.offAll(LoginView());
+        Get.offAll(const LoginView());
       } else {
         Get.back();
         MySnackbar.errorSnackBar(

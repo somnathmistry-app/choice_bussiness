@@ -30,8 +30,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
         actions: [
           TextButton.icon(onPressed: () {
 
-          }, icon: Icon(Icons.done), label: Text('Save')),
-          SizedBox(width: 25,)
+          }, icon: const Icon(Icons.done), label: const Text('Save')),
+          const SizedBox(width: 25,)
         ],
 
       ),
@@ -50,40 +50,40 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 Center(
                   child: Column(
                     children: [
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.grey,
                           ),
                           TextButton.icon(onPressed: () {
 
-                          }, icon: Icon(Icons.camera_alt_outlined), label: Text('Add image')),
+                          }, icon: const Icon(Icons.camera_alt_outlined), label: const Text('Add image')),
                           TextButton.icon(onPressed: () {
 
-                          }, icon: Icon(Icons.video_camera_back_outlined), label: Text('Add Video')),
+                          }, icon: const Icon(Icons.video_camera_back_outlined), label: const Text('Add Video')),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       // Additional user details can be added here
                     ],
                   ),
                 ),
                 // Image gallery
                 GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, // Adjust the number of columns
                   ),
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: uploadedImages.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
                         },
-                        child: Container(height: 20,width: 20,margin:EdgeInsets.all(2),color: Colors.grey,)
+                        child: Container(height: 20,width: 20,margin:const EdgeInsets.all(2),color: Colors.grey,)
 
                       //Image.network(uploadedImages[index]),
                     );

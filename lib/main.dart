@@ -14,10 +14,12 @@ Future<void> main() async {
   Get.put<UploadMediaController>(UploadMediaController());
   Get.put<ServiceListController>(ServiceListController());
   Get.put<PortfolioController>(PortfolioController());
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   //var box = GetStorage();
   //const MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.

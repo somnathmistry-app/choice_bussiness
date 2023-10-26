@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../app_colors.dart';
-import 'my_widgets.dart';
 
 
 var box = GetStorage();

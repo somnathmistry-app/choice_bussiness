@@ -32,19 +32,19 @@ class MyWidgets {
     Card(
       elevation: 2,
       shadowColor: AppColors.themeColor,
-      margin: EdgeInsets.all(4),
+      margin: const EdgeInsets.all(4),
       child: Container(
         height: cardSize,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Image.asset(
               image,
               width: imageWidth,
               height: imageHeight,
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +56,7 @@ class MyWidgets {
                     productName,
                     textAlign: TextAlign.start,
                     maxLines: 2,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                   ),
                 ),
                 Padding(
@@ -66,7 +66,7 @@ class MyWidgets {
                     companyName,
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 11),
+                    style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 11),
                   ),
                 ),
                 Row(
@@ -78,7 +78,7 @@ class MyWidgets {
                         '\$. $price ',
                         textAlign: TextAlign.center,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 16),
                       ),
                     ),
@@ -89,7 +89,7 @@ class MyWidgets {
                         priceOff,
                         textAlign: TextAlign.center,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'JosefinSans',
                             color: Colors.green,
                             fontWeight: FontWeight.w800,
@@ -98,8 +98,8 @@ class MyWidgets {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       top: 2, bottom: 10, left: 6, right: 8),
                   child: Text(
                     'Out of Stock',
@@ -115,7 +115,7 @@ class MyWidgets {
                   child: Row(
                     children: [
                       GestureDetector(
-                        child: Card(
+                        child: const Card(
                           child: Icon(Icons.add_box_rounded,
                               color: Colors.white),
                           color: Colors.black54,
@@ -124,12 +124,12 @@ class MyWidgets {
                           increament;
                         },
                       ),
-                      MyWidgets.textView(' ${qntyValue} ', Colors.black87, 17, fontWeight: FontWeight.w800),
+                      MyWidgets.textView(' $qntyValue ', Colors.black87, 17, fontWeight: FontWeight.w800),
                       GestureDetector(
                         onTap: (){
                           decreament;
                         },
-                        child: Card(
+                        child: const Card(
                           child: Icon(Icons.indeterminate_check_box,
                               color: Colors.white),
                           color: Colors.black54,

@@ -58,8 +58,8 @@ class _UploadMediaState extends State<UploadMedia> {
       actions: [
         TextButton.icon(onPressed: () {
           uploadMediaController.upload(imgPathList: imgsStr,videoPath: _selectedVideo!.path);
-        }, icon: Icon(Icons.done,color: Colors.white), label: Text('Done',style: TextStyle(color: Colors.white),)),
-        SizedBox(width: 20,)
+        }, icon: const Icon(Icons.done,color: Colors.white), label: const Text('Done',style: TextStyle(color: Colors.white),)),
+        const SizedBox(width: 20,)
       ],
       ),
       body: Center(
@@ -89,12 +89,12 @@ class _UploadMediaState extends State<UploadMedia> {
             ),
             const SizedBox(height: 10),
             _selectedVideo != null?
-            Text('Selected Video: ${_selectedVideo!.name}',style: TextStyle(color: Colors.black)):Text('No video selected'),
+            Text('Selected Video: ${_selectedVideo!.name}',style: const TextStyle(color: Colors.black)):const Text('No video selected'),
             const SizedBox(height: 10),
             const Text(
               'Selected Images:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),SizedBox(height: 20.0),
+            ),const SizedBox(height: 20.0),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

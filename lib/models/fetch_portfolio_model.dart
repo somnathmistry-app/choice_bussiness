@@ -10,7 +10,7 @@ String fetchPortfolioModelToJson(FetchPortfolioModel data) => json.encode(data.t
 
 class FetchPortfolioModel {
   String response;
-  FetchPortfolioModelArtistPortfolio artistPortfolio;
+  dynamic artistPortfolio;
   int status;
 
   FetchPortfolioModel({
@@ -21,7 +21,7 @@ class FetchPortfolioModel {
 
   factory FetchPortfolioModel.fromJson(Map<String, dynamic> json) => FetchPortfolioModel(
     response: json["response"],
-    artistPortfolio: FetchPortfolioModelArtistPortfolio.fromJson(json["artistPortfolio"]),
+    artistPortfolio: json["artistPortfolio"].length != 0 ? FetchPortfolioModelArtistPortfolio.fromJson(json["artistPortfolio"]): null,
     status: json["status"],
   );
 

@@ -82,6 +82,7 @@ class AddServiceController extends GetxController{
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {
           allCatList.assignAll(apiResponse.catsubcat);
+          allCatList.map((element) => allSubCatList.assign(element));
           // print(apiResponse.catsubcat[0].subcat![0].photo);
           for (var element in allCatList) {
             if(element.subcat!.isEmpty){

@@ -22,7 +22,7 @@ class PortfolioController extends GetxController{
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {
           artisMain = apiResponse.artistPortfolio;
-          print(artisMain.phoneNumber);
+          //print(artisMain.phoneNumber);
           if(apiResponse.artistPortfolio.artistPortfolio.isNotEmpty){
             artisDetails.assignAll(apiResponse.artistPortfolio.artistPortfolio);
           }

@@ -1,4 +1,5 @@
 import 'package:choice_bussiness/controller/services_controller.dart';
+import 'package:choice_bussiness/pages/service_view_more.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
@@ -18,7 +19,7 @@ class ServicesPage extends StatefulWidget {
 
 class _ServicesPageState extends State<ServicesPage> {
   ServiceListController serviceListController = ServiceListController.to;
-  DateTime _currentDate = DateTime.now();
+  final DateTime _currentDate = DateTime.now();
   DateTime _currentDate2 = DateTime.now();
   String _currentMonth = DateFormat.yMMM().format(DateTime.now());
   DateTime _targetDateTime = DateTime.now();
@@ -279,11 +280,12 @@ class _ServicesPageState extends State<ServicesPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(onPressed: () {
-
+                    Get.to(()=> ServiceViewMore(serviceListController: serviceListController));
                   }, child: const Text('View more')),
                   const SizedBox(width: 20,)
                 ],
               ),
+              serviceListController.bookingList.length <= 3?
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(bottom: 30),
@@ -363,7 +365,88 @@ class _ServicesPageState extends State<ServicesPage> {
 
                       ],),
                   );
-                },),
+                },)
+              :  ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 30),
+                itemCount: 3,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 3,
+                          offset: Offset(
+                            0,
+                            3,
+                          ),
+                        )
+                      ],
+                      color: AppColors.themeColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text('     ${controller.serviceList[index].place}'),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //
+                        //     Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //       children: [
+                        //         Center(
+                        //           child: IconButton(onPressed: () {
+                        //             _callNumber(controller.bookingList[index].userphone.toString());
+                        //           }, icon: Icon(Icons.call,)),
+                        //         ),
+                        //         Center(
+                        //           child: IconButton(onPressed: () {
+                        //
+                        //           }, icon: Icon(Icons.message,)),
+                        //         ),
+                        //         Center(
+                        //           child: IconButton(onPressed: () {
+                        //
+                        //           }, icon: Icon(Icons.book_outlined,)),
+                        //         ),
+                        //         SizedBox(width: 8)
+                        //       ],
+                        //     )
+                        //   ],
+                        // ),
+                        const SizedBox(height: 5),
+                        Text('    ${controller.serviceList[index].serviceName}',style:const TextStyle(fontSize: 17)),
+                        const SizedBox(height: 2),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('     ${controller.bookingList[index].username}'),
+                            Text('     ₹ ${controller.serviceList[index].price}     ',style:const TextStyle(fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                      ],),
+                  );
+                },)
+              ,
             ],
           );
         }

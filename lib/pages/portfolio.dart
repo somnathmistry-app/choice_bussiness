@@ -78,12 +78,19 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: uploadedImages.length,
+                  itemCount: controller.artisDetails.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
                         },
-                        child: Container(height: 20,width: 20,margin:const EdgeInsets.all(2),color: Colors.grey,)
+                        child: Container(height: 20,width: 20,
+                          margin:const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              image:
+                              controller.artisDetails[index].image.toString() != ''?
+                              DecorationImage(image: NetworkImage(controller.artisDetails[index].image)):null),
+                          )
 
                       //Image.network(uploadedImages[index]),
                     );

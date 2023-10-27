@@ -123,8 +123,6 @@ class ApiEndPath{
   static Future<SubCategoryModel> getSubCategories() async {
     var baseurl = GlobalConfiguration().get('base_url');
 
-
-
     var response = await client.post(Uri.parse('${baseurl}get-cat-subcat-service'));
     print('base url: $baseurl, response: $response');
 

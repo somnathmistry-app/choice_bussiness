@@ -16,7 +16,7 @@ class ServiceListController extends GetxController{
   getServices() async {
     try {
       isLoading(true);
-      var apiResponse = await ApiEndPath.getAllServices(box.read('userId'));
+      var apiResponse = await ApiEndPath.getAllServices('1');
 
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {

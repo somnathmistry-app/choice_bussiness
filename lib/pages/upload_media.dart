@@ -7,6 +7,10 @@ import '../styles/app_colors.dart';
 
 
 class UploadMedia extends StatefulWidget {
+  String? serviceID;
+
+  UploadMedia(this.serviceID);
+
   @override
   _UploadMediaState createState() => _UploadMediaState();
 }
@@ -58,9 +62,9 @@ class _UploadMediaState extends State<UploadMedia> {
       actions: [
         TextButton.icon(onPressed: () {
           if(_selectedVideo != null){
-            uploadMediaController.upload(imgPathList: imgsStr,videoPath:  _selectedVideo!.path);
+            uploadMediaController.upload(widget.serviceID!,imgPathList: imgsStr,videoPath:  _selectedVideo!.path);
           }else{
-            uploadMediaController.upload(imgPathList: imgsStr);
+            uploadMediaController.upload(widget.serviceID!,imgPathList: imgsStr);
           }
 
         }, icon: const Icon(Icons.done,color: Colors.white), label: const Text('Done',style: TextStyle(color: Colors.white),)),

@@ -14,12 +14,13 @@ class UploadMediaController extends GetxController{
   final box = GetStorage();
 
 
-  upload({dynamic imgPathList, videoPath}) async {
+  upload(String serviceId,{dynamic imgPathList, videoPath}) async {
     MyAlertDialog.circularProgressDialog();
 
-
+print(box.read('userId'));
+print(imgPathList);
     var apiResponse = await ApiEndPath.uploadMedia(
-        box.read('userId'),service_image_List: imgPathList,service_video: videoPath);
+        serviceId,service_image_List: imgPathList,service_video: videoPath);
 
     if(apiResponse!=null){
 

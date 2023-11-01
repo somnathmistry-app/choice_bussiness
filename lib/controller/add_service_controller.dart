@@ -24,9 +24,11 @@ class AddServiceController extends GetxController{
 
   addService () async {
 
-    print('my id :${box.read('userId')}');
-    print(subCategory);
-    print(serviceName.text);
+    print('my id :${box.read('userId')}, cat id: ${box.read('registeredCategoryID')},'
+        ' subcat : $subCategory, businessname: ${box.read('businessName')} price : ${price.text}, selectedlocation : $selectedLocation'
+        'des : ${description.text}, about : ${about.text}'
+    );
+    print(box.read('registeredCategoryID'));
     print(price.text);
     print(selectedLocation);
     print(description.text);
@@ -42,7 +44,7 @@ class AddServiceController extends GetxController{
         MySnackbar.successSnackBar(
           'Success', 'Service has been added',
         );
-        Get.off(()=> UploadMedia());
+        Get.off(()=> UploadMedia(apiResponse.serviceId.toString()));
       }
       // else if(apiResponse.response != 'ok') {
       //   Get.back();
@@ -79,7 +81,7 @@ class AddServiceController extends GetxController{
           //allCatList.map((element) => allSubCatList.assign(element));
           // print(apiResponse.catsubcat[0].subcat![0].photo);
           mySubCats = allCatList.firstWhere(
-                (category) => category.id == '28',
+                (category) => category.id == box.read('registeredCategoryID'),
             orElse: () => Subcat(
               id: '',
               title: '', slug: '', summary: null, isParent: '', parentId: null,

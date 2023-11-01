@@ -19,8 +19,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   UserController userController = UserController();
   AddServiceController addServiceController = AddServiceController.to;
-  List<String> category = ['category1', 'category2', 'category3', 'category3']; // Option 2
-  String? selectedCat;
+
 
   @override
   Widget build(BuildContext context) {
@@ -149,15 +148,18 @@ class _RegisterViewState extends State<RegisterView> {
                               Colors.white,
                               16),
                           // Not necessary for Option 1
-                          value: controller.category,
+                          value: userController.selectedCatID,
                           onChanged: (newValue) {
+                            print(newValue);
                             setState(() {
-                              controller.category = newValue.toString();
+                              userController.selectedCatID =
+                                  newValue.toString();
                             });
                           },
+
                           items: controller.allCatList.map((cat) {
                             return DropdownMenuItem(
-                              value: cat,
+                              value: cat.id,
                               child: MyWidgets.textView(cat.title, Colors.white, 16),
                             );
                           }).toList(),

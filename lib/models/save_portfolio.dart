@@ -1,50 +1,54 @@
 // To parse this JSON data, do
 //
-//     final fetchPortfolioModel = fetchPortfolioModelFromJson(jsonString);
+//     final savePortfolioModel = savePortfolioModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FetchPortfolioModel fetchPortfolioModelFromJson(String str) => FetchPortfolioModel.fromJson(json.decode(str));
+SavePortfolioModel savePortfolioModelFromJson(String str) => SavePortfolioModel.fromJson(json.decode(str));
 
-String fetchPortfolioModelToJson(FetchPortfolioModel data) => json.encode(data.toJson());
+String savePortfolioModelToJson(SavePortfolioModel data) => json.encode(data.toJson());
 
-class FetchPortfolioModel {
+class SavePortfolioModel {
   String response;
-  List<ArtistPortfolio> artistPortfolio;
+  String message;
+  List<ArtistDetail> artistDetail;
   int status;
 
-  FetchPortfolioModel({
+  SavePortfolioModel({
     required this.response,
-    required this.artistPortfolio,
+    required this.message,
+    required this.artistDetail,
     required this.status,
   });
 
-  factory FetchPortfolioModel.fromJson(Map<String, dynamic> json) => FetchPortfolioModel(
+  factory SavePortfolioModel.fromJson(Map<String, dynamic> json) => SavePortfolioModel(
     response: json["response"],
-    artistPortfolio: List<ArtistPortfolio>.from(json["artistPortfolio"].map((x) => ArtistPortfolio.fromJson(x))),
+    message: json["message"],
+    artistDetail: List<ArtistDetail>.from(json["artistDetail"].map((x) => ArtistDetail.fromJson(x))),
     status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
     "response": response,
-    "artistPortfolio": List<dynamic>.from(artistPortfolio.map((x) => x.toJson())),
+    "message": message,
+    "artistDetail": List<dynamic>.from(artistDetail.map((x) => x.toJson())),
     "status": status,
   };
 }
 
-class ArtistPortfolio {
+class ArtistDetail {
   String businessName;
   String phoneNumber;
   String categoryId;
   String location;
   dynamic profilePhoto;
   String description;
-  dynamic facebookLink;
-  dynamic instagramLink;
+  String facebookLink;
+  String instagramLink;
   List<PortfolioImage> portfolioImage;
   List<PortfolioVideo> portfolioVideo;
 
-  ArtistPortfolio({
+  ArtistDetail({
     required this.businessName,
     required this.phoneNumber,
     required this.categoryId,
@@ -57,7 +61,7 @@ class ArtistPortfolio {
     required this.portfolioVideo,
   });
 
-  factory ArtistPortfolio.fromJson(Map<String, dynamic> json) => ArtistPortfolio(
+  factory ArtistDetail.fromJson(Map<String, dynamic> json) => ArtistDetail(
     businessName: json["business_name"],
     phoneNumber: json["phone_number"],
     categoryId: json["category_id"],

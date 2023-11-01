@@ -36,38 +36,50 @@ class Data {
   String? id;
   String? businessName;
   String? phoneNumber;
+  String? categoryId;
   String? password;
   String? location;
   dynamic profilePhoto;
   String? description;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Data({
-    this.id,
-    this.businessName,
-    this.phoneNumber,
-    this.password,
-    this.location,
-    this.profilePhoto,
-    this.description,
+     this.id,
+     this.businessName,
+     this.phoneNumber,
+     this.categoryId,
+     this.password,
+     this.location,
+     this.profilePhoto,
+     this.description,
+     this.createdAt,
+     this.updatedAt,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     businessName: json["business_name"],
     phoneNumber: json["phone_number"],
+    categoryId: json["category_id"],
     password: json["password"],
     location: json["location"],
     profilePhoto: json["profile_photo"],
     description: json["description"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "business_name": businessName,
     "phone_number": phoneNumber,
+    "category_id": categoryId,
     "password": password,
     "location": location,
     "profile_photo": profilePhoto,
     "description": description,
+    "created_at": createdAt!.toIso8601String(),
+    "updated_at": updatedAt!.toIso8601String(),
   };
 }

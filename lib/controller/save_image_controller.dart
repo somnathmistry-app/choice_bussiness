@@ -1,30 +1,33 @@
-import 'package:choice_bussiness/api/api_end_path.dart';
+
+
+
 import 'package:choice_bussiness/pages/dashboard.dart';
+import 'package:choice_bussiness/pages/portfolio_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../api/api_end_path.dart';
 import '../styles/commonmodule/my_alert_dilog.dart';
 import '../styles/commonmodule/my_snack_bar.dart';
 
+class SavePortfolioController extends GetxController{
 
-
-class UploadMediaController extends GetxController{
-
-  static UploadMediaController to = Get.find();
+  static SavePortfolioController to = Get.find();
   final box = GetStorage();
 
 
-  upload({dynamic imgPathList, videoPath}) async {
+  save({dynamic imgPathList}) async {
     MyAlertDialog.circularProgressDialog();
 
 
-    var apiResponse = await ApiEndPath.uploadMedia(
-        box.read('userId'),service_image_List: imgPathList,service_video: videoPath);
+    var apiResponse = await ApiEndPath.savePortfolio(
+        box.read('userId'),portfolio_image_List: imgPathList,);
 
     if(apiResponse!=null){
 
       if(apiResponse.response=='ok'){
         Get.back();
+
         MySnackbar.successSnackBar(
           'Uploaded', 'Your media is uploaded',
         );

@@ -10,21 +10,25 @@ class PortfolioController extends GetxController{
   static PortfolioController to = Get.find();
   var isLoading = false.obs;
   final box = GetStorage();
-  dynamic artisMain;
-  var artisDetails = <ArtistPortfolioElement>[].obs;
+  var artisDetails = <ArtistPortfolio>[].obs;
+  var artisImages = <PortfolioImage>[].obs;
+  var artisVideos = <PortfolioVideo>[].obs;
 
 
   getPortfolioDetails() async {
     try {
       isLoading(true);
-      var apiResponse = await ApiEndPath.getPortfolioDetails('2');
+      var apiResponse = await ApiEndPath.getPortfolioDetails(box.read('userId'));
 
+      print(apiResponse.response);
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {
-          artisMain = apiResponse.artistPortfolio;
+          artisDetails.assignAll(apiResponse.artistPortfolio);
           //print(artisMain.phoneNumber);
-          if(apiResponse.artistPortfolio.artistPortfolio.isNotEmpty){
-            artisDetails.assignAll(apiResponse.artistPortfolio.artistPortfolio);
+          if(apiResponse.artistPortfolio.isNotEmpty){
+            artisImages.assignAll(apiResponse.artistPortfolio[0].portfolioImage);
+            print(apiResponse.artistPortfolio[0].portfolioImage);
+            artisVideos.assignAll(apiResponse.artistPortfolio[0].portfolioVideo);
           }
           print(artisDetails.length);
         }

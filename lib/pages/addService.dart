@@ -122,41 +122,6 @@ class _AddServiceState extends State<AddService> {
                         underline: const SizedBox(),
                         style: TextStyle(color: AppColors.themeColorTwo),
                         hint: MyWidgets.textView(
-                            'Please select your business category',
-                            AppColors.themeColorTwo,
-                            16),
-                        // Not necessary for Option 1
-                        value: addServiceController.category,
-                        onChanged: (newValue) {
-                          setState(() {
-                            addServiceController.category = newValue.toString();
-                          });
-                        },
-                        items:
-                            addServiceController.categoryList.map((location) {
-                          return DropdownMenuItem(
-                            value: location,
-                            child:
-                                MyWidgets.textView(location, Colors.black, 16),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 55,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.themeColorTwo,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5))),
-                      child: DropdownButton(
-                        underline: const SizedBox(),
-                        style: TextStyle(color: AppColors.themeColorTwo),
-                        hint: MyWidgets.textView(
                             'Please select your Subcategory',
                             AppColors.themeColorTwo,
                             16),
@@ -168,51 +133,51 @@ class _AddServiceState extends State<AddService> {
                                 newValue.toString();
                           });
                         },
-                        items: addServiceController.subCategoryList
-                            .map((location) {
+                        items: addServiceController.allSubCatList
+                            .map((subCat) {
                           return DropdownMenuItem(
-                            value: location,
+                            value: subCat.id,
                             child:
-                                MyWidgets.textView(location, Colors.black, 16),
+                                MyWidgets.textView(subCat.title, Colors.black, 16),
                           );
                         }).toList(),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                        style: TextStyle(
-                            color: AppColors.themeColorTwo, fontSize: 18),
-                        controller: addServiceController.serviceName,
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter your service name'
-                            : null,
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 14),
-                            enabled: true,
-                            labelText: 'Enter your service name',
-                            labelStyle: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.themeColorTwo,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            errorStyle: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.red,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.themeColor)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.themeColorTwo)),
-                            errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red)))),
+                    // const SizedBox(height: 20),
+                    // TextFormField(
+                    //     style: TextStyle(
+                    //         color: AppColors.themeColorTwo, fontSize: 18),
+                    //     controller: addServiceController.serviceName,
+                    //     validator: (value) => value!.isEmpty
+                    //         ? 'Please enter Artist profile name'
+                    //         : null,
+                    //     decoration: InputDecoration(
+                    //         contentPadding: const EdgeInsets.symmetric(
+                    //             vertical: 16, horizontal: 14),
+                    //         enabled: true,
+                    //         labelText: 'Enter Artist profile name',
+                    //         labelStyle: TextStyle(
+                    //           fontSize: 16,
+                    //           color: AppColors.themeColorTwo,
+                    //           fontWeight: FontWeight.w600,
+                    //           // light
+                    //           fontStyle: FontStyle.normal,
+                    //         ),
+                    //         errorStyle: const TextStyle(
+                    //           fontSize: 16,
+                    //           color: Colors.red,
+                    //           fontWeight: FontWeight.w600,
+                    //           // light
+                    //           fontStyle: FontStyle.normal,
+                    //         ),
+                    //         border: OutlineInputBorder(
+                    //             borderSide:
+                    //                 BorderSide(color: AppColors.themeColor)),
+                    //         enabledBorder: OutlineInputBorder(
+                    //             borderSide:
+                    //                 BorderSide(color: AppColors.themeColorTwo)),
+                    //         errorBorder: const OutlineInputBorder(
+                    //             borderSide: BorderSide(color: Colors.red)))),
                     const SizedBox(height: 20),
                     TextFormField(
                         controller: addServiceController.price,

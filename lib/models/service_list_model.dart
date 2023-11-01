@@ -9,86 +9,54 @@ ServiceListModel serviceListModelFromJson(String str) => ServiceListModel.fromJs
 String serviceListModelToJson(ServiceListModel data) => json.encode(data.toJson());
 
 class ServiceListModel {
-  String? response;
-  List<BookingList>? bookingList;
-  int? status;
+  String response;
+  List<ServiceList> serviceList;
+  int status;
 
   ServiceListModel({
-    this.response,
-    this.bookingList,
-    this.status,
+    required this.response,
+    required this.serviceList,
+    required this.status,
   });
 
   factory ServiceListModel.fromJson(Map<String, dynamic> json) => ServiceListModel(
     response: json["response"],
-    bookingList: json["bookingList"] == null ? [] : List<BookingList>.from(json["bookingList"]!.map((x) => BookingList.fromJson(x))),
+    serviceList: List<ServiceList>.from(json["serviceList"].map((x) => ServiceList.fromJson(x))),
     status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
     "response": response,
-    "bookingList": bookingList == null ? [] : List<dynamic>.from(bookingList!.map((x) => x.toJson())),
+    "serviceList": List<dynamic>.from(serviceList.map((x) => x.toJson())),
     "status": status,
   };
 }
 
-class BookingList {
-  String? userid;
-  String? username;
-  String? userphone;
-  String? artistId;
-  String? serviceId;
-  String? amount;
-  List<ServiceList>? serviceList;
-
-  BookingList({
-    this.userid,
-    this.username,
-    this.userphone,
-    this.artistId,
-    this.serviceId,
-    this.amount,
-    this.serviceList,
-  });
-
-  factory BookingList.fromJson(Map<String, dynamic> json) => BookingList(
-    userid: json["userid"],
-    username: json["username"],
-    userphone: json["userphone"],
-    artistId: json["artist_id"],
-    serviceId: json["service_id"],
-    amount: json["amount"],
-    serviceList: json["serviceList"] == null ? [] : List<ServiceList>.from(json["serviceList"]!.map((x) => ServiceList.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "userid": userid,
-    "username": username,
-    "userphone": userphone,
-    "artist_id": artistId,
-    "service_id": serviceId,
-    "amount": amount,
-    "serviceList": serviceList == null ? [] : List<dynamic>.from(serviceList!.map((x) => x.toJson())),
-  };
-}
-
 class ServiceList {
-  String? serviceId;
-  String? artistId;
-  String? categoryId;
+  String serviceId;
+  String artistId;
+  String categoryId;
   String? subcategoryId;
-  String? serviceName;
-  String? price;
-  String? place;
+  String serviceName;
+  String price;
+  String place;
+  String description;
+  String about;
+  List<ServiceImage>? serviceImage;
+  List<ServiceVideo>? serviceVideo;
 
   ServiceList({
-    this.serviceId,
-    this.artistId,
-    this.categoryId,
-    this.subcategoryId,
-    this.serviceName,
-    this.price,
-    this.place,
+    required this.serviceId,
+    required this.artistId,
+    required this.categoryId,
+    required this.subcategoryId,
+    required this.serviceName,
+    required this.price,
+    required this.place,
+    required this.description,
+    required this.about,
+    this.serviceImage,
+    this.serviceVideo,
   });
 
   factory ServiceList.fromJson(Map<String, dynamic> json) => ServiceList(
@@ -99,6 +67,10 @@ class ServiceList {
     serviceName: json["service_name"],
     price: json["price"],
     place: json["place"],
+    description: json["description"],
+    about: json["about"],
+    serviceImage: json["serviceImage"] == null ? [] : List<ServiceImage>.from(json["serviceImage"]!.map((x) => ServiceImage.fromJson(x))),
+    serviceVideo: json["serviceVideo"] == null ? [] : List<ServiceVideo>.from(json["serviceVideo"]!.map((x) => ServiceVideo.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -109,5 +81,41 @@ class ServiceList {
     "service_name": serviceName,
     "price": price,
     "place": place,
+    "description": description,
+    "about": about,
+    "serviceImage": serviceImage == null ? [] : List<dynamic>.from(serviceImage!.map((x) => x.toJson())),
+    "serviceVideo": serviceVideo == null ? [] : List<dynamic>.from(serviceVideo!.map((x) => x.toJson())),
+  };
+}
+
+class ServiceImage {
+  String photo;
+
+  ServiceImage({
+    required this.photo,
+  });
+
+  factory ServiceImage.fromJson(Map<String, dynamic> json) => ServiceImage(
+    photo: json["photo"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "photo": photo,
+  };
+}
+
+class ServiceVideo {
+  String video;
+
+  ServiceVideo({
+    required this.video,
+  });
+
+  factory ServiceVideo.fromJson(Map<String, dynamic> json) => ServiceVideo(
+    video: json["video"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "video": video,
   };
 }

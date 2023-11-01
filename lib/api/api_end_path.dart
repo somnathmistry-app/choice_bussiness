@@ -1,6 +1,7 @@
 import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
 import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
+import 'package:choice_bussiness/models/save_portfolio.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,10 +13,10 @@ import '../models/upload_media_model.dart';
 class ApiEndPath{
   static var client = http.Client();
 
-  static Future<ResponseModel> registerUser(number, business_name, password, location, description) async {
+  static Future<RegisterModel> registerUser(number, business_name, category_id, password, location, description) async {
     var baseurl = GlobalConfiguration().get('base_url');
 
-    print('user reg data: number: $number, business_name: $business_name, password: $password, location: $location, description: $description');
+    print('user reg data: number: $number, business_name: $business_name,category_id $category_id, password: $password, location: $location, description: $description');
 
    //number:7029869895
     // business_name:abc
@@ -25,19 +26,20 @@ class ApiEndPath{
 
     var response = await client.post(Uri.parse('${baseurl}Registration-service-provider'), body: {
       'number': number,
-      'business_name':business_name,
-      'password':password,
-      'location':location,
-      'description':description
+      'business_name': business_name,
+      'category_id': category_id,
+      'password': password,
+      'location': location,
+      'description': description
     });
     print('base url: $baseurl, response: $response');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
 
-      return responseModelFromJson(jsonString);
+      return registerModelFromJson(jsonString);
     }
-    return responseModelFromJson(response.body);
+    return registerModelFromJson(response.body);
   }
 
   static Future<LoginModel> login(number, password) async {
@@ -140,7 +142,7 @@ class ApiEndPath{
 
 
 
-    var response = await client.get(Uri.parse('${baseurl}getUserBookingData?artist_id=$artistId'));
+    var response = await client.get(Uri.parse('${baseurl}getServiceList?artist=$artistId'));
     print('base url: $baseurl, response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
@@ -163,5 +165,30 @@ class ApiEndPath{
       return fetchPortfolioModelFromJson(jsonString);
     }
     return fetchPortfolioModelFromJson(response.body);
+  }
+
+
+  static Future<SavePortfolioModel> savePortfolio(String artistId,
+      {var portfolio_image_List}) async {
+    var baseurl = GlobalConfiguration().get('base_url');
+
+    var request = http.MultipartRequest('POST', Uri.parse('${baseurl}saveArtistPortfolio'));
+    // print('base url: $baseurl, response: ${request.statusCode}');
+    request.fields.addAll({
+      'artist_id': artistId
+    });
+    if(portfolio_image_List.length == 0){}
+    else{
+      for (int i = 0; i < portfolio_image_List.length; i++) {
+        var filePath = portfolio_image_List[i];
+        var multipartFile = await http.MultipartFile.fromPath('portfolio_image', filePath.toString());
+        request.files.add(multipartFile);
+      }}
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var jsonString = await response.stream.bytesToString();
+      return savePortfolioModelFromJson(jsonString);
+    }
+    return savePortfolioModelFromJson(response.reasonPhrase.toString());
   }
 }

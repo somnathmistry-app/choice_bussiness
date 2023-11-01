@@ -13,7 +13,7 @@ class ServiceViewMore extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(backgroundColor: Colors.white,elevation: 0,),
        body: ListView.builder(
-         itemCount: serviceListController.bookingList.length,
+         itemCount: serviceListController.serviceList.length,
          shrinkWrap: true,
          itemBuilder: (context, index) {
            return Container(
@@ -41,39 +41,17 @@ class ServiceViewMore extends StatelessWidget {
                    height: 180,
                    decoration: BoxDecoration(
                      borderRadius: BorderRadius.circular(8),
+                     image: serviceListController.imageService[index] == ''?
+                     null:
+                     DecorationImage(
+                         image: NetworkImage(serviceListController.imageService[index].toString())
+                     ),
                      //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
                      color: Colors.grey[200],
                    ),
                  ),
                  const SizedBox(height: 5),
                  Text('     ${serviceListController.serviceList[index].place}'),
-                 // Row(
-                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 //   children: [
-                 //
-                 //     Row(
-                 //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                 //       children: [
-                 //         Center(
-                 //           child: IconButton(onPressed: () {
-                 //             _callNumber(controller.bookingList[index].userphone.toString());
-                 //           }, icon: Icon(Icons.call,)),
-                 //         ),
-                 //         Center(
-                 //           child: IconButton(onPressed: () {
-                 //
-                 //           }, icon: Icon(Icons.message,)),
-                 //         ),
-                 //         Center(
-                 //           child: IconButton(onPressed: () {
-                 //
-                 //           }, icon: Icon(Icons.book_outlined,)),
-                 //         ),
-                 //         SizedBox(width: 8)
-                 //       ],
-                 //     )
-                 //   ],
-                 // ),
                  const SizedBox(height: 5),
                  Text('    ${serviceListController.serviceList[index].serviceName}',style:const TextStyle(fontSize: 17)),
                  const SizedBox(height: 2),
@@ -81,7 +59,7 @@ class ServiceViewMore extends StatelessWidget {
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                     Text('     ${serviceListController.bookingList[index].username}'),
+                     Text('     ${serviceListController.serviceList[index].serviceName}'),
                      Text('     ₹ ${serviceListController.serviceList[index].price}     ',style:const TextStyle(fontWeight: FontWeight.bold)),
                    ],
                  ),

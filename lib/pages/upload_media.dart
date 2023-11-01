@@ -57,7 +57,12 @@ class _UploadMediaState extends State<UploadMedia> {
       appBar: AppBar(backgroundColor: AppColors.themeColorTwo,
       actions: [
         TextButton.icon(onPressed: () {
-          uploadMediaController.upload(imgPathList: imgsStr,videoPath: _selectedVideo!.path);
+          if(_selectedVideo != null){
+            uploadMediaController.upload(imgPathList: imgsStr,videoPath:  _selectedVideo!.path);
+          }else{
+            uploadMediaController.upload(imgPathList: imgsStr);
+          }
+
         }, icon: const Icon(Icons.done,color: Colors.white), label: const Text('Done',style: TextStyle(color: Colors.white),)),
         const SizedBox(width: 20,)
       ],

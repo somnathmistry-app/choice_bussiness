@@ -1,4 +1,5 @@
 import 'package:choice_bussiness/controller/services_controller.dart';
+import 'package:choice_bussiness/pages/portfolio_page.dart';
 import 'package:choice_bussiness/pages/service_view_more.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -37,9 +38,9 @@ class _ServicesPageState extends State<ServicesPage> {
 
   final EventList<Event> _markedDateMap = EventList<Event>(
     events: {
-      DateTime(2023, 10, 10): [
+      DateTime(2023, 11, 8): [
         Event(
-          date: DateTime(2023, 10, 10),
+          date: DateTime(2023, 11, 8),
           title: 'Event 1',
           icon: _eventIcon,
           dot: Container(
@@ -66,34 +67,34 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   void initState() {
     _markedDateMap.add(
-        DateTime(2023, 10, 25),
+        DateTime(2023, 11, 25),
         Event(
-          date: DateTime(2023, 10, 25),
+          date: DateTime(2023, 11, 25),
           title: 'Event 5',
           icon: _eventIcon,
         ));
 
     _markedDateMap.add(
-        DateTime(2023, 10, 10),
+        DateTime(2023, 11, 11),
         Event(
-          date: DateTime(2023, 10, 10),
+          date: DateTime(2023, 11, 11),
           title: 'Event 4',
           icon: _eventIcon,
         ));
 
-    _markedDateMap.addAll(DateTime(2023, 10, 11), [
+    _markedDateMap.addAll(DateTime(2023, 11, 11), [
       Event(
-        date: DateTime(2023, 10, 11),
+        date: DateTime(2023, 11, 11),
         title: 'Event 1',
         icon: _eventIcon,
       ),
       Event(
-        date: DateTime(2023, 10, 11),
+        date: DateTime(2023, 11, 10),
         title: 'Event 2',
         icon: _eventIcon,
       ),
       Event(
-        date: DateTime(2023, 10, 11),
+        date: DateTime(2023, 11, 10),
         title: 'Event 3',
         icon: _eventIcon,
       ),
@@ -167,6 +168,7 @@ class _ServicesPageState extends State<ServicesPage> {
       },
     );
     return Scaffold(
+      backgroundColor: AppColors.offWhite,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -174,7 +176,19 @@ class _ServicesPageState extends State<ServicesPage> {
 
         leading: Image.asset('assets/images/app_icon.png',fit: BoxFit.cover),
         titleSpacing: 0,
-        title: const  Text('Our Services'),),
+        title: const  Text('Services'),
+      actions: [
+        IconButton(onPressed: () {
+          Get.to(()=> const PortfolioPage());
+
+        }, icon: const Icon(Icons.person_pin,size: 30,)),
+        const SizedBox(width: 5,),
+        IconButton(onPressed: () {
+
+        }, icon: const Icon(Icons.logout)),
+        const SizedBox(width: 15,)
+      ],
+      ),
       body: GetX<ServiceListController>(initState: (context) {
         serviceListController.getServices();
       }, builder: (controller) {
@@ -206,7 +220,7 @@ class _ServicesPageState extends State<ServicesPage> {
                           ),
                         )),
                     TextButton(
-                      child: const Text('PREV'),
+                      child: Text('PREV',style: TextStyle(color: AppColors.themeColorTwo)),
                       onPressed: () {
                         setState(() {
                           _targetDateTime = DateTime(
@@ -217,7 +231,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       },
                     ),
                     TextButton(
-                      child: const Text('NEXT'),
+                      child: Text('NEXT',style: TextStyle(color: AppColors.themeColorTwo)),
                       onPressed: () {
                         setState(() {
                           _targetDateTime = DateTime(
@@ -237,9 +251,22 @@ class _ServicesPageState extends State<ServicesPage> {
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 //height: 270,
-                color: Colors.grey[200],
+
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2,
+                      offset: Offset(
+                        0,
+                        2,
+                      ),
+                    )
+                  ],
+                ),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, // Adjust the number of columns
@@ -285,11 +312,11 @@ class _ServicesPageState extends State<ServicesPage> {
                   const SizedBox(width: 20,)
                 ],
               ),
-              serviceListController.bookingList.length <= 3?
+              serviceListController.serviceList.length <= 3?
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(bottom: 30),
-                itemCount: serviceListController.bookingList.length,
+                itemCount: serviceListController.serviceList.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Container(
@@ -317,6 +344,11 @@ class _ServicesPageState extends State<ServicesPage> {
                           height: 180,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
+                            image: controller.imageService[index] == ''?
+                            null:
+                            DecorationImage(
+                                image: NetworkImage(controller.imageService[index].toString())
+                            ),
                             //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
                             color: Colors.grey[200],
                           ),
@@ -357,7 +389,7 @@ class _ServicesPageState extends State<ServicesPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('     ${controller.bookingList[index].username}'),
+                            Text('     ${controller.serviceList[index].serviceName}'),
                             Text('     ₹ ${controller.serviceList[index].price}     ',style:const TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),
@@ -397,6 +429,12 @@ class _ServicesPageState extends State<ServicesPage> {
                           height: 180,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
+                            image: controller.imageService[index] == ''?
+                                null:
+                            DecorationImage(
+                                image: NetworkImage(controller.imageService[index].toString())
+                            ),
+                            //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
                             //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
                             color: Colors.grey[200],
                           ),
@@ -437,7 +475,7 @@ class _ServicesPageState extends State<ServicesPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('     ${controller.bookingList[index].username}'),
+                            Text('     ${controller.serviceList[index].serviceName}'),
                             Text('     ₹ ${controller.serviceList[index].price}     ',style:const TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),

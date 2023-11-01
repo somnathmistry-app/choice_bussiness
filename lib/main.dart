@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:global_configuration/global_configuration.dart';
 
+import 'controller/save_image_controller.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +16,7 @@ Future<void> main() async {
   Get.put<UploadMediaController>(UploadMediaController());
   Get.put<ServiceListController>(ServiceListController());
   Get.put<PortfolioController>(PortfolioController());
+  Get.put<SavePortfolioController>(SavePortfolioController());
   runApp(const MyApp());
 }
 

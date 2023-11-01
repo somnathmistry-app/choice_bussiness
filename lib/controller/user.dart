@@ -16,6 +16,7 @@ class UserController extends GetxController {
   static TextEditingController descriptionTec = TextEditingController();
   List<String> locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
   String? selectedLocation;
+  String? selectedCatID;
 
   var otpSent= false.obs;
   GetStorage box = GetStorage();
@@ -24,7 +25,6 @@ class UserController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
-    //print('date is: ${dobController.text}');
   }
 
   registerUser() async{
@@ -32,10 +32,11 @@ class UserController extends GetxController {
 
     var response = await ApiEndPath.registerUser(
         mobileTec.text,
-      businessTec.text,
-      passTec.text,
-      selectedLocation,
-      descriptionTec.text
+        businessTec.text,
+        selectedCatID,
+        passTec.text,
+        selectedLocation,
+        descriptionTec.text
     );
 
     print('register controller response: ${response.response}');
@@ -43,6 +44,8 @@ class UserController extends GetxController {
       if (response.response == 'ok') {
         MySnackbar.successSnackBar(
             'Registration Success', 'please login to enter');
+        box.write('registeredCategoryID', response.userDetail[0].categoryId);
+        box.write('businessName', response.userDetail[0].businessName);
         Get.offAll(const LoginView());
       } else {
         Get.back();
@@ -68,9 +71,11 @@ class UserController extends GetxController {
             'Login Success', 'Welcome to choice 99');
         Get.offAll(()=>Dashboard());
         box.write('userId', response.data!.id.toString());
+        box.write('businessName', response.data!.businessName.toString());
         box.write('userPhoto', response.data!.profilePhoto.toString());
         box.write('userLocation', response.data!.location.toString());
         box.write('email', response.data!..toString());
+        box.write('registeredCategoryID', response.data!.categoryId);
 
       } else {
         Get.back();
@@ -80,5 +85,4 @@ class UserController extends GetxController {
       }
     }
   }
-
 }

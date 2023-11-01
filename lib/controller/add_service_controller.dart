@@ -13,16 +13,11 @@ class AddServiceController extends GetxController{
   static AddServiceController to = Get.find();
 
   final box = GetStorage();
-  var categoryy = '1';
-  var subCategoryy = '';
 
   TextEditingController serviceName = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController about = TextEditingController();
-  List<String> categoryList = ['1', '2', '3', '4'];
-  List<String> subCategoryList = ['1', '2', '3', '4'];
-  String? category;
   String? subCategory;
   List<String> locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
   String? selectedLocation;
@@ -31,7 +26,6 @@ class AddServiceController extends GetxController{
   addService () async {
 
     print('my id :${box.read('userId')}');
-    print(category);
     print(subCategory);
     print(serviceName.text);
     print(price.text);
@@ -40,13 +34,12 @@ class AddServiceController extends GetxController{
     print(about.text);
     MyAlertDialog.circularProgressDialog();
     var apiResponse = await ApiEndPath.addService(
-        box.read('userId'), category, subCategory, serviceName.text, price.text, selectedLocation, description.text, about.text
+        box.read('userId'), box.read('registeredCategoryID'), subCategory, box.read('businessName'), price.text, selectedLocation, description.text, about.text
     );
 
     if(apiResponse!=null){
       if(apiResponse.response=='ok'){
         Get.back();
-        box.write('service_id', category);
         MySnackbar.successSnackBar(
           'Success', 'Service has been added',
         );
@@ -72,30 +65,34 @@ class AddServiceController extends GetxController{
 
   var isLoading = false.obs;
   var allCatList = <Subcat>[].obs;
+  var mySubCats;
   var allSubCatList = [].obs;
   var allSubCatListID = [].obs;
   getSubCategory () async {
     try {
+      print(box.read('registeredCategoryID'));
       isLoading(true);
       var apiResponse = await ApiEndPath.getSubCategories();
 
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {
           allCatList.assignAll(apiResponse.catsubcat);
-          allCatList.map((element) => allSubCatList.assign(element));
+          //allCatList.map((element) => allSubCatList.assign(element));
           // print(apiResponse.catsubcat[0].subcat![0].photo);
-          for (var element in allCatList) {
-            if(element.subcat!.isEmpty){
+          mySubCats = allCatList.firstWhere(
+                (category) => category.id == '28',
+            orElse: () => Subcat(
+              id: '',
+              title: '', slug: '', summary: null, isParent: '', parentId: null,
+            ),
+          );
+           print(mySubCats);
 
-            }else{
-              allSubCatListID.add(element.subcat![0].id);
-              allSubCatList.add(element.subcat);
-            }
-            //print(element.subcat);
-           // element.subcat!.map((e) => print(e));
-
-
+          if (mySubCats.subcat != null && mySubCats.subcat!.isNotEmpty) {
+            allSubCatList.assignAll(mySubCats.subcat);
+            allSubCatListID.assign(mySubCats.subcat!.map((subcat) => subcat.id));
           }
+
         }
       }
     } finally {

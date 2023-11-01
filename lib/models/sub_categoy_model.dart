@@ -39,7 +39,7 @@ class Subcat {
   dynamic summary;
   String? photo;
   String isParent;
-  dynamic parentId;
+  String? parentId;
   List<Subcat>? subcat;
 
   Subcat({

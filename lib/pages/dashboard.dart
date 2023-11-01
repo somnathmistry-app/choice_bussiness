@@ -1,6 +1,6 @@
 import 'package:choice_bussiness/pages/addService.dart';
 import 'package:choice_bussiness/pages/bookingPage.dart';
-import 'package:choice_bussiness/pages/portfolio.dart';
+import 'package:choice_bussiness/pages/profile.dart';
 import 'package:choice_bussiness/pages/ratingspage.dart';
 import 'package:choice_bussiness/pages/services.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
     const BookingPage(),
     const AddService(),
     const RatingPage(),
-     PortfolioPage(),
+    const ProfileScreen(),
   ];
   final _pageController = PageController(initialPage: 0);
 
@@ -45,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.add_circle),
-            label: 'Add Service',
+            label: 'AddService',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.newspaper),

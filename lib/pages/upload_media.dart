@@ -21,6 +21,8 @@ class _UploadMediaState extends State<UploadMedia> {
   List<String> imgsStr = [];
 
   void _openFilePicker() async {
+    selectedFiles.clear();
+    imgsStr.clear();
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,

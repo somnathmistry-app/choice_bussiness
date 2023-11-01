@@ -182,10 +182,7 @@ class _ServicesPageState extends State<ServicesPage> {
           Get.to(()=> const PortfolioPage());
 
         }, icon: const Icon(Icons.person_pin,size: 30,)),
-        const SizedBox(width: 5,),
-        IconButton(onPressed: () {
 
-        }, icon: const Icon(Icons.logout)),
         const SizedBox(width: 15,)
       ],
       ),

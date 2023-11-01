@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/app_colors.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,28 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
+    _showDialog(){
+      return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Log Out?'),
+          content: const Text('Are your sure your want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.offAll(()=> const LoginView());
+                box.erase();
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        ),
+      );
+    }
     PortfolioController portfolioController = PortfolioController.to;
     return Scaffold(
         backgroundColor: AppColors.offWhite,
@@ -24,9 +47,11 @@ class ProfileScreen extends StatelessWidget {
           title: Text(box.read('userId').toString()),
           actions: [
             TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.done),
-                label: const Text('Save')),
+                onPressed: () {
+                  _showDialog();
+                },
+                icon: const Icon(Icons.logout),
+                label: const Text('Log Out')),
             const SizedBox(
               width: 25,
             )
@@ -66,21 +91,26 @@ class ProfileScreen extends StatelessWidget {
                     Positioned(
                       top: 90,
                       left: 20,
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(image: AssetImage('assets/images/profile.jpg')),
-                          color: Colors.white,
-                          border: Border.all(
-                            color: AppColors.themeColor,
-                            width: 3.0,
+                      child: InkWell(
+                        onTap: () {
+                          _bottomsheet(context);
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: const DecorationImage(image: AssetImage('assets/images/profile.jpg')),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: AppColors.themeColorTwo,
+                              width: 3.0,
+                            ),
+                            // image: const DecorationImage(
+                            //   image: AssetImage('assets/images/app_icon.png'),
+                            //   fit: BoxFit.cover,
+                            // ),
                           ),
-                          // image: const DecorationImage(
-                          //   image: AssetImage('assets/images/app_icon.png'),
-                          //   fit: BoxFit.cover,
-                          // ),
                         ),
                       ),
                     ),
@@ -89,32 +119,55 @@ class ProfileScreen extends StatelessWidget {
                      Positioned(
                       top: 125,
                       left: 140,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      right: 5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            controller.artisDetails[0].businessName,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                controller.artisDetails[0].businessName,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                               Text(
+                                controller.artisDetails[0].location,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              // Add more profile information here
+                            ],
                           ),
-                           Text(
-                            controller.artisDetails[0].location,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // Add more profile information here
+                          IconButton(
+                              //padding: const EdgeInsets.only(right: 20),
+                              onPressed: () {
+
+                              }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
                         ],
                       ),
                     ),
                   ],
                 ),
-                MyWidgets.textView(
-                    '       Profile Details', AppColors.themeColorTwo, 17),
+                Row(
+                  mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                  children: [
+                    MyWidgets.textView(
+                        '       Profile Details', AppColors.themeColorTwo, 17),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: IconButton(
+                          onPressed: () {
+
+                      }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -178,5 +231,34 @@ class ProfileScreen extends StatelessWidget {
             );
           }
         }));
+  }
+  _bottomsheet(context){
+    return  showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          //color: Colors.amber,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.themeColorTwo)),
+                  child: const Text('Change Profile Photo',style: TextStyle(color: Colors.white)),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.themeColorTwo)),
+                  child: const Text(' Change Cover Photo ',style: TextStyle(color: Colors.white)),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -122,7 +122,7 @@ class _RegisterViewState extends State<RegisterView> {
                           },
                           items: controller.locationData.map((element) {
                             return DropdownMenuItem(
-                              value: element.id,
+                              value: element.name,
                               child: MyWidgets.textView(
                                   element.name, Colors.white, 16),
                             );

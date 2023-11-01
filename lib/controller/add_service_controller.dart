@@ -15,17 +15,26 @@ class AddServiceController extends GetxController{
 
   final box = GetStorage();
 
-  TextEditingController serviceName = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController about = TextEditingController();
   String? subCategory;
 
 
+  @override
+  void onInit() {
+    price.clear();
+    description.clear();
+    about.clear();
+    subCategory = null;
+    selectedLocation = null;
+    super.onInit();
+  }
+
   addService () async {
 
     print('my id :${box.read('userId')}, cat id: ${box.read('registeredCategoryID')},'
-        ' subcat : $subCategory, businessname: ${box.read('businessName')} price : ${price.text}, selectedlocation : $selectedLocation'
+        ' subcat : $subCategory, businessname: ${box.read('businessName')} price : ${price.text}, selectedlocation : $selectedLocation,  '
         'des : ${description.text}, about : ${about.text}'
     );
     print(box.read('registeredCategoryID'));
@@ -35,7 +44,14 @@ class AddServiceController extends GetxController{
     print(about.text);
     MyAlertDialog.circularProgressDialog();
     var apiResponse = await ApiEndPath.addService(
-        box.read('userId'), box.read('registeredCategoryID'), subCategory, box.read('businessName'), price.text, selectedLocation, description.text, about.text
+        box.read('userId'),
+        box.read('registeredCategoryID'),
+        subCategory,
+        box.read('businessName'),
+        price.text,
+        selectedLocation,
+        description.text,
+        about.text
     );
 
     if(apiResponse!=null){
@@ -45,6 +61,11 @@ class AddServiceController extends GetxController{
           'Success', 'Service has been added',
         );
         Get.off(()=> UploadMedia(apiResponse.serviceId.toString()));
+        price.clear();
+        description.clear();
+        about.clear();
+        subCategory = null;
+        selectedLocation = null;
       }
       // else if(apiResponse.response != 'ok') {
       //   Get.back();

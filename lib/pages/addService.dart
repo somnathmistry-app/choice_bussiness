@@ -240,7 +240,7 @@ class _AddServiceState extends State<AddService> {
                         },
                         items: addServiceController.locationData.map((location) {
                           return DropdownMenuItem(
-                            value: location.id,
+                            value: location.name,
                             child:
                                 MyWidgets.textView(location.name, Colors.black, 16),
                           );

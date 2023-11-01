@@ -23,8 +23,9 @@ class _AddServiceState extends State<AddService> {
     return Scaffold(
       body: GetX<AddServiceController>(initState: (context) {
             addServiceController.getSubCategory();
+            addServiceController.getLocationList();
           }, builder: (controller) {
-            if (controller.isLoading.value) {
+            if (controller.isLoading.value || controller.isLoading2.value) {
               return Scaffold(
                   body: Center(
                       child: CircularProgressIndicator(
@@ -237,11 +238,11 @@ class _AddServiceState extends State<AddService> {
                                 newValue.toString();
                           });
                         },
-                        items: addServiceController.locations.map((location) {
+                        items: addServiceController.locationData.map((location) {
                           return DropdownMenuItem(
-                            value: location,
+                            value: location.id,
                             child:
-                                MyWidgets.textView(location, Colors.black, 16),
+                                MyWidgets.textView(location.name, Colors.black, 16),
                           );
                         }).toList(),
                       ),

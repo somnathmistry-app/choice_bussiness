@@ -27,8 +27,9 @@ class _RegisterViewState extends State<RegisterView> {
       backgroundColor: AppColors.themeColorTwo,
       body: GetX<AddServiceController>(initState: (context) {
         addServiceController.getSubCategory();
+        addServiceController.getLocationList();
       }, builder: (controller) {
-        if (controller.isLoading.value) {
+        if (controller.isLoading.value || controller.isLoading2.value) {
           return Scaffold(
               body: Center(
                   child: CircularProgressIndicator(
@@ -112,18 +113,18 @@ class _RegisterViewState extends State<RegisterView> {
                           hint: MyWidgets.textView(
                               'Please select your location', Colors.white, 16),
                           // Not necessary for Option 1
-                          value: userController.selectedLocation,
+                          value: controller.selectedLocation,
                           onChanged: (newValue) {
                             setState(() {
-                              userController.selectedLocation =
+                              controller.selectedLocation =
                                   newValue.toString();
                             });
                           },
-                          items: userController.locations.map((location) {
+                          items: controller.locationData.map((element) {
                             return DropdownMenuItem(
-                              value: location,
+                              value: element.id,
                               child: MyWidgets.textView(
-                                  location, Colors.white, 16),
+                                  element.name, Colors.white, 16),
                             );
                           }).toList(),
                         ),
@@ -281,7 +282,7 @@ class _RegisterViewState extends State<RegisterView> {
                           style: elevatedButtonStyleWhiteCurve,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              userController.registerUser();
+                              userController.registerUser(controller.selectedLocation.toString());
                             }
                           },
                           child: Padding(

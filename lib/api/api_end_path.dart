@@ -1,6 +1,7 @@
 import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
 import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
+import 'package:choice_bussiness/models/location_list_model.dart';
 import 'package:choice_bussiness/models/save_portfolio.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
@@ -12,9 +13,9 @@ import '../models/upload_media_model.dart';
 
 class ApiEndPath{
   static var client = http.Client();
-
+  static var baseurl = GlobalConfiguration().get('base_url');
   static Future<RegisterModel> registerUser(number, business_name, category_id, password, location, description) async {
-    var baseurl = GlobalConfiguration().get('base_url');
+
 
     print('user reg data: number: $number, business_name: $business_name,category_id $category_id, password: $password, location: $location, description: $description');
 
@@ -43,7 +44,6 @@ class ApiEndPath{
   }
 
   static Future<LoginModel> login(number, password) async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     print('user login data: number: $number, password: $password');
 
@@ -67,7 +67,6 @@ class ApiEndPath{
   static Future<AddServiceModel> addService
       (artist_id, category_id, subcategory_id, service_name, price,place,description,about)
   async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     var response = await client.post(Uri.parse('${baseurl}add_service'),
         body: {
@@ -93,7 +92,6 @@ class ApiEndPath{
   static Future<UploadMediaModel> uploadMedia
       (service_id, {dynamic service_image_List, service_video})
   async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}upload_service_media'));
     request.fields.addAll({
@@ -123,7 +121,6 @@ class ApiEndPath{
   }
 
   static Future<SubCategoryModel> getSubCategories() async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     var response = await client.post(Uri.parse('${baseurl}get-cat-subcat-service'));
     print('base url: $baseurl, response: $response');
@@ -138,8 +135,6 @@ class ApiEndPath{
 
 
   static Future<ServiceListModel> getAllServices(String artistId) async {
-    var baseurl = GlobalConfiguration().get('base_url');
-
 
 
     var response = await client.get(Uri.parse('${baseurl}getServiceList?artist=$artistId'));
@@ -155,7 +150,6 @@ class ApiEndPath{
 
 
   static Future<FetchPortfolioModel> getPortfolioDetails(String artistId) async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     var response = await client.get(Uri.parse('${baseurl}getArtistPortfolio/$artistId'));
     print('base url: $baseurl, response: ${response.statusCode}');
@@ -170,7 +164,6 @@ class ApiEndPath{
 
   static Future<SavePortfolioModel> savePortfolio(String artistId,
       {var portfolio_image_List}) async {
-    var baseurl = GlobalConfiguration().get('base_url');
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}saveArtistPortfolio'));
     // print('base url: $baseurl, response: ${request.statusCode}');
@@ -191,4 +184,17 @@ class ApiEndPath{
     }
     return savePortfolioModelFromJson(response.reasonPhrase.toString());
   }
+
+  static Future<LocationListModel> getLocationList() async {
+    var response = await client.post(Uri.parse('${baseurl}city_list'));
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return locationListModelFromJson(jsonString);
+    }
+    return locationListModelFromJson(response.body);
+  }
+
 }

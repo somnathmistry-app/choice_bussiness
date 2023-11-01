@@ -3,6 +3,7 @@ import 'package:choice_bussiness/models/sub_categoy_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../models/location_list_model.dart';
 import '../pages/upload_media.dart';
 import '../styles/commonmodule/my_alert_dilog.dart';
 import '../styles/commonmodule/my_snack_bar.dart';
@@ -19,8 +20,6 @@ class AddServiceController extends GetxController{
   TextEditingController description = TextEditingController();
   TextEditingController about = TextEditingController();
   String? subCategory;
-  List<String> locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
-  String? selectedLocation;
 
 
   addService () async {
@@ -97,6 +96,26 @@ class AddServiceController extends GetxController{
       }
     } finally {
       isLoading(false);
+    }
+  }
+
+
+  var isLoading2 = false.obs;
+  var locationData = <LocationData>[].obs;
+  String? selectedLocation;
+
+  getLocationList() async {
+    try {
+      isLoading2(true);
+      var apiResponse = await ApiEndPath.getLocationList();
+      if (apiResponse != null) {
+        if (apiResponse.response == 'true') {
+          locationData.assignAll(apiResponse.data);
+          print('Location ${locationData.length}');
+        }
+      }
+    } finally {
+      isLoading2(false);
     }
   }
 }

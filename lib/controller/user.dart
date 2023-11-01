@@ -14,8 +14,6 @@ class UserController extends GetxController {
   static TextEditingController mobileTec = TextEditingController();
   static TextEditingController passTec = TextEditingController();
   static TextEditingController descriptionTec = TextEditingController();
-  List<String> locations = ['Durgapur', 'Kolkata', 'Asansol', 'Bankura']; // Option 2
-  String? selectedLocation;
   String? selectedCatID;
 
   var otpSent= false.obs;
@@ -27,7 +25,7 @@ class UserController extends GetxController {
 
   }
 
-  registerUser() async{
+  registerUser(String selectedLocation) async{
     MyAlertDialog.circularProgressDialog();
 
     var response = await ApiEndPath.registerUser(

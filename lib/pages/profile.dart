@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/controller/profile_update_controller.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/app_colors.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
@@ -6,36 +7,49 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../controller/portfolio_controller.dart';
+import '../styles/button_style.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  //const ProfileScreen({super.key});
+  final box = GetStorage();
+
+  final _formKey = GlobalKey<FormState>();
+
+  ProfileUpdateController profileUpdateController = ProfileUpdateController.to;
+
+  _logOut(context){
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Log Out?'),
+        content: const Text('Are your sure your want to log out?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.offAll(()=> const LoginView());
+              box.erase();
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PortfolioController portfolioController = PortfolioController.to;
 
   @override
   Widget build(BuildContext context) {
-    final box = GetStorage();
-    _showDialog(){
-      return showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Log Out?'),
-          content: const Text('Are your sure your want to log out?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.offAll(()=> const LoginView());
-                box.erase();
-              },
-              child: const Text('Yes'),
-            ),
-          ],
-        ),
-      );
-    }
-    PortfolioController portfolioController = PortfolioController.to;
+
     return Scaffold(
         backgroundColor: AppColors.offWhite,
         appBar: AppBar(
@@ -48,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             TextButton.icon(
                 onPressed: () {
-                  _showDialog();
+                  _logOut(context);
                 },
                 icon: const Icon(Icons.logout),
                 label: const Text('Log Out')),
@@ -67,6 +81,10 @@ class ProfileScreen extends StatelessWidget {
               color: AppColors.themeColor,
             )));
           } else {
+            profileUpdateController.business_name.text = controller.artisDetails[0].businessName.toString();
+            profileUpdateController.description.text = controller.artisDetails[0].description.toString();
+            profileUpdateController.facebook_link.text = controller.artisDetails[0].facebookLink == null ? '' : controller.artisDetails[0].facebookLink.toString();
+            profileUpdateController.insta_link.text = controller.artisDetails[0].instagramLink == null? '': controller.artisDetails[0].instagramLink.toString();
             return ListView(
               padding: EdgeInsets.zero,
               //crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
                       left: 20,
                       child: InkWell(
                         onTap: () {
-                          _bottomsheet(context);
+                          _changeImage(context);
                         },
                         child: Container(
                           width: 100,
@@ -129,13 +147,15 @@ class ProfileScreen extends StatelessWidget {
                               Text(
                                 controller.artisDetails[0].businessName,
                                 style: const TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
+                              controller.artisDetails[0].location == null?
+                                  const SizedBox(height: 10,):
                                Text(
-                                controller.artisDetails[0].location,
+                                controller.artisDetails[0].location.toString(),
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -147,12 +167,17 @@ class ProfileScreen extends StatelessWidget {
                           IconButton(
                               //padding: const EdgeInsets.only(right: 20),
                               onPressed: () {
-
+                                _changeProfileData(context);
                               }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
                         ],
                       ),
                     ),
                   ],
+                ),
+                MyWidgets.textView('      About Business :',Colors.black,17),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: MyWidgets.textView(controller.artisDetails[0].description.toString(), Colors.grey, 15),
                 ),
                 Row(
                   mainAxisAlignment:  MainAxisAlignment.spaceBetween,
@@ -163,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 10),
                       child: IconButton(
                           onPressed: () {
-
+                            _changeSocialMediaDetails(context);
                       }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
                     ),
                   ],
@@ -171,12 +196,33 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                MyWidgets.textView('        ${controller.artisDetails[0].facebookLink}', AppColors.black, 15),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 27,
+                    ),
+                    const Icon(Icons.facebook,color: Colors.blueAccent),
+                    controller.artisDetails[0].facebookLink == null ?
+                    MyWidgets.textView('Facebook', AppColors.black, 15)
+                    :MyWidgets.textView('  ${controller.artisDetails[0].facebookLink.toString()}', AppColors.black, 15),
+                  ],
+                ),
+
                 const SizedBox(
                   height: 5,
                 ),
-                MyWidgets.textView(
-                    '        ${controller.artisDetails[0].facebookLink}', AppColors.black, 15),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 27,
+                    ),
+                    Image.asset('assets/images/insta_img.png',scale: 25,),
+                    controller.artisDetails[0].instagramLink == null ?
+                    MyWidgets.textView('Instagram', AppColors.black, 15):
+                    MyWidgets.textView(
+                        '  ${controller.artisDetails[0].instagramLink}', AppColors.black, 15),
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -185,7 +231,6 @@ class ProfileScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   //height: 270,
-
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
                     boxShadow: const [
@@ -232,7 +277,8 @@ class ProfileScreen extends StatelessWidget {
           }
         }));
   }
-  _bottomsheet(context){
+
+  _changeImage(context){
     return  showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -261,4 +307,245 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
+
+  _changeProfileData(context){
+    return  showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Form(
+          key: _formKey,
+          child: Container(
+            height: 270,
+            color: AppColors.themeColorTwo,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                        style:
+                        TextStyle(
+                            color: AppColors.white, fontSize: 18),
+                        controller: profileUpdateController.business_name,
+                        validator: (value) => value!.isEmpty
+                            ? 'Please enter your business name'
+                            : null,
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 14),
+                            enabled: true,
+                            labelText: 'Please enter your business name',
+                            labelStyle: TextStyle(
+                              fontSize: 16,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                              // light
+                              fontStyle: FontStyle.normal,
+                            ),
+                            errorStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.orangeAccent,
+                              fontWeight: FontWeight.w600,
+                              // light
+                              fontStyle: FontStyle.normal,
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: AppColors.themeColor)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: AppColors.white)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Colors.orangeAccent)))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                        style:
+                        TextStyle(
+                            color: AppColors.white, fontSize: 18),
+                        controller: profileUpdateController.description,
+                        validator: (value) => value!.isEmpty
+                            ? 'Please enter your business description'
+                            : null,
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 14),
+                            enabled: true,
+                            labelText: 'Please enter your business description',
+                            labelStyle: TextStyle(
+                              fontSize: 16,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                              // light
+                              fontStyle: FontStyle.normal,
+                            ),
+                            errorStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.orangeAccent,
+                              fontWeight: FontWeight.w600,
+                              // light
+                              fontStyle: FontStyle.normal,
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: AppColors.themeColor)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: AppColors.white)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Colors.orangeAccent)))),
+                  ),
+
+                  const SizedBox(height: 10,),
+                  ElevatedButton(
+                      style: elevatedButtonStyleWhiteCurve,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          print('hii');
+                          profileUpdateController.profileUpdate();
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: MyWidgets.textView(
+                            '    SAVE    ', AppColors.themeColorTwo, 15),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        ),
+    )
+    );
+  }
+
+  _changeSocialMediaDetails(context){
+    return  showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Form(
+            key: _formKey,
+            child: Container(
+              height: 270,
+              color: AppColors.themeColorTwo,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                          style:
+                          TextStyle(
+                              color: AppColors.white, fontSize: 18),
+                          controller: profileUpdateController.facebook_link,
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter your Facebook link'
+                              : null,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 14),
+                              enabled: true,
+                              labelText: 'Please enter your Facebook link',
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              errorStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.orangeAccent,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.themeColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.white)),
+                              errorBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.orangeAccent)))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                          style:
+                          TextStyle(
+                              color: AppColors.white, fontSize: 18),
+                          controller: profileUpdateController.insta_link,
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter your Instagram link'
+                              : null,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 14),
+                              enabled: true,
+                              labelText: 'Please enter your Instagram link',
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              errorStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.orangeAccent,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.themeColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.white)),
+                              errorBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.orangeAccent)))),
+                    ),
+
+                    const SizedBox(height: 10,),
+                    ElevatedButton(
+                        style: elevatedButtonStyleWhiteCurve,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print('hii2');
+                            profileUpdateController.profileUpdate();
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: MyWidgets.textView(
+                              '    SAVE    ', AppColors.themeColorTwo, 15),
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+    );
+  }
 }
+/*
+
+ */

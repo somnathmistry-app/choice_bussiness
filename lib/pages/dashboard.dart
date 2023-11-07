@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
     const BookingPage(),
     const AddService(),
     const RatingPage(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
   final _pageController = PageController(initialPage: 0);
 

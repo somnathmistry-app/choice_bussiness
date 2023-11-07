@@ -178,10 +178,12 @@ class _RegisterViewState extends State<RegisterView> {
                               : value.length < 8
                                   ? 'Please enter 10 digit number'
                                   : null,
+                          maxLength: 10,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 16, horizontal: 14),
                               enabled: true,
+                              counterText: '',
                               labelText: 'Enter mobile number',
                               labelStyle: TextStyle(
                                 fontSize: 16,

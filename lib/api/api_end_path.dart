@@ -2,6 +2,7 @@ import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
 import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
 import 'package:choice_bussiness/models/location_list_model.dart';
+import 'package:choice_bussiness/models/profile_update_model.dart';
 import 'package:choice_bussiness/models/save_portfolio.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
@@ -195,6 +196,27 @@ class ApiEndPath{
       return locationListModelFromJson(jsonString);
     }
     return locationListModelFromJson(response.body);
+  }
+
+  static Future<ProfileUpdateModel> profileUpdate
+      (artist_id, number, business_name, description, facebook_link,instagram_link)
+  async {
+    var response = await client.post(Uri.parse('${baseurl}updateArtistProfile'),
+        body: {
+          'artist_id': artist_id,
+          'number': number,
+          'business_name':  business_name,
+          'description': description,
+          'facebook_link': facebook_link,
+          'instagram_link': instagram_link
+        });
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return profileUpdateModelFromJson(jsonString);
+    }
+    return profileUpdateModelFromJson(response.body);
   }
 
 }

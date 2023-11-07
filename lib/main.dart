@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:global_configuration/global_configuration.dart';
 
+import 'controller/profile_update_controller.dart';
 import 'controller/save_image_controller.dart';
 
 
@@ -17,6 +18,7 @@ Future<void> main() async {
   Get.put<ServiceListController>(ServiceListController());
   Get.put<PortfolioController>(PortfolioController());
   Get.put<SavePortfolioController>(SavePortfolioController());
+  Get.put<ProfileUpdateController>(ProfileUpdateController());
   runApp(const MyApp());
 }
 

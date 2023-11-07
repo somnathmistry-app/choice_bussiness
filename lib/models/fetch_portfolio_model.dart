@@ -36,7 +36,7 @@ class ArtistPortfolio {
   String businessName;
   String phoneNumber;
   String categoryId;
-  String location;
+  dynamic location;
   dynamic profilePhoto;
   String description;
   dynamic facebookLink;

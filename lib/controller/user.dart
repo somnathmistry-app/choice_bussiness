@@ -44,6 +44,7 @@ class UserController extends GetxController {
             'Registration Success', 'please login to enter');
         box.write('registeredCategoryID', response.userDetail[0].categoryId);
         box.write('businessName', response.userDetail[0].businessName);
+        box.write('userNumber', response.userDetail[0].phoneNumber.toString());
         Get.offAll(const LoginView());
       } else {
         Get.back();
@@ -73,12 +74,13 @@ class UserController extends GetxController {
         box.write('userPhoto', response.data!.profilePhoto.toString());
         box.write('userLocation', response.data!.location.toString());
         box.write('email', response.data!..toString());
+        box.write('userNumber', response.data!.phoneNumber.toString());
         box.write('registeredCategoryID', response.data!.categoryId);
 
       } else {
         Get.back();
         MySnackbar.errorSnackBar(
-            'Incorrect Details', 'Mobile no or password incorrect');
+            'Incorrect Details', response.message.toString());
 
       }
     }

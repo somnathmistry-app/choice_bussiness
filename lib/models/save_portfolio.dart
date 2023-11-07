@@ -43,8 +43,8 @@ class ArtistDetail {
   String location;
   dynamic profilePhoto;
   String description;
-  String facebookLink;
-  String instagramLink;
+  dynamic facebookLink;
+  dynamic instagramLink;
   List<PortfolioImage> portfolioImage;
   List<PortfolioVideo> portfolioVideo;
 

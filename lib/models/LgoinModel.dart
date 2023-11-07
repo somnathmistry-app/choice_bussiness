@@ -22,7 +22,7 @@ class LoginModel {
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     response: json["response"],
     message: json["message"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    data: json["data"] == null ? null :json["data"] == 'null'? null : Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {

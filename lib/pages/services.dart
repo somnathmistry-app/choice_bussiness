@@ -1,5 +1,6 @@
 import 'package:choice_bussiness/controller/services_controller.dart';
 import 'package:choice_bussiness/pages/portfolio_page.dart';
+import 'package:choice_bussiness/pages/service_photo_viewmore.dart';
 import 'package:choice_bussiness/pages/service_view_more.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -188,8 +189,9 @@ class _ServicesPageState extends State<ServicesPage> {
       ),
       body: GetX<ServiceListController>(initState: (context) {
         serviceListController.getServices();
+        serviceListController.getPortfolioDetails();
       }, builder: (controller) {
-        if (controller.isLoading.value) {
+        if (controller.isLoading.value || controller.isLoading1.value) {
           return Scaffold(
               body: Center(
                   child: CircularProgressIndicator(
@@ -274,24 +276,35 @@ class _ServicesPageState extends State<ServicesPage> {
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 5 - 1) {
                       // Add your custom widget at the last index
-                      return Container(height: 20,width: 20,
-                        margin:const EdgeInsets.all(2),color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_forward_outlined,color: AppColors.themeColorTwo),
-                            Text('View more',style: TextStyle(color: AppColors.themeColorTwo),)
-                          ],
-                        ),
+                      return InkWell(
+                        onTap: () {
+                          Get.to(()=> ServicePhotos(controller));
+                        },
+                        child: Container(height: 20,width: 20,
+                          margin:const EdgeInsets.all(2),color: Colors.white,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.arrow_forward_outlined,color: AppColors.themeColorTwo),
+                              Text('View more',style: TextStyle(color: AppColors.themeColorTwo),)
+                            ],
+                          ),
 
+                        ),
                       );
                     } else {
                       // Generate other items as needed
                       return GestureDetector(
                           onTap: () {
                           },
-                          child: Container(height: 20,width: 20,margin:const EdgeInsets.all(2),color: Colors.white,)
+                          child: Container(height: 20,width: 20,
+                            margin:const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo))),
+
+                          )
 
                         //Image.network(uploadedImages[index]),
                       );
@@ -352,33 +365,6 @@ class _ServicesPageState extends State<ServicesPage> {
                         ),
                         const SizedBox(height: 5),
                         Text('     ${controller.serviceList[index].place}'),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //       children: [
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //             _callNumber(controller.bookingList[index].userphone.toString());
-                        //           }, icon: Icon(Icons.call,)),
-                        //         ),
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //
-                        //           }, icon: Icon(Icons.message,)),
-                        //         ),
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //
-                        //           }, icon: Icon(Icons.book_outlined,)),
-                        //         ),
-                        //         SizedBox(width: 8)
-                        //       ],
-                        //     )
-                        //   ],
-                        // ),
                         const SizedBox(height: 5),
                         Text('    ${controller.serviceList[index].serviceName}',style:const TextStyle(fontSize: 17)),
                         const SizedBox(height: 2),
@@ -438,33 +424,6 @@ class _ServicesPageState extends State<ServicesPage> {
                         ),
                         const SizedBox(height: 5),
                         Text('     ${controller.serviceList[index].place}'),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //       children: [
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //             _callNumber(controller.bookingList[index].userphone.toString());
-                        //           }, icon: Icon(Icons.call,)),
-                        //         ),
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //
-                        //           }, icon: Icon(Icons.message,)),
-                        //         ),
-                        //         Center(
-                        //           child: IconButton(onPressed: () {
-                        //
-                        //           }, icon: Icon(Icons.book_outlined,)),
-                        //         ),
-                        //         SizedBox(width: 8)
-                        //       ],
-                        //     )
-                        //   ],
-                        // ),
                         const SizedBox(height: 5),
                         Text('    ${controller.serviceList[index].serviceName}',style:const TextStyle(fontSize: 17)),
                         const SizedBox(height: 2),

@@ -139,10 +139,10 @@ class ApiEndPath{
   }
 
 
-  static Future<ServiceListModel> getAllServices(String artistId) async {
+  static Future<ServiceListModel> getAllServices(String artistId,String place) async {
 
 
-    var response = await client.get(Uri.parse('${baseurl}getServiceList?artist=$artistId'));
+    var response = await client.get(Uri.parse('${baseurl}getServiceList?place=$place&null=null&artist=$artistId'));
     print('base url: $baseurl, response: ${response.statusCode}');
 
     if (response.statusCode == 200) {

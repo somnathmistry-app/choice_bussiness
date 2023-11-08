@@ -81,11 +81,11 @@ class _UploadMediaState extends State<UploadMedia> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
 
-                ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.themeColorTwo)),
-                  onPressed: _pickVideo,
-                  child: const Text('Pick Videos',style: TextStyle(color: Colors.white)),
-                ),
+                // ElevatedButton(
+                //   style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.themeColorTwo)),
+                //   onPressed: _pickVideo,
+                //   child: const Text('Pick Videos',style: TextStyle(color: Colors.white)),
+                // ),
                 ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.themeColorTwo)),
                   onPressed: _openFilePicker,
@@ -94,14 +94,14 @@ class _UploadMediaState extends State<UploadMedia> {
               ],
             ),
              const SizedBox(height: 20),
-            const Text(
-              'Selected Video:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            _selectedVideo != null?
-            Text('Selected Video: ${_selectedVideo!.name}',style: const TextStyle(color: Colors.black)):const Text('No video selected'),
-            const SizedBox(height: 10),
+            // const Text(
+            //   'Selected Video:',
+            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 10),
+            // _selectedVideo != null?
+            // Text('Selected Video: ${_selectedVideo!.name}',style: const TextStyle(color: Colors.black)):const Text('No video selected'),
+            // const SizedBox(height: 10),
             const Text(
               'Selected Images:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

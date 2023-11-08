@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           leadingWidth: 100,
           leading: Image.asset('assets/images/app_icon.png', fit: BoxFit.cover),
           titleSpacing: 0,
-          title: Text(box.read('userId').toString()),
+          //title: Text(box.read('businessName').toString()),
           actions: [
             TextButton.icon(
                 onPressed: () {

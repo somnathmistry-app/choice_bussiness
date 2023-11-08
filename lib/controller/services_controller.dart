@@ -2,6 +2,7 @@ import 'package:choice_bussiness/api/api_end_path.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../models/fetch_portfolio_model.dart';
 import '../models/service_list_model.dart';
 
 
@@ -9,6 +10,7 @@ import '../models/service_list_model.dart';
 class ServiceListController extends GetxController{
   static ServiceListController to = Get.find();
   var isLoading = false.obs;
+  var isLoading1 = false.obs;
   var serviceList = <ServiceList>[].obs;
   var imageService = [].obs;
   var videoService = [].obs;
@@ -18,7 +20,7 @@ class ServiceListController extends GetxController{
   getServices() async {
     try {
       isLoading(true);
-      var apiResponse = await ApiEndPath.getAllServices(box.read('userId'));
+      var apiResponse = await ApiEndPath.getAllServices(box.read('userId'),box.read('location'));
 
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {
@@ -46,6 +48,29 @@ class ServiceListController extends GetxController{
       }
     } finally {
       isLoading(false);
+    }
+  }
+  var artisDetails = <ArtistPortfolio>[].obs;
+  var artisImages = <PortfolioImage>[].obs;
+  getPortfolioDetails() async {
+    try {
+      isLoading1(true);
+      var apiResponse = await ApiEndPath.getPortfolioDetails(box.read('userId'));
+
+      print(apiResponse.response);
+      if (apiResponse != null) {
+        if (apiResponse.response == 'ok') {
+          artisDetails.assignAll(apiResponse.artistPortfolio);
+          //print(artisMain.phoneNumber);
+          if(apiResponse.artistPortfolio.isNotEmpty){
+            artisImages.assignAll(apiResponse.artistPortfolio[0].portfolioImage);
+            print(apiResponse.artistPortfolio[0].portfolioImage);
+          }
+          print(artisDetails.length);
+        }
+      }
+    } finally {
+      isLoading1(false);
     }
   }
 

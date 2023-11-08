@@ -15,10 +15,14 @@ import '../models/upload_media_model.dart';
 class ApiEndPath{
   static var client = http.Client();
   static var baseurl = GlobalConfiguration().get('base_url');
-  static Future<RegisterModel> registerUser(number, business_name, category_id, password, location, description) async {
+  static Future<RegisterModel> registerUser(
+      number, business_name, category_id,
+      password, location, description) async {
 
 
-    print('user reg data: number: $number, business_name: $business_name,category_id $category_id, password: $password, location: $location, description: $description');
+    print('user reg data: number: $number,'
+        ' business_name: $business_name,category_id $category_id,'
+        ' password: $password, location: $location, description: $description');
 
    //number:7029869895
     // business_name:abc
@@ -173,6 +177,7 @@ class ApiEndPath{
     });
     if(portfolio_image_List.length == 0){}
     else{
+      print(portfolio_image_List);
       for (int i = 0; i < portfolio_image_List.length; i++) {
         var filePath = portfolio_image_List[i];
         var multipartFile = await http.MultipartFile.fromPath('portfolio_image', filePath.toString());
@@ -199,24 +204,37 @@ class ApiEndPath{
   }
 
   static Future<ProfileUpdateModel> profileUpdate
-      (artist_id, number, business_name, description, facebook_link,instagram_link)
+      (artist_id,  business_name, number,category_id,location, description, facebook_link,instagram_link,
+      {var profile_photo, cover_photo}
+      )
   async {
-    var response = await client.post(Uri.parse('${baseurl}updateArtistProfile'),
-        body: {
-          'artist_id': artist_id,
-          'number': number,
-          'business_name':  business_name,
-          'description': description,
-          'facebook_link': facebook_link,
-          'instagram_link': instagram_link
-        });
+    var request = http.MultipartRequest('POST',
+        Uri.parse('${baseurl}updateArtistProfile'));
+    request.fields.addAll({
+      'artist_id': artist_id,
+      'business_name': business_name,
+      'phone_number': number,
+      'category_id': category_id,
+      'location': location,
+      'description': description,
+      'facebook_link': facebook_link,
+      'instagram_link': instagram_link
+    });
+    if(profile_photo == null || profile_photo == ''){
+    }else{
+      request.files.add(await http.MultipartFile.fromPath('profile_photo', profile_photo));
+    }
+    if(cover_photo == null || cover_photo == ''){}else{
+      request.files.add(await http.MultipartFile.fromPath('cover_photo', cover_photo));
+    }
 
+    http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      var jsonString = response.body;
+      var jsonString = await response.stream.bytesToString();
 
       return profileUpdateModelFromJson(jsonString);
     }
-    return profileUpdateModelFromJson(response.body);
+    return profileUpdateModelFromJson(response.reasonPhrase.toString());
   }
 
 }

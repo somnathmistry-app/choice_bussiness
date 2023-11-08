@@ -43,6 +43,7 @@ class UserController extends GetxController {
         MySnackbar.successSnackBar(
             'Registration Success', 'please login to enter');
         box.write('registeredCategoryID', response.userDetail[0].categoryId);
+        box.write('location', response.userDetail[0].location);
         box.write('businessName', response.userDetail[0].businessName);
         box.write('userNumber', response.userDetail[0].phoneNumber.toString());
         Get.offAll(const LoginView());
@@ -76,6 +77,7 @@ class UserController extends GetxController {
         box.write('email', response.data!..toString());
         box.write('userNumber', response.data!.phoneNumber.toString());
         box.write('registeredCategoryID', response.data!.categoryId);
+        box.write('location', response.data!.location);
 
       } else {
         Get.back();

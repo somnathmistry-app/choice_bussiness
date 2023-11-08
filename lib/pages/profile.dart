@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:choice_bussiness/controller/profile_update_controller.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/styles/app_colors.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -45,11 +48,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  File? selectedFile;
+  String imgsStr = '';
+
+  void _openFilePicker(String type) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png'],
+        allowMultiple: false,
+      );
+
+      if (result != null) {
+        selectedFile = File(result.files.single.path.toString());
+        imgsStr = selectedFile!.path;
+        setState(() {
+        });
+        if(type == 'profile'){
+          print(selectedFile);
+          print(imgsStr);
+          profileUpdateController.profileUpdate(profilePhoto: imgsStr);
+        }
+        if(type == 'cover'){
+          profileUpdateController.profileUpdate(coverPhoto: imgsStr);
+        }
+
+      }
+    } catch (e) {
+      print('Error picking files: $e');
+    }
+  }
+
   PortfolioController portfolioController = PortfolioController.to;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: AppColors.offWhite,
         appBar: AppBar(
@@ -118,7 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 100,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            image: const DecorationImage(image: AssetImage('assets/images/profile.jpg')),
+                            image:controller.artisDetails[0].profilePhoto.toString() == 'null'? null :DecorationImage(
+                                image: NetworkImage(
+                                    'https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}'
+                                )
+                            ),
                             color: Colors.white,
                             border: Border.all(
                               color: AppColors.themeColorTwo,
@@ -167,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           IconButton(
                               //padding: const EdgeInsets.only(right: 20),
                               onPressed: () {
+                                print('https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}');
                                 _changeProfileData(context);
                               }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
                         ],
@@ -293,12 +331,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.themeColorTwo)),
                   child: const Text('Change Profile Photo',style: TextStyle(color: Colors.white)),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _openFilePicker('profile');
+                  },
                 ),
                 ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.themeColorTwo)),
                   child: const Text(' Change Cover Photo ',style: TextStyle(color: Colors.white)),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _openFilePicker('cover');
+                  },
                 ),
               ],
             ),

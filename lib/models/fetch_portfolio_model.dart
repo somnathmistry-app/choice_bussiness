@@ -38,6 +38,7 @@ class ArtistPortfolio {
   String categoryId;
   dynamic location;
   dynamic profilePhoto;
+  dynamic coverPhoto;
   String description;
   dynamic facebookLink;
   dynamic instagramLink;
@@ -50,6 +51,7 @@ class ArtistPortfolio {
     required this.categoryId,
     required this.location,
     required this.profilePhoto,
+    required this.coverPhoto,
     required this.description,
     required this.facebookLink,
     required this.instagramLink,
@@ -63,6 +65,7 @@ class ArtistPortfolio {
     categoryId: json["category_id"],
     location: json["location"],
     profilePhoto: json["profile_photo"],
+    coverPhoto: json["cover_photo"],
     description: json["description"],
     facebookLink: json["facebook_link"],
     instagramLink: json["instagram_link"],
@@ -76,6 +79,7 @@ class ArtistPortfolio {
     "category_id": categoryId,
     "location": location,
     "profile_photo": profilePhoto,
+    "cover_photo": coverPhoto,
     "description": description,
     "facebook_link": facebookLink,
     "instagram_link": instagramLink,

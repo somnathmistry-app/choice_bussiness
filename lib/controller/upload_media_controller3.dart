@@ -20,7 +20,7 @@ class UploadMediaController extends GetxController{
 print(box.read('userId'));
 print(imgPathList);
     var apiResponse = await ApiEndPath.uploadMedia(
-        serviceId,service_image_List: imgPathList,service_video: videoPath);
+        serviceId,service_image_List: imgPathList);
 
     if(apiResponse!=null){
 

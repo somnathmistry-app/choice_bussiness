@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:choice_bussiness/controller/delete_controller.dart';
 import 'package:choice_bussiness/controller/portfolio_controller.dart';
 import 'package:choice_bussiness/controller/save_image_controller.dart';
+import 'package:choice_bussiness/pages/dashboard.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class PortfolioPage extends StatefulWidget {
 
 class _PortfolioPageState extends State<PortfolioPage> {
   SavePortfolioController savePortfolioController = SavePortfolioController.to;
+  DeleteController deleteController = DeleteController.to;
   String userName = "Divya Patil";
 
   List<File> selectedFiles = [];
@@ -59,8 +62,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
           title: Text(box.read('userId').toString()),
           actions: [
             TextButton.icon(onPressed: () {
-              savePortfolioController.save(imgPathList: imgsStr);
-              selectedFiles.clear();
+              if(imgsStr.isNotEmpty){
+                savePortfolioController.save(imgPathList: imgsStr);
+                selectedFiles.clear();
+              }else{Get.offAll(()=> Dashboard());}
             }, icon: const Icon(Icons.done), label: const Text('Save')),
             const SizedBox(width: 25,)
           ],
@@ -85,10 +90,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const CircleAvatar(
+                           CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.grey,
-                            backgroundImage: AssetImage('assets/images/profile.jpg'),
+                            backgroundImage:
+                            portfolioController.artisDetails[0].profilePhoto.toString() == 'null'? null:
+                            NetworkImage('https://psbeauty.co.in/app/${portfolioController.artisDetails[0].profilePhoto.toString()}'),
                           ),
                           TextButton.icon(onPressed: _openFilePicker,
                               icon: const Icon(Icons.camera_alt_outlined), label: const Text('Add image')),
@@ -169,21 +176,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.artisImages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                        },
-                        child: Container(height: 20,width: 20,
-                          margin:const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              image:
-                              controller.artisImages[index].photo.toString() != ''?
-                              DecorationImage(
-                                  image: NetworkImage(controller.artisImages[index].photo))
-                                  : null
-                          ),
-                        )
-                      //Image.network(uploadedImages[index]),
+                    return Container(height: 20,width: 20,
+                      margin:const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          image:
+                          controller.artisImages[index].photo.toString() != ''?
+                          DecorationImage(
+                              image: NetworkImage(controller.artisImages[index].photo))
+                              : null
+                      ),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(onPressed: () async  {
+                          //print();
+                          _deleteImage(context, await getFileNameFromURL(controller.artisImages[index].photo));
+                        }, icon: const Icon(Icons.cancel_outlined)),
+                      ),
                     );
                   },
                 ),
@@ -191,5 +200,31 @@ class _PortfolioPageState extends State<PortfolioPage> {
             );
           }
         }));
+  }
+  Future<String> getFileNameFromURL(String url) async {
+    Uri uri = Uri.parse(url);
+    return uri.pathSegments.last;
+  }
+  _deleteImage(context,imgname){
+    print(imgname);
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Delete Image?'),
+        content: const Text('Are your sure your want to delete this image?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteController.deleteImagePortfolio(imgname);
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
   }
 }

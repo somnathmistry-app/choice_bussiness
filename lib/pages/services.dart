@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/controller/delete_controller.dart';
 import 'package:choice_bussiness/controller/services_controller.dart';
 import 'package:choice_bussiness/pages/portfolio_page.dart';
 import 'package:choice_bussiness/pages/service_photo_viewmore.dart';
@@ -21,10 +22,34 @@ class ServicesPage extends StatefulWidget {
 
 class _ServicesPageState extends State<ServicesPage> {
   ServiceListController serviceListController = ServiceListController.to;
+  DeleteController deleteController = DeleteController.to;
+
   final DateTime _currentDate = DateTime.now();
   DateTime _currentDate2 = DateTime.now();
   String _currentMonth = DateFormat.yMMM().format(DateTime.now());
   DateTime _targetDateTime = DateTime.now();
+
+  _serviceDel(context,serviceId){
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Delete Service?'),
+        content: const Text('Are your sure your want to delete this service?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteController.serviceDeleting(serviceId);
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
 //  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   static final Widget _eventIcon = Container(
     decoration: BoxDecoration(
@@ -247,6 +272,69 @@ class _ServicesPageState extends State<ServicesPage> {
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: calendarCarouselNoHeader,
               ),
+              controller.artisImages.length > 5?
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2,
+                      offset: Offset(
+                        0,
+                        2,
+                      ),
+                    )
+                  ],
+                ),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, // Adjust the number of columns
+                  ),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 5 - 1) {
+                      return InkWell(
+                        onTap: () {
+                          Get.to(()=> ServicePhotos(controller));
+                        },
+                        child: Container(height: 20,width: 20,
+                          margin:const EdgeInsets.all(2),color: Colors.white,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.arrow_forward_outlined,color: AppColors.themeColorTwo),
+                              Text('View more',style: TextStyle(color: AppColors.themeColorTwo),)
+                            ],
+                          ),
+
+                        ),
+                      );
+                    } else {
+                      return GestureDetector(
+                          onTap: () {
+                          },
+                          child: Container(height: 20,width: 20,
+                            margin:const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo))),
+
+                          )
+
+                        //Image.network(uploadedImages[index]),
+                      );
+                    }
+
+                  },
+                ),
+              ):
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
@@ -272,29 +360,8 @@ class _ServicesPageState extends State<ServicesPage> {
                   ),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
+                  itemCount:  controller.artisImages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (index == 5 - 1) {
-                      // Add your custom widget at the last index
-                      return InkWell(
-                        onTap: () {
-                          Get.to(()=> ServicePhotos(controller));
-                        },
-                        child: Container(height: 20,width: 20,
-                          margin:const EdgeInsets.all(2),color: Colors.white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.arrow_forward_outlined,color: AppColors.themeColorTwo),
-                              Text('View more',style: TextStyle(color: AppColors.themeColorTwo),)
-                            ],
-                          ),
-
-                        ),
-                      );
-                    } else {
-                      // Generate other items as needed
                       return GestureDetector(
                           onTap: () {
                           },
@@ -308,8 +375,6 @@ class _ServicesPageState extends State<ServicesPage> {
 
                         //Image.network(uploadedImages[index]),
                       );
-                    }
-
                   },
                 ),
               ),
@@ -349,19 +414,29 @@ class _ServicesPageState extends State<ServicesPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: controller.imageService[index] == ''?
-                            null:
-                            DecorationImage(
-                                image: NetworkImage(controller.imageService[index].toString())
+                        Stack(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 180,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: controller.imageService[index] == ''?
+                                null:
+                                DecorationImage(
+                                    image: NetworkImage(controller.imageService[index].toString())
+                                ),
+                                //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
+                                color: Colors.grey[200],
+                              ),
                             ),
-                            //image: DecorationImage(image: NetworkImage(controller.bookingList[index].)),
-                            color: Colors.grey[200],
-                          ),
+                            Positioned(
+                              right: 0,
+                              child: IconButton(onPressed: () {
+                                _serviceDel(context,controller.serviceList[index].serviceId);
+                              }, icon: const Icon(Icons.cancel_outlined)),
+                            )
+                          ],
                         ),
                         const SizedBox(height: 5),
                         Text('     ${controller.serviceList[index].place}'),

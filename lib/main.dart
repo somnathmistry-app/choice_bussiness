@@ -1,3 +1,4 @@
+import 'package:choice_bussiness/controller/delete_controller.dart';
 import 'package:choice_bussiness/controllers.dart';
 import 'package:choice_bussiness/pages/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
   Get.put<PortfolioController>(PortfolioController());
   Get.put<SavePortfolioController>(SavePortfolioController());
   Get.put<ProfileUpdateController>(ProfileUpdateController());
+  Get.put<DeleteController>(DeleteController());
   runApp(const MyApp());
 }
 

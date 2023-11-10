@@ -1,9 +1,11 @@
 import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
+import 'package:choice_bussiness/models/delete_image_model.dart';
 import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
 import 'package:choice_bussiness/models/location_list_model.dart';
 import 'package:choice_bussiness/models/profile_update_model.dart';
 import 'package:choice_bussiness/models/save_portfolio.dart';
+import 'package:choice_bussiness/models/service_delete_model.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
@@ -95,7 +97,7 @@ class ApiEndPath{
 
 
   static Future<UploadMediaModel> uploadMedia
-      (service_id, {dynamic service_image_List, service_video})
+      (service_id, {dynamic service_image_List})
   async {
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}upload_service_media'));
@@ -104,17 +106,13 @@ class ApiEndPath{
     });
     if(service_image_List.length == 0){}
     else{
+      print(service_image_List.length);
     for (int i = 0; i < service_image_List.length; i++) {
       var filePath = service_image_List[i];
       var multipartFile = await http.MultipartFile.fromPath('service_image', filePath.toString());
       request.files.add(multipartFile);
     }}
     //request.files.add(await http.MultipartFile.fromPath('service_image', '/path/to/file'));
-    if(service_video == null){}
-    else {
-      request.files.add(
-          await http.MultipartFile.fromPath('service_video', service_video));
-    }
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
@@ -237,4 +235,33 @@ class ApiEndPath{
     return profileUpdateModelFromJson(response.reasonPhrase.toString());
   }
 
+  static Future<ServiceDeleteModel> serviceDelete(service_id) async {
+    print('user login data: service_id: $service_id');
+    var response = await client.post(Uri.parse('${baseurl}delete_service'), body: {
+      'service_id': service_id,
+    });
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return serviceDeleteModelFromJson(jsonString);
+    }
+    return serviceDeleteModelFromJson(response.body);
+  }
+
+  static Future<DeleteServiceImageModel> deleteServiceImage(imagename) async {
+    print('user login data: imagename: $imagename');
+    var response = await client.post(Uri.parse('${baseurl}delete_service_image'), body: {
+      'imagename': imagename,
+    });
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return deleteServiceImageModelFromJson(jsonString);
+    }
+    return deleteServiceImageModelFromJson(response.body);
+  }
 }

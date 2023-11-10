@@ -128,10 +128,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       height: 150,
                       margin: const EdgeInsets.only(bottom: 80),
-                      decoration: const BoxDecoration(
+                      decoration:  BoxDecoration(
                         color: Colors.white,
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/app_icon.png'),
+                        image: controller.artisDetails[0].coverPhoto.toString() == null?
+                        const DecorationImage(
+                          image: NetworkImage('assets/images/app_icon.png'),
+                          // Replace with your cover photo
+                          fit: BoxFit.cover,
+                        ):
+                        DecorationImage(
+                          image: NetworkImage('https://psbeauty.co.in/app/${controller.artisDetails[0].coverPhoto.toString()}'),
                           // Replace with your cover photo
                           fit: BoxFit.cover,
                         ),
@@ -181,12 +187,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                controller.artisDetails[0].businessName,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                              Container(
+                                color: Colors.white54,
+                                child: Text(
+                                  controller.artisDetails[0].businessName,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               controller.artisDetails[0].location == null?

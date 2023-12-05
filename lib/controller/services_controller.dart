@@ -4,13 +4,16 @@ import 'package:get_storage/get_storage.dart';
 
 import '../models/fetch_portfolio_model.dart';
 import '../models/service_list_model.dart';
+import '../styles/commonmodule/my_alert_dilog.dart';
+import '../styles/commonmodule/my_snack_bar.dart';
 
 
 
 class ServiceListController extends GetxController{
   static ServiceListController to = Get.find();
-  var isLoading = false.obs;
-  var isLoading1 = false.obs;
+  var portfolioLoading = false.obs;
+  var serviceDeleteLoading = false.obs;
+  var serviceLoading = false.obs;
   var serviceList = <ServiceList>[].obs;
   var imageService = [].obs;
   var videoService = [].obs;
@@ -19,7 +22,7 @@ class ServiceListController extends GetxController{
 
   getServices() async {
     try {
-      isLoading(true);
+      serviceLoading(true);
       var apiResponse = await ApiEndPath.getAllServices(box.read('userId'),box.read('location'));
 
       if (apiResponse != null) {
@@ -47,14 +50,59 @@ class ServiceListController extends GetxController{
         }
       }
     } finally {
-      isLoading(false);
+      serviceLoading(false);
     }
+
+
+
+
   }
+
+  serviceDeleting(service_id) async{
+    try {
+      serviceDeleteLoading(true);
+      //MyAlertDialog.circularProgressDialog();
+
+      var response = await ApiEndPath.serviceDelete(
+        service_id,
+      );
+
+      print('service delete controller response: ${response.response}');
+      if (response != null) {
+        if (response.response == 'true') {
+          MySnackbar.successSnackBar(
+              'Service Deleted', response.message.toString());
+          getServices();
+
+          //Get.back();
+          // Get.off(()=>Dashboard());
+        } else {
+          Get.back();
+          MySnackbar.errorSnackBar(
+              'Server Error', response.message.toString());
+        }
+      }
+    } finally {
+      try{
+        serviceDeleteLoading(false);
+      }catch(c){
+
+      }
+    }
+
+
+
+
+
+
+  }
+
   var artisDetails = <ArtistPortfolio>[].obs;
   var artisImages = <PortfolioImage>[].obs;
+
   getPortfolioDetails() async {
     try {
-      isLoading1(true);
+      portfolioLoading(true);
       var apiResponse = await ApiEndPath.getPortfolioDetails(box.read('userId'));
 
       print(apiResponse.response);
@@ -70,7 +118,11 @@ class ServiceListController extends GetxController{
         }
       }
     } finally {
-      isLoading1(false);
+      try{
+        portfolioLoading(false);
+      }catch(c){
+
+      }
     }
   }
 

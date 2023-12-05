@@ -6,6 +6,7 @@ import 'package:choice_bussiness/models/location_list_model.dart';
 import 'package:choice_bussiness/models/profile_update_model.dart';
 import 'package:choice_bussiness/models/save_portfolio.dart';
 import 'package:choice_bussiness/models/service_delete_model.dart';
+import 'package:get/get.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
@@ -96,22 +97,19 @@ class ApiEndPath{
   }
 
 
-  static Future<UploadMediaModel> uploadMedia
-      (service_id, {dynamic service_image_List})
+  static Future<UploadMediaModel> uploadMedia(service_id, {dynamic mediaFile})
   async {
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}upload_service_media'));
     request.fields.addAll({
       'service_id': service_id
     });
-    if(service_image_List.length == 0){}
-    else{
-      print(service_image_List.length);
-    for (int i = 0; i < service_image_List.length; i++) {
-      var filePath = service_image_List[i];
-      var multipartFile = await http.MultipartFile.fromPath('service_image', filePath.toString());
+    if(mediaFile != null){}
+
+    //for (int i = 0; i < service_image_List.length; i++) {
+      var multipartFile = await http.MultipartFile.fromPath('service_image', mediaFile.toString());
       request.files.add(multipartFile);
-    }}
+  //  }
     //request.files.add(await http.MultipartFile.fromPath('service_image', '/path/to/file'));
     http.StreamedResponse response = await request.send();
 
@@ -166,21 +164,30 @@ class ApiEndPath{
 
 
   static Future<SavePortfolioModel> savePortfolio(String artistId,
-      {var portfolio_image_List}) async {
+      {mediaFile}) async {
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}saveArtistPortfolio'));
-    // print('base url: $baseurl, response: ${request.statusCode}');
+    print('artistlist: $baseurl, artistid:- $artistId, imgs:- $mediaFile');
     request.fields.addAll({
       'artist_id': artistId
     });
-    if(portfolio_image_List.length == 0){}
-    else{
+    if(mediaFile!=null){
+    //for(var i in portfolio_image_List) {
+      var multipartFile = await http.MultipartFile.fromPath('portfolio_image', mediaFile.toString());
+      request.files.add(multipartFile);
+    //}
+
+    }
+    /*if(portfolio_image_List!.length > 0){
       print(portfolio_image_List);
-      for (int i = 0; i < portfolio_image_List.length; i++) {
+      for (int i = 0; i <= portfolio_image_List.length; i++) {
         var filePath = portfolio_image_List[i];
         var multipartFile = await http.MultipartFile.fromPath('portfolio_image', filePath.toString());
         request.files.add(multipartFile);
-      }}
+      }
+    }*/
+    else{
+      }
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var jsonString = await response.stream.bytesToString();
@@ -188,6 +195,9 @@ class ApiEndPath{
     }
     return savePortfolioModelFromJson(response.reasonPhrase.toString());
   }
+
+
+
 
   static Future<LocationListModel> getLocationList() async {
     var response = await client.post(Uri.parse('${baseurl}city_list'));
@@ -250,8 +260,10 @@ class ApiEndPath{
     return serviceDeleteModelFromJson(response.body);
   }
 
-  static Future<DeleteServiceImageModel> deleteServiceImage(imagename) async {
-    print('user login data: imagename: $imagename');
+  static Future<DeleteServiceImageModel> deleteServiceImage(String imagename) async {
+    //List<String> imageId = imagename.split('.');
+    print('user portfolio delete data: imagename: $imagename');
+
     var response = await client.post(Uri.parse('${baseurl}delete_service_image'), body: {
       'imagename': imagename,
     });

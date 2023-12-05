@@ -111,8 +111,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Scaffold(
                 body: Center(
                     child: CircularProgressIndicator(
-              color: AppColors.themeColor,
-            )));
+                      color: AppColors.themeColor,
+                    )));
           } else {
             profileUpdateController.business_name.text = controller.artisDetails[0].businessName.toString();
             profileUpdateController.description.text = controller.artisDetails[0].description.toString();
@@ -177,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
 
                     // Profile Info (Name, etc.)
-                     Positioned(
+                    Positioned(
                       top: 125,
                       left: 140,
                       right: 5,
@@ -199,8 +199,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               controller.artisDetails[0].location == null?
-                                  const SizedBox(height: 10,):
-                               Text(
+                              const SizedBox(height: 10,):
+                              Text(
                                 controller.artisDetails[0].location.toString(),
                                 style: const TextStyle(
                                   fontSize: 16,
@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                           IconButton(
-                              //padding: const EdgeInsets.only(right: 20),
+                            //padding: const EdgeInsets.only(right: 20),
                               onPressed: () {
                                 print('https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}');
                                 _changeProfileData(context);
@@ -236,7 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: IconButton(
                           onPressed: () {
                             _changeSocialMediaDetails(context);
-                      }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
+                          }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
                     ),
                   ],
                 ),
@@ -251,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const Icon(Icons.facebook,color: Colors.blueAccent),
                     controller.artisDetails[0].facebookLink == null ?
                     MyWidgets.textView('Facebook', AppColors.black, 15)
-                    :MyWidgets.textView('  ${controller.artisDetails[0].facebookLink.toString()}', AppColors.black, 15),
+                        :MyWidgets.textView('  ${controller.artisDetails[0].facebookLink.toString()}', AppColors.black, 15),
                   ],
                 ),
 
@@ -293,28 +293,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   child: GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // Adjust the number of columns
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: controller.artisImages.length,
                     itemBuilder: (BuildContext context, int index) {
-                        // Generate other items as needed
-                        return GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              height: 20,
-                              width: 20,
-                              margin: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo))),
+                      // Generate other items as needed
+                      return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            margin: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo))),
 
-                            )
+                          )
 
-                            //Image.network(uploadedImages[index]),
-                            );
+                        //Image.network(uploadedImages[index]),
+                      );
 
                     },
                   ),
@@ -361,120 +361,120 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _changeProfileData(context){
     return  showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Form(
-          key: _formKey,
-          child: Container(
-            height: 270,
-            color: AppColors.themeColorTwo,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                        style:
-                        TextStyle(
-                            color: AppColors.white, fontSize: 18),
-                        controller: profileUpdateController.business_name,
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter your business name'
-                            : null,
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 14),
-                            enabled: true,
-                            labelText: 'Please enter your business name',
-                            labelStyle: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            errorStyle: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.orangeAccent,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: AppColors.themeColor)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: AppColors.white)),
-                            errorBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.orangeAccent)))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                        style:
-                        TextStyle(
-                            color: AppColors.white, fontSize: 18),
-                        controller: profileUpdateController.description,
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter your business description'
-                            : null,
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 14),
-                            enabled: true,
-                            labelText: 'Please enter your business description',
-                            labelStyle: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            errorStyle: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.orangeAccent,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: AppColors.themeColor)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: AppColors.white)),
-                            errorBorder: const OutlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.orangeAccent)))),
-                  ),
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Form(
+            key: _formKey,
+            child: Container(
+              height: 270,
+              color: AppColors.themeColorTwo,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                          style:
+                          TextStyle(
+                              color: AppColors.white, fontSize: 18),
+                          controller: profileUpdateController.business_name,
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter your business name'
+                              : null,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 14),
+                              enabled: true,
+                              labelText: 'Please enter your business name',
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              errorStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.orangeAccent,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.themeColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.white)),
+                              errorBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.orangeAccent)))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                          style:
+                          TextStyle(
+                              color: AppColors.white, fontSize: 18),
+                          controller: profileUpdateController.description,
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter your business description'
+                              : null,
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 14),
+                              enabled: true,
+                              labelText: 'Please enter your business description',
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              errorStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.orangeAccent,
+                                fontWeight: FontWeight.w600,
+                                // light
+                                fontStyle: FontStyle.normal,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.themeColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: AppColors.white)),
+                              errorBorder: const OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.orangeAccent)))),
+                    ),
 
-                  const SizedBox(height: 10,),
-                  ElevatedButton(
-                      style: elevatedButtonStyleWhiteCurve,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          print('hii');
-                          profileUpdateController.profileUpdate();
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: MyWidgets.textView(
-                            '    SAVE    ', AppColors.themeColorTwo, 15),
-                      )),
-                ],
+                    const SizedBox(height: 10,),
+                    ElevatedButton(
+                        style: elevatedButtonStyleWhiteCurve,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print('hii');
+                            profileUpdateController.profileUpdate();
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: MyWidgets.textView(
+                              '    SAVE    ', AppColors.themeColorTwo, 15),
+                        )),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-    )
+        )
     );
   }
 

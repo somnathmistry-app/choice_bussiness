@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 final ButtonStyle elevatedButtonStyleThemeColor = ElevatedButton.styleFrom(
   onPrimary: Colors.black87,
   primary: AppColors.themeColor,
-  minimumSize: const Size(150, 36),
+  minimumSize: const Size(150, 40),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(4)),
+    borderRadius: BorderRadius.all(Radius.circular(50)),
   ),
 );
 
@@ -64,10 +64,10 @@ final ButtonStyle curveButtonStyleThemeColor = ElevatedButton.styleFrom(
 final ButtonStyle elevatedButtonStyleStripe = ElevatedButton.styleFrom(
   onPrimary: Colors.black87,
   primary: Colors.deepPurpleAccent,
-  minimumSize: const Size(150, 50),
+  minimumSize: const Size(150, 40),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(4)),
+    borderRadius: BorderRadius.all(Radius.circular(50)),
   ),
 );
 

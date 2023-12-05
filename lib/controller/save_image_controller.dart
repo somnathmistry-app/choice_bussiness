@@ -16,32 +16,34 @@ class SavePortfolioController extends GetxController{
   final box = GetStorage();
 
 
-  save({dynamic imgPathList}) async {
+  save({List<String>? imgPathList}) async {
     MyAlertDialog.circularProgressDialog();
+    print('iamges str: portfolio imgs: ${imgPathList!.length}');
 
 
-    var apiResponse = await ApiEndPath.savePortfolio(
-        box.read('userId'),portfolio_image_List: imgPathList,);
+    for(var imagePath in imgPathList){
+      var apiResponse = await ApiEndPath.savePortfolio(
+        box.read('userId'),mediaFile: imagePath);
 
-    if(apiResponse!=null){
+      if(apiResponse!=null){
 
-      if(apiResponse.response=='ok'){
+        if(apiResponse.response=='ok'){
+          MyAlertDialog.alertDialog('Uploading images please wait', 'Do not press back button or exit the app');
+        }
+        else{
+          Get.back();
+          MySnackbar.errorSnackBar('Server Down', 'Please try again later');
+          print('Response ------ ${apiResponse.response}');
+        }
+
+      }else{
         Get.back();
-
-        MySnackbar.successSnackBar(
-          'Uploaded', 'Your media is uploaded',
-        );
-        Get.offAll(()=> Dashboard());
+        MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
       }
-      else{
-        Get.back();
-        MySnackbar.errorSnackBar('Server Down', 'Please try again later');
-        print('Response ------ ${apiResponse.response}');
-      }
-
-    }else{
-      Get.back();
-      MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
     }
+    Get.offAll(Dashboard());
+    MySnackbar.infoSnackBar('Images Uploaded Successfully', '');
+
+
   }
 }

@@ -19,27 +19,27 @@ class UploadMediaController extends GetxController{
 
 print(box.read('userId'));
 print(imgPathList);
-    var apiResponse = await ApiEndPath.uploadMedia(
-        serviceId,service_image_List: imgPathList);
+for(var imageFile in imgPathList){
+  var apiResponse = await ApiEndPath.uploadMedia(serviceId,mediaFile: imageFile);
 
-    if(apiResponse!=null){
+  if(apiResponse!=null){
 
-      if(apiResponse.response=='ok'){
-        Get.back();
-        MySnackbar.successSnackBar(
-          'Uploaded', 'Your media is uploaded',
-        );
-        Get.offAll(()=> Dashboard());
-      }
-      else{
-        Get.back();
-        MySnackbar.errorSnackBar('Server Down', 'Please try again later');
-        print('Response ------ ${apiResponse.response}');
-      }
-
-    }else{
-      Get.back();
-      MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
+    if(apiResponse.response=='ok'){
+      MyAlertDialog.alertDialog('Your service is uploading please wait..', 'Do not press back button or exit the app');
     }
+    else{
+      Get.back();
+      MySnackbar.errorSnackBar('Server Down', 'Please try again later');
+      print('Response ------ ${apiResponse.response}');
+    }
+
+  }else{
+    Get.back();
+    MySnackbar.errorSnackBar('Server Down ', 'Please try again later');
+  }
+}
+    Get.offAll(()=> Dashboard());
+MySnackbar.successSnackBar('Service uploaded successfully', '');
+
   }
 }

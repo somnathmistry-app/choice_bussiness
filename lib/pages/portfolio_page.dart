@@ -4,6 +4,8 @@ import 'package:choice_bussiness/controller/delete_controller.dart';
 import 'package:choice_bussiness/controller/portfolio_controller.dart';
 import 'package:choice_bussiness/controller/save_image_controller.dart';
 import 'package:choice_bussiness/pages/dashboard.dart';
+import 'package:choice_bussiness/styles/button_style.dart';
+import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,6 @@ class PortfolioPage extends StatefulWidget {
 class _PortfolioPageState extends State<PortfolioPage> {
   SavePortfolioController savePortfolioController = SavePortfolioController.to;
   DeleteController deleteController = DeleteController.to;
-  String userName = "Divya Patil";
 
   List<File> selectedFiles = [];
   List<String> imgsStr = [];
@@ -56,21 +57,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
           backgroundColor: Colors.white,
           elevation: 0,
           leadingWidth: 100,
-
-          leading: Image.asset('assets/images/app_icon.png',fit: BoxFit.cover),
           titleSpacing: 0,
-          title: Text(box.read('userId').toString()),
-          actions: [
-            TextButton.icon(onPressed: () {
-              if(imgsStr.isNotEmpty){
-                savePortfolioController.save(imgPathList: imgsStr);
-                selectedFiles.clear();
-              }else{Get.offAll(()=> Dashboard());}
-            }, icon: const Icon(Icons.done), label: const Text('Save')),
-            const SizedBox(width: 25,)
-          ],
-
+          title: Text(box.read('businessName').toString())
         ),
+        floatingActionButton: ElevatedButton(
+          style: elevatedButtonStyleThemeColor,
+          onPressed: (){
+            _openFilePicker();
+        },child: Text('Choose Image'),),
         body: GetX<PortfolioController>(initState: (context) {
           portfolioController.getPortfolioDetails();
         }, builder: (controller) {
@@ -86,19 +80,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 Center(
                   child: Column(
                     children: [
-                      const SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                           CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.grey,
-                            backgroundImage:
-                            portfolioController.artisDetails[0].profilePhoto.toString() == 'null'? null:
-                            NetworkImage('https://psbeauty.co.in/app/${portfolioController.artisDetails[0].profilePhoto.toString()}'),
-                          ),
-                          TextButton.icon(onPressed: _openFilePicker,
-                              icon: const Icon(Icons.camera_alt_outlined), label: const Text('Add image')),
+
+                          // TextButton.icon(onPressed: _openFilePicker,
+                          //     icon: const Icon(Icons.camera_alt_outlined), label: const Text('Add image')),
                           selectedFiles.isNotEmpty?
                               selectedFiles.length < 8?
                               Expanded(
@@ -120,7 +107,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                               image:
                                               selectedFiles.toString() != ''?
                                               DecorationImage(
-                                                  image: FileImage(selectedFiles[index]))
+                                                  image: FileImage(selectedFiles[index]), fit: BoxFit.cover)
                                                   : null
                                           ),
                                         )
@@ -148,7 +135,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                           image:
                                           selectedFiles.toString() != ''?
                                           DecorationImage(
-                                              image: FileImage(selectedFiles[index]))
+                                              image: FileImage(selectedFiles[index]), fit: BoxFit.cover)
                                               : null
                                       ),
                                     )
@@ -162,8 +149,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           // }, icon: const Icon(Icons.video_camera_back_outlined), label: const Text('Add Video')),
                         ],
                       ),
-                      const SizedBox(height: 10,),
-                      // Additional user details can be added here
+                      selectedFiles.isNotEmpty? SizedBox(height: 10):SizedBox(),
+                      selectedFiles.isNotEmpty?ElevatedButton(
+                          style: elevatedButtonStyleStripe,
+                          onPressed: (){
+                            if(imgsStr.isNotEmpty){
+                              savePortfolioController.save(imgPathList: imgsStr);
+                              selectedFiles.clear();
+                            }
+                            else{Get.offAll(()=> Dashboard());}
+                          }, child: MyWidgets.textView('Upload', AppColors.white, 14)):SizedBox(),
+                      selectedFiles.isNotEmpty? SizedBox(height: 20):SizedBox()
+
                     ],
                   ),
                 ),
@@ -176,14 +173,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.artisImages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(height: 20,width: 20,
+                    return Container(
                       margin:const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                           color: Colors.grey[300],
                           image:
                           controller.artisImages[index].photo.toString() != ''?
                           DecorationImage(
-                              image: NetworkImage(controller.artisImages[index].photo))
+                              image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)
                               : null
                       ),
                       child: Align(
@@ -191,7 +188,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         child: IconButton(onPressed: () async  {
                           //print();
                           _deleteImage(context, await getFileNameFromURL(controller.artisImages[index].photo));
-                        }, icon: const Icon(Icons.cancel_outlined)),
+                        }, icon: const Icon(Icons.delete, color: Colors.orange)),
                       ),
                     );
                   },

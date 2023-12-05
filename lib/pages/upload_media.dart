@@ -87,7 +87,7 @@ class _UploadMediaState extends State<UploadMedia> {
                 //   child: const Text('Pick Videos',style: TextStyle(color: Colors.white)),
                 // ),
                 ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.themeColorTwo)),
+                  //style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.themeColorTwo)),
                   onPressed: _openFilePicker,
                   child: const Text('Pick Images',style: TextStyle(color: Colors.white)),
                 ),

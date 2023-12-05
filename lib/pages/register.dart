@@ -25,7 +25,10 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.themeColorTwo,
-      body: GetX<AddServiceController>(initState: (context) {
+      body:
+
+
+      GetX<AddServiceController>(initState: (context) {
         addServiceController.getSubCategory();
         addServiceController.getLocationList();
       }, builder: (controller) {

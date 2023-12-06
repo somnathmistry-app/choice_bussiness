@@ -208,14 +208,7 @@ class _ServicesPageState extends State<ServicesPage> {
           leading: Image.asset('assets/images/app_icon.png',fit: BoxFit.cover),
           titleSpacing: 0,
 
-          actions: [
-            IconButton(onPressed: () {
-              Get.to(()=> const PortfolioPage());
 
-            }, icon: const Icon(Icons.person_pin,size: 30,)),
-
-            const SizedBox(width: 15,)
-          ],
         ),
         body: GetX<ServiceListController>(initState: (context) {
           serviceListController.getServices();

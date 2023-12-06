@@ -1,5 +1,5 @@
 import 'package:choice_bussiness/pages/addService.dart';
-import 'package:choice_bussiness/pages/bookingPage.dart';
+import 'package:choice_bussiness/pages/leadpage.dart';
 import 'package:choice_bussiness/pages/profile.dart';
 import 'package:choice_bussiness/pages/ratingspage.dart';
 import 'package:choice_bussiness/pages/services.dart';
@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
 
   final List<Widget> bottomBarPages = [
     const ServicesPage(),
-    const BookingPage(),
+    const LeadsPage(),
     const AddService(),
     const RatingPage(),
     ProfileScreen(),
@@ -40,8 +40,8 @@ class _DashboardState extends State<Dashboard> {
             label: 'Services',
           ),
           CurvedNavigationBarItem(
-            child: Icon(Icons.book_outlined),
-            label: 'Bookings',
+            child: Icon(Icons.list),
+            label: 'Leads',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.add_circle),

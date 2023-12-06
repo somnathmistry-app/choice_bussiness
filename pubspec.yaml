@@ -43,7 +43,6 @@ dependencies:
   file_picker:
   flutter_calendar_carousel: ^2.4.2
   percent_indicator: ^4.2.3
-  flutter_launcher_icons:
 
 
 dev_dependencies:

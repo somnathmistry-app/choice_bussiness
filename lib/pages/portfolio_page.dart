@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:choice_bussiness/controller/delete_controller.dart';
 import 'package:choice_bussiness/controller/portfolio_controller.dart';
 import 'package:choice_bussiness/controller/save_image_controller.dart';
@@ -49,7 +48,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   final box = GetStorage();
-  PortfolioController portfolioController = PortfolioController.to;
+  //PortfolioController portfolioController = PortfolioController.to;
+  PortfolioController portfolioController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

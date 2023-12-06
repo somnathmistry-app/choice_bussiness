@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:choice_bussiness/controller/profile_update_controller.dart';
+import 'package:choice_bussiness/pages/dashboard.dart';
 import 'package:choice_bussiness/pages/login.dart';
+import 'package:choice_bussiness/pages/portfolio_page.dart';
 import 'package:choice_bussiness/styles/app_colors.dart';
+import 'package:choice_bussiness/styles/commonmodule/my_snack_bar.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -85,25 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.offWhite,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leadingWidth: 100,
-          leading: Image.asset('assets/images/app_icon.png', fit: BoxFit.cover),
-          titleSpacing: 0,
-          //title: Text(box.read('businessName').toString()),
-          actions: [
-            TextButton.icon(
-                onPressed: () {
-                  _logOut(context);
-                },
-                icon: const Icon(Icons.logout),
-                label: const Text('Log Out')),
-            const SizedBox(
-              width: 25,
-            )
-          ],
-        ),
         body: GetX<PortfolioController>(initState: (context) {
           portfolioController.getPortfolioDetails();
         }, builder: (controller) {
@@ -126,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     // Cover Photo
                     Container(
-                      height: 150,
+                      height: 200,
                       margin: const EdgeInsets.only(bottom: 80),
                       decoration:  BoxDecoration(
                         color: Colors.white,
@@ -143,10 +127,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
+                    Positioned(
+                        top: 30,
+                        left: 10,
+                        child: Container(
+                          color: Colors.black26,
+                          child: IconButton(
+                              onPressed: (){
+                            Get.offAll(Dashboard());
+                            print('back');
+                          }, icon: Icon(Icons.arrow_back_ios_new_outlined, color: AppColors.white,)),
+                        )),
 
                     // Profile Photo
                     Positioned(
-                      top: 90,
+                      top: 140,
                       left: 20,
                       child: InkWell(
                         onTap: () {
@@ -178,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // Profile Info (Name, etc.)
                     Positioned(
-                      top: 125,
+                      top: 200,
                       left: 140,
                       right: 5,
                       child: Row(
@@ -273,6 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(
                   height: 20,
                 ),
+
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(8),
@@ -298,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.artisImages.length,
+                    itemCount: controller.artisImages.length>6?6:controller.artisImages.length,
                     itemBuilder: (BuildContext context, int index) {
                       // Generate other items as needed
                       return GestureDetector(
@@ -309,7 +305,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             margin: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo))),
+                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)),
 
                           )
 
@@ -318,6 +314,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     },
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        style: elevatedCurveButtonStyleRed,
+                        onPressed: (){
+                          _logOut(context);
+                    }, child: MyWidgets.textView('Logout', AppColors.white, 14)),
+                    ElevatedButton(
+                        style: elevatedButtonStyleStripe,
+                        onPressed: (){
+                          Get.to(PortfolioPage());
+                        }, child: MyWidgets.textView('View Portfolio', AppColors.white, 14)),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
               ],
             );

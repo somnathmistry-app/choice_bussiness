@@ -16,7 +16,7 @@ class ImageView extends StatelessWidget {
           panEnabled: false, // Set it to false
           boundaryMargin: EdgeInsets.all(100),
           minScale: 0.5,
-          maxScale: 6,
+          maxScale: 10,
           child: Image.network(img!)
         ),
       ),

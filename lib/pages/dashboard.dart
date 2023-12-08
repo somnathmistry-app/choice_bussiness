@@ -21,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
 
   final List<Widget> bottomBarPages = [
     const ServicesPage(),
-    const LeadsPage(),
+    LeadsPage(),
     const AddService(),
     const RatingPage(),
     ProfileScreen(),

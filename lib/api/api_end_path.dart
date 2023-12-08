@@ -11,11 +11,13 @@ import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/ResponseModel.dart';
+import '../models/lead_model.dart';
 import '../models/service_list_model.dart';
 import '../models/sub_categoy_model.dart';
 import '../models/upload_media_model.dart';
 
 class ApiEndPath{
+  static String imageURL = 'https://psbeauty.co.in/app/public/service_image/';
   static var client = http.Client();
   static var baseurl = GlobalConfiguration().get('base_url');
   static Future<RegisterModel> registerUser(
@@ -149,6 +151,18 @@ class ApiEndPath{
     return serviceListModelFromJson(response.body);
   }
 
+
+  static Future<LeadModel> getLead(String artistId) async {
+    var response = await client.get(Uri.parse('${baseurl}lead-entry?artist_id=$artistId'));
+    print('base url: $baseurl, response: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return leadModelFromJson(jsonString);
+    }
+    return leadModelFromJson(response.body);
+  }
 
   static Future<FetchPortfolioModel> getPortfolioDetails(String artistId) async {
 

@@ -335,7 +335,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       TextButton(onPressed: () {
                         Get.to(()=> ServiceViewMore(serviceListController: serviceListController));
                       }, child: const Text('View more')),
-                      const SizedBox(width: 20,)
+                      const SizedBox(width: 20)
                     ],
                   ),
                   serviceListController.serviceList.length <= 3?

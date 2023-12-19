@@ -4,6 +4,7 @@ import 'package:choice_bussiness/controller/profile_update_controller.dart';
 import 'package:choice_bussiness/pages/dashboard.dart';
 import 'package:choice_bussiness/pages/login.dart';
 import 'package:choice_bussiness/pages/portfolio_page.dart';
+import 'package:choice_bussiness/pages/subscription.dart';
 import 'package:choice_bussiness/styles/app_colors.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_snack_bar.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
@@ -225,23 +226,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                   children: [
                     MyWidgets.textView(
-                        '       Profile Details', AppColors.themeColorTwo, 17),
+                        '       Profile Details', AppColors.themeColorTwo, 15),
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: IconButton(
                           onPressed: () {
                             _changeSocialMediaDetails(context);
-                          }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo,)),
+                          }, icon: Icon(Icons.edit,size: 20,color: AppColors.themeColorTwo)),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 10
                 ),
                 Row(
                   children: [
                     const SizedBox(
-                      width: 27,
+                      width: 27
                     ),
                     const Icon(Icons.facebook,color: Colors.blueAccent),
                     controller.artisDetails[0].facebookLink == null ?
@@ -249,24 +250,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         :MyWidgets.textView('  ${controller.artisDetails[0].facebookLink.toString()}', AppColors.black, 15),
                   ],
                 ),
-
                 const SizedBox(
-                  height: 5,
+                  height: 5
                 ),
                 Row(
                   children: [
                     const SizedBox(
-                      width: 27,
+                      width: 27
                     ),
-                    Image.asset('assets/images/insta_img.png',scale: 25,),
+                    Image.asset('assets/images/insta_img.png',scale: 25),
                     controller.artisDetails[0].instagramLink == null ?
                     MyWidgets.textView('Instagram', AppColors.black, 15):
-                    MyWidgets.textView(
-                        '  ${controller.artisDetails[0].instagramLink}', AppColors.black, 15),
+                    MyWidgets.textView('  ${controller.artisDetails[0].instagramLink}', AppColors.black, 15),
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                    height: 10
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                      style: elevatedButtonStyleThemeColor,
+                      onPressed: (){
+Get.to(Subscription());
+                      }, child: MyWidgets.textView('My Subscription', AppColors.white, 14)),
+                ),
+                const SizedBox(
+                  height: 10
                 ),
 
                 Container(

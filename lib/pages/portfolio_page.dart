@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:choice_bussiness/controller/delete_controller.dart';
+import 'package:choice_bussiness/controller/permission_controller.dart';
 import 'package:choice_bussiness/controller/portfolio_controller.dart';
 import 'package:choice_bussiness/controller/save_image_controller.dart';
 import 'package:choice_bussiness/pages/dashboard.dart';
@@ -9,6 +10,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../styles/app_colors.dart';
 
@@ -22,11 +25,13 @@ class PortfolioPage extends StatefulWidget {
 class _PortfolioPageState extends State<PortfolioPage> {
   SavePortfolioController savePortfolioController = SavePortfolioController.to;
   DeleteController deleteController = DeleteController.to;
-
   List<File> selectedFiles = [];
   List<String> imgsStr = [];
 
-  void _openFilePicker() async {
+
+
+  void openFilePicker() async {
+    PermissionController.requestStoragePermission();
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -49,6 +54,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   final box = GetStorage();
   //PortfolioController portfolioController = PortfolioController.to;
+
+
+
   PortfolioController portfolioController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -63,7 +71,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         floatingActionButton: ElevatedButton(
           style: elevatedButtonStyleThemeColor,
           onPressed: (){
-            _openFilePicker();
+            openFilePicker();
         },child: Text('Choose Image'),),
         body: GetX<PortfolioController>(initState: (context) {
           portfolioController.getPortfolioDetails();

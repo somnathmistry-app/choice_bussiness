@@ -20,6 +20,7 @@ class ApiEndPath{
   static String imageURL = 'https://psbeauty.co.in/app/public/service_image/';
   static var client = http.Client();
   static var baseurl = GlobalConfiguration().get('base_url');
+
   static Future<RegisterModel> registerUser(
       number, business_name, category_id,
       password, location, description) async {

@@ -49,8 +49,7 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 180,
                   child: Image.asset(
                     'assets/images/logo.png',
-                    scale: 1,
-                    color: AppColors.themeColor,
+                    scale: 6,
                   ),
                 ),
                 //SizedBox(height: 20),

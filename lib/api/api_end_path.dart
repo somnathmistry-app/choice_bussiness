@@ -1,12 +1,13 @@
 import 'package:choice_bussiness/models/LgoinModel.dart';
 import 'package:choice_bussiness/models/add_service_model.dart';
+import 'package:choice_bussiness/models/change_password_model.dart';
 import 'package:choice_bussiness/models/delete_image_model.dart';
 import 'package:choice_bussiness/models/fetch_portfolio_model.dart';
 import 'package:choice_bussiness/models/location_list_model.dart';
 import 'package:choice_bussiness/models/profile_update_model.dart';
 import 'package:choice_bussiness/models/save_portfolio.dart';
+import 'package:choice_bussiness/models/send_otp_model.dart';
 import 'package:choice_bussiness/models/service_delete_model.dart';
-import 'package:get/get.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,10 +26,10 @@ class ApiEndPath{
       number, business_name, category_id,
       password, location, description) async {
 
-
-    print('user reg data: number: $number,'
-        ' business_name: $business_name,category_id $category_id,'
-        ' password: $password, location: $location, description: $description');
+    //
+    // print('user reg data: number: $number,'
+    //     ' business_name: $business_name,category_id $category_id,'
+    //     ' password: $password, location: $location, description: $description');
 
    //number:7029869895
     // business_name:abc
@@ -56,7 +57,7 @@ class ApiEndPath{
 
   static Future<LoginModel> login(number, password) async {
 
-    print('user login data: number: $number, password: $password');
+   // print('user login data: number: $number, password: $password');
 
    //number:9898989898
     // password:12345678
@@ -65,7 +66,7 @@ class ApiEndPath{
       'number': number,
       'password':password
     });
-    print('base url: $baseurl, response: $response');
+    //print('base url: $baseurl, response: $response');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -127,7 +128,7 @@ class ApiEndPath{
   static Future<SubCategoryModel> getSubCategories() async {
 
     var response = await client.post(Uri.parse('${baseurl}get-cat-subcat-service'));
-    print('base url: $baseurl, response: $response');
+   // print('base url: $baseurl, response: $response');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -142,7 +143,7 @@ class ApiEndPath{
 
 
     var response = await client.get(Uri.parse('${baseurl}getServiceList?artist=$artistId'));
-    print('base url: $baseurl, response: ${response.statusCode}');
+   // print('base url: $baseurl, response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -155,7 +156,7 @@ class ApiEndPath{
 
   static Future<LeadModel> getLead(String artistId) async {
     var response = await client.get(Uri.parse('${baseurl}lead-entry?artist_id=$artistId'));
-    print('base url: $baseurl, response: ${response.statusCode}');
+    //print('base url: $baseurl, response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -168,7 +169,7 @@ class ApiEndPath{
   static Future<FetchPortfolioModel> getPortfolioDetails(String artistId) async {
 
     var response = await client.get(Uri.parse('${baseurl}getArtistPortfolio/$artistId'));
-    print('base url: $baseurl, response: ${response.statusCode}');
+    //print('base url: $baseurl, response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -182,7 +183,7 @@ class ApiEndPath{
       {mediaFile}) async {
 
     var request = http.MultipartRequest('POST', Uri.parse('${baseurl}saveArtistPortfolio'));
-    print('artistlist: $baseurl, artistid:- $artistId, imgs:- $mediaFile');
+   // print('artistlist: $baseurl, artistid:- $artistId, imgs:- $mediaFile');
     request.fields.addAll({
       'artist_id': artistId
     });
@@ -216,7 +217,7 @@ class ApiEndPath{
 
   static Future<LocationListModel> getLocationList() async {
     var response = await client.post(Uri.parse('${baseurl}city_list'));
-    print('base url: $baseurl, response: $response');
+   // print('base url: $baseurl, response: $response');
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
@@ -261,7 +262,7 @@ class ApiEndPath{
   }
 
   static Future<ServiceDeleteModel> serviceDelete(service_id) async {
-    print('user login data: service_id: $service_id');
+   // print('user login data: service_id: $service_id');
     var response = await client.post(Uri.parse('${baseurl}delete_service'), body: {
       'service_id': service_id,
     });
@@ -290,5 +291,38 @@ class ApiEndPath{
       return deleteServiceImageModelFromJson(jsonString);
     }
     return deleteServiceImageModelFromJson(response.body);
+  }
+  static Future<SendOtpModel> sendOtp(number) async {
+
+    print('OTP number: $number,');
+
+    var response = await client.post(Uri.parse('${baseurl}forget_password_service'), body: {
+      'type': 'service',
+      'phone_number':number
+    });
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return sendOtpModelFromJson(jsonString);
+    }
+    return sendOtpModelFromJson(response.body);
+  }
+  static Future<ChangePasswordModel> changePassword(number, password) async {
+
+    var response = await client.post(Uri.parse('${baseurl}change_password'), body: {
+      'type': 'service',
+      'phone_number':number,
+      'password': password
+    });
+    print('base url: $baseurl, response: $response');
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+
+      return changePasswordModelFromJson(jsonString);
+    }
+    return changePasswordModelFromJson(response.body);
   }
 }

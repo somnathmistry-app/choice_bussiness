@@ -35,12 +35,12 @@ class _AddServiceState extends State<AddService> {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 70),
             children: [
               MyWidgets.textView(
-                  'Add service :', AppColors.themeColorLight, 16),
+                  'Add service :', AppColors.themeColorTwo, 16),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Form(
                 key: _formKey,
                 child: Column(
@@ -110,40 +110,92 @@ class _AddServiceState extends State<AddService> {
                     // ),
                     const SizedBox(height: 20),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 55,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.themeColorTwo,
+                      child: DropdownButtonFormField(
+                        validator: (input) =>
+                        input == null ? "Please enter a service" : null,
+                        iconSize: 0,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          //  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                          suffixIcon: Icon(
+                              Icons.arrow_drop_down,color: AppColors.themeColorTwo,),
+                          hintText: 'Please select your service',
+                          hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.themeColorTwo),
                           ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5))),
-                      child: DropdownButton(
-                        underline: const SizedBox(),
-                        style: TextStyle(color: AppColors.themeColorTwo),
-                        hint: MyWidgets.textView(
-                            'Please select your Subcategory',
-                            AppColors.themeColorTwo,
-                            16),
-                        // Not necessary for Option 1
-                        value: addServiceController.subCategory,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: AppColors.themeColorTwo),
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                        items: addServiceController.allSubCatList
+                            .map((subCat) {
+                          return DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: subCat.id,
+                            child:
+                            MyWidgets.textView(subCat.title, Colors.black, 16),
+                          );
+                        }).toList(),
                         onChanged: (newValue) {
                           setState(() {
                             addServiceController.subCategory =
                                 newValue.toString();
                           });
                         },
-                        items: addServiceController.allSubCatList
-                            .map((subCat) {
-                          return DropdownMenuItem(
-                            value: subCat.id,
-                            child:
-                                MyWidgets.textView(subCat.title, Colors.black, 16),
-                          );
-                        }).toList(),
                       ),
                     ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                    //   height: 55,
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //         color: AppColors.themeColorTwo,
+                    //       ),
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5))
+                    //   ),
+                    //   child: DropdownButtonFormField(
+                    //
+                    //     validator: (value) => value == null
+                    //         ? 'Please select a service' : null,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //             color:
+                    //         Colors.transparent),),
+                    //       focusedBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(color:
+                    //         Colors.transparent),),
+                    //     ),
+                    //
+                    //     style: TextStyle(color: AppColors.themeColorTwo),
+                    //     hint: MyWidgets.textView(
+                    //         'Please select your service',
+                    //         AppColors.themeColorTwo,
+                    //         16),
+                    //     // Not necessary for Option 1
+                    //     value: addServiceController.subCategory,
+                    //     onChanged: (newValue) {
+                    //       setState(() {
+                    //         addServiceController.subCategory =
+                    //             newValue.toString();
+                    //       });
+                    //     },
+                    //     items: addServiceController.allSubCatList
+                    //         .map((subCat) {
+                    //       return DropdownMenuItem(
+                    //         value: subCat.id,
+                    //         child:
+                    //             MyWidgets.textView(subCat.title, Colors.black, 16),
+                    //       );
+                    //     }).toList(),
+                    //   ),
+                    // ),
                     // const SizedBox(height: 20),
                     // TextFormField(
                     //     style: TextStyle(
@@ -216,21 +268,27 @@ class _AddServiceState extends State<AddService> {
                                 borderSide: BorderSide(color: Colors.red)))),
                     const SizedBox(height: 20),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      height: 55,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.themeColorTwo,
+                      child: DropdownButtonFormField(
+                        validator: (input) =>
+                        input == null ? 'Please enter a location' : null,
+                        iconSize: 0,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          //  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                          suffixIcon: Icon(
+                            Icons.arrow_drop_down,color: AppColors.themeColorTwo,),
+                          hintText: 'Please select your location',
+                          hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.themeColorTwo),
                           ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5))),
-                      child: DropdownButton(
-                        underline: const SizedBox(),
-                        style: TextStyle(color: AppColors.themeColorTwo),
-                        hint: MyWidgets.textView('Please select your location',
-                            AppColors.themeColorTwo, 16),
-                        // Not necessary for Option 1
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: AppColors.themeColorTwo),
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
                         value: addServiceController.selectedLocation,
                         onChanged: (newValue) {
                           setState(() {
@@ -240,13 +298,46 @@ class _AddServiceState extends State<AddService> {
                         },
                         items: addServiceController.locationData.map((location) {
                           return DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
                             value: location.name,
                             child:
-                                MyWidgets.textView(location.name, Colors.black, 16),
+                            MyWidgets.textView(location.name, Colors.black, 16),
                           );
                         }).toList(),
                       ),
                     ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                    //   height: 55,
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //         color: AppColors.themeColorTwo,
+                    //       ),
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(5))),
+                    //   child: DropdownButton(
+                    //     underline: const SizedBox(),
+                    //     style: TextStyle(color: AppColors.themeColorTwo),
+                    //     hint: MyWidgets.textView('Please select your location',
+                    //         AppColors.themeColorTwo, 16),
+                    //     // Not necessary for Option 1
+                    //     value: addServiceController.selectedLocation,
+                    //     onChanged: (newValue) {
+                    //       setState(() {
+                    //         addServiceController.selectedLocation =
+                    //             newValue.toString();
+                    //       });
+                    //     },
+                    //     items: addServiceController.locationData.map((location) {
+                    //       return DropdownMenuItem(
+                    //         value: location.name,
+                    //         child:
+                    //             MyWidgets.textView(location.name, Colors.black, 16),
+                    //       );
+                    //     }).toList(),
+                    //   ),
+                    // ),
                     const SizedBox(height: 20),
                     TextFormField(
                         style: TextStyle(

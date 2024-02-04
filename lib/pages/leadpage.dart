@@ -1,7 +1,5 @@
 import 'package:choice_bussiness/api/api_end_path.dart';
 import 'package:choice_bussiness/controller/lead_controller.dart';
-import 'package:choice_bussiness/pages/dashboard.dart';
-import 'package:choice_bussiness/styles/commonmodule/app_bar.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_snack_bar.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +17,18 @@ class LeadsPage extends StatefulWidget {
 class _LeadsPageState extends State<LeadsPage> {
   LeadController leadController = Get.put(LeadController());
 
+
+  _launchWhatsApp(String phoneNumber) async {
+    final url =
+    phoneNumber.startsWith('+91')?
+        'https://wa.me/$phoneNumber':'https://wa.me/+91$phoneNumber';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +39,7 @@ class _LeadsPageState extends State<LeadsPage> {
         //     onTap: (){
         //       Get.to(Dashboard());
         //     },
-         //   child: Icon(Icons.arrow_back_ios_new_outlined)),
+        //   child: Icon(Icons.arrow_back_ios_new_outlined)),
       ),
         backgroundColor: AppColors.offWhite,
         body: GetX<LeadController>(initState: (context) {
@@ -103,15 +113,30 @@ class _LeadsPageState extends State<LeadsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MyWidgets.textView('Contact - '+controller.leadList[index].phone!.toString()+'\nTried to connect via - ${controller.leadList[index].leadType!.toString()}', AppColors.black, 14),
-                          InkWell(
-                            onTap:(){
-                              dialNumber(phoneNumber:controller.leadList[index].phone!.toString(), context: context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/images/call.png', scale: 14),
-                            ),
-                          )
+
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap:(){
+                                  dialNumber(phoneNumber:controller.leadList[index].phone!.toString(), context: context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset('assets/images/call.png', scale: 14),
+                                ),
+                              ),
+                              InkWell(
+                                onTap:(){
+                                  _launchWhatsApp(controller.leadList[index].phone!.toString());
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset('assets/images/wp_icon.png', scale: 14),
+                                ),
+                              ),
+                            ],
+                          ),
+
                         ],
                       ),
                       Container(

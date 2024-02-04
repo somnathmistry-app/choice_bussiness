@@ -191,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                           image: controller.artisDetails[0].coverPhoto.toString() == 'null'?
                           const DecorationImage(
-                            image: NetworkImage('assets/images/app_icon.png'),
+                            image: AssetImage('assets/images/app_icon.png'),
                             // Replace with your cover photo
                             fit: BoxFit.cover,
                           ):

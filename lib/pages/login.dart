@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../styles/app_colors.dart';
+import 'forget_password/input_number.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -30,7 +31,6 @@ class _LoginViewState extends State<LoginView> {
             Image.asset(
               'assets/images/logo.png',
               scale: 6,
-              color: AppColors.themeColor,
             ),
             //SizedBox(height: 20),
             MyWidgets.textView('Welcome Back to Choice 99', AppColors.themeColorLight, 22),
@@ -113,6 +113,20 @@ class _LoginViewState extends State<LoginView> {
                               borderSide: BorderSide(
                                   color: Colors.orangeAccent))
                       )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                     TextButton(onPressed: () {
+                       Get.to(()=>  InputNumber());
+                     }, child: Text('Forget Password?',style: TextStyle(
+                       fontSize: 16,
+                       color: AppColors.white,
+                       fontWeight: FontWeight.w600,
+                       // light
+                       fontStyle: FontStyle.normal,
+                     ),))
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                       style: elevatedButtonStyleWhiteCurve,
@@ -135,7 +149,7 @@ class _LoginViewState extends State<LoginView> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(14.0),
-                  child: MyWidgets.textView('Not a vendor yet? Singup', AppColors.white, 16),
+                  child: MyWidgets.textView('Not a vendor yet? SingUp', AppColors.white, 16),
                 ),
               ),
             ),

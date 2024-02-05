@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../styles/app_colors.dart';
+import 'image_full_view.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -181,22 +182,29 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.artisImages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin:const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          image:
-                          controller.artisImages[index].photo.toString() != ''?
-                          DecorationImage(
-                              image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)
-                              : null
-                      ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(onPressed: () async  {
-                          //print();
-                          _deleteImage(context, await getFileNameFromURL(controller.artisImages[index].photo));
-                        }, icon: const Icon(Icons.delete, color: Colors.orange)),
+                    return GestureDetector(
+                      onTap: () {
+                        if( controller.artisImages[index].photo.toString() != ''){
+                          Get.to(()=> ImageFullView(controller.artisImages[index].photo.toString()));
+                        }
+                      },
+                      child: Container(
+                        margin:const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            image:
+                            controller.artisImages[index].photo.toString() != ''?
+                            DecorationImage(
+                                image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)
+                                : null
+                        ),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(onPressed: () async  {
+                            //print();
+                            _deleteImage(context, await getFileNameFromURL(controller.artisImages[index].photo));
+                          }, icon: const Icon(Icons.delete, color: Colors.orange)),
+                        ),
                       ),
                     );
                   },

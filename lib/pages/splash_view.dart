@@ -15,7 +15,7 @@ class SplashView extends StatelessWidget {
     var box = GetStorage();
 //    print('userId`````````````: ${box.read('userId')}');
 //HomeController homeController = Get.put(HomeController());
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 2), () {
       if(box.hasData('userId')){
         Get.offAll(Dashboard());
       }else{

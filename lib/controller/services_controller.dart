@@ -24,6 +24,7 @@ class ServiceListController extends GetxController{
     try {
       serviceLoading(true);
       var apiResponse = await ApiEndPath.getAllServices(box.read('userId'),box.read('location'));
+      print('get service:- ${box.read('userId')+", "+box.read('location')}');
 
       if (apiResponse != null) {
         if (apiResponse.response == 'ok') {

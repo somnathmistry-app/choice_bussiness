@@ -8,6 +8,7 @@ import 'package:choice_bussiness/styles/button_style.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../styles/app_colors.dart';
 import 'image_full_view.dart';
@@ -91,6 +92,8 @@ class _ServicesPageState extends State<ServicesPage> {
 
   @override
   Widget build(BuildContext context) {
+    var box = GetStorage();
+    print('get service:- ${box.read('userId')+", "+box.read('location')}');
     return Scaffold(
         backgroundColor: AppColors.offWhite,
         appBar: AppBar(
@@ -210,7 +213,7 @@ class _ServicesPageState extends State<ServicesPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: 230,
+                              height: MediaQuery.of(context).size.height/3.5,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(4),
                                 color: Colors.white,
@@ -243,10 +246,10 @@ class _ServicesPageState extends State<ServicesPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].serviceName}',
+                              child: Text('${controller.serviceList[index].subcategoryName}',
                                   maxLines :1,
                                   overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
+                                  style:const TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 6.0),

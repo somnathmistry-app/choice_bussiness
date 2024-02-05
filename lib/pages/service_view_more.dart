@@ -98,7 +98,7 @@ class ServiceViewMore extends StatelessWidget {
                  ),
                  Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                   child: Text('${serviceListController.serviceList[index].serviceName}',
+                   child: Text('${serviceListController.serviceList[index].subcategoryName}',
                        maxLines :1,
                        overflow: TextOverflow.ellipsis,
                        style:const TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),

@@ -38,6 +38,7 @@ class ServiceList {
   String categoryId;
   String? subcategoryId;
   String serviceName;
+  String subcategoryName;
   String price;
   String place;
   String description;
@@ -51,6 +52,7 @@ class ServiceList {
     required this.categoryId,
     required this.subcategoryId,
     required this.serviceName,
+    required this.subcategoryName,
     required this.price,
     required this.place,
     required this.description,
@@ -65,6 +67,7 @@ class ServiceList {
     categoryId: json["category_id"],
     subcategoryId: json["subcategory_id"],
     serviceName: json["service_name"],
+    subcategoryName: json["subcategory_name"],
     price: json["price"],
     place: json["place"],
     description: json["description"],
@@ -79,6 +82,7 @@ class ServiceList {
     "category_id": categoryId,
     "subcategory_id": subcategoryId,
     "service_name": serviceName,
+    'subcategory_name':subcategoryName,
     "price": price,
     "place": place,
     "description": description,

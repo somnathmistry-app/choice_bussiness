@@ -10,6 +10,7 @@ class LeadController extends GetxController{
   var leadLoading = false.obs;
 
   getLead() async {
+    print('lead user id ');
     try {
       leadLoading(true);
       var apiResponse = await ApiEndPath.getLead(box.read('userId'));

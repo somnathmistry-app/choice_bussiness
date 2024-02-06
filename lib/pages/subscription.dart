@@ -24,11 +24,11 @@ class _SubscriptionState extends State<Subscription> {
     super.initState();
     // int id,   bool isSelected,   String planname,   String time,   String price
     currencyModel_in
-        .add(new RadioModel(1, false, 'Beginner', '7 Days', 'Free'));
+        .add(new RadioModel(1, false, 'BEGINNER', '7 Days', 'Free'));
     currencyModel_in
-        .add(new RadioModel(1, false, 'Advanced', '1 month', '1000/-'));
+        .add(new RadioModel(1, false, 'ADVANCED', '1 month', '1000/-'));
     currencyModel_in
-        .add(new RadioModel(1, false, 'Pro', '1 year', '10,000/-'));
+        .add(new RadioModel(1, false, 'PRO', '1 year', '10,000/-'));
   }
 
   @override
@@ -39,7 +39,7 @@ class _SubscriptionState extends State<Subscription> {
       body: Column(
         children: [
           SizedBox(height: 20),
-          Container(
+          /*Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child:
 
@@ -90,7 +90,9 @@ class _SubscriptionState extends State<Subscription> {
                   ]),
                 ]
             ),
-          ),
+          ),*/
+
+          Image.asset('assets/images/sub.png'),
           SizedBox(height: 20),
           Container(
             height: 100,

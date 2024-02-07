@@ -26,9 +26,9 @@ class _SubscriptionState extends State<Subscription> {
     currencyModel_in
         .add(new RadioModel(1, false, 'BEGINNER', '7 Days', 'Free'));
     currencyModel_in
-        .add(new RadioModel(1, false, 'ADVANCED', '1 month', '1000/-'));
+        .add(new RadioModel(1, false, 'ADVANCED', '3 Month', '3000/-'));
     currencyModel_in
-        .add(new RadioModel(1, false, 'PRO', '1 year', '10,000/-'));
+        .add(new RadioModel(1, false, 'PRO', '1 Year', '10,000/-'));
   }
 
   @override

@@ -536,13 +536,13 @@ Get.to(Subscription());
                               color: AppColors.white, fontSize: 18),
                           controller: profileUpdateController.business_name,
                           validator: (value) => value!.isEmpty
-                              ? 'Please enter your business name'
+                              ? 'Update business name'
                               : null,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 16, horizontal: 14),
                               enabled: true,
-                              labelText: 'Please enter your business name',
+                              labelText: 'Update business name',
                               labelStyle: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.white,
@@ -575,13 +575,13 @@ Get.to(Subscription());
                               color: AppColors.white, fontSize: 18),
                           controller: profileUpdateController.description,
                           validator: (value) => value!.isEmpty
-                              ? 'Please enter your business description'
+                              ? 'Update business about'
                               : null,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 16, horizontal: 14),
                               enabled: true,
-                              labelText: 'Please enter your business description',
+                              labelText: 'Update business about',
                               labelStyle: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.white,

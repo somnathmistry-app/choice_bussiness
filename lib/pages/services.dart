@@ -304,7 +304,7 @@ class _ServicesPageState extends State<ServicesPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: 230,
+                              height: MediaQuery.of(context).size.height/3.5,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(4),
                                 color: Colors.white,
@@ -347,14 +347,14 @@ class _ServicesPageState extends State<ServicesPage> {
                               child: Text('${controller.serviceList[index].about}',
                                   maxLines :2,
                                   overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 13,)),
+                                  style:const TextStyle(fontSize: 11)),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 6.0),
                               child: Text('${controller.serviceList[index].description}',
-                                  maxLines :2,
+                                  maxLines :1,
                                   overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 12,color: Colors.black45)),
+                                  style:const TextStyle(fontSize: 11,color: Colors.black45)),
                             ),
                             Text('  ₹ ${controller.serviceList[index].price}',style:const TextStyle(fontWeight: FontWeight.bold))
                           ],

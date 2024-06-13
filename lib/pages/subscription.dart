@@ -5,8 +5,10 @@ import 'package:choice_bussiness/styles/commonmodule/app_bar.dart';
 import 'package:choice_bussiness/styles/commonmodule/my_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../models/radio_model.dart';
+import '../onlinepayment/rozer_pay.dart';
 import '../styles/commonmodule/radio_item.dart';
 class Subscription extends StatefulWidget {
   const Subscription({Key? key}) : super(key: key);
@@ -17,8 +19,8 @@ class Subscription extends StatefulWidget {
 
 class _SubscriptionState extends State<Subscription> {
   List<RadioModel> currencyModel_in = <RadioModel>[];
-
-
+int? selectedIndex=0;
+  int payableAmount=3000;
   @override
   void initState() {
     super.initState();
@@ -104,7 +106,8 @@ class _SubscriptionState extends State<Subscription> {
                 InkWell(
                   onTap: (){
                     setState(() {
-
+                      selectedIndex= index;
+                      payableAmount = selectedIndex==1?3000:10000;
                         currencyModel_in.forEach(
                                 (element) => element
                                 .isSelected = false);
@@ -123,14 +126,87 @@ class _SubscriptionState extends State<Subscription> {
             }),
           ),
           SizedBox(height: 40),
-          ElevatedButton(
+        currencyModel_in[0]
+            .isSelected?SizedBox():ElevatedButton(
               style: elevatedButtonStyleStripe,
               onPressed: (){
-                MySnackbar.successSnackBar('Subscription added', 'Your subscription has been added');
-                Get.offAll(Dashboard());
+
+                print('selectedIndex: $selectedIndex, payableAmount: $payableAmount');
+
+               // MySnackbar.successSnackBar('Subscription added', 'Your subscription has been added');
+                //Get.offAll(RozerPayScreen(title:'Subscription', mobile: '9547607753', email: 'sam@gmail.com',description: 'Subscription des',amount: 100.00));
+                //Get.offAll(RozerPayScreen(title:'Subscription'));
+makePayment(payableAmount, 'Subscription of Rs. $payableAmount',box.read('userNumber').toString(),'somnath222666@gmail.com' );
+
               }, child: Text('Get Subscription', style: TextStyle(color: AppColors.white),))
         ],
       )
+    );
+  }
+
+  void makePayment(payableAmount, description, mobile, email) {
+    print('payment data: $payableAmount, $description, $mobile, $email');
+    Razorpay razorpay = Razorpay();
+    var options = {
+
+      //'key':'uVmVtthlb7jlrq9OW7DqjmAK',
+      'key': 'rzp_live_ILgsfZCZoFIKMb',
+      'amount':payableAmount * 100,
+      'name': 'Choice 99',
+      'description': description,
+      'retry': {'enabled': true, 'max_count': 3},
+      'send_sms_hash': true,
+      'prefill': {'contact': mobile, 'email': email},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentErrorResponse);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWalletSelected);
+    razorpay.open(options);
+  }
+
+  void handlePaymentErrorResponse(PaymentFailureResponse response){
+    /*
+    * PaymentFailureResponse contains three values:
+    * 1. Error Code
+    * 2. Error Description
+    * 3. Metadata
+    * */
+    showAlertDialog(context, "Payment Failed", "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
+  }
+
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response){
+    /*
+    * Payment Success Response contains three values:
+    * 1. Order ID
+    * 2. Payment ID
+    * 3. Signature
+    * */
+    showAlertDialog(context, "Payment Successful", "Payment ID: ${response.paymentId}");
+  }
+
+  void handleExternalWalletSelected(ExternalWalletResponse response){
+    showAlertDialog(context, "External Wallet Selected", "${response.walletName}");
+  }
+  void showAlertDialog(BuildContext context, String title, String message){
+    // set up the buttons
+    Widget continueButton = ElevatedButton(
+      child: const Text("Continue"),
+      onPressed:  () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text('Please try again'),
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

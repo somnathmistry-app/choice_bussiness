@@ -219,52 +219,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Positioned(
                       top: 140,
                       left: 20,
-                      child: InkWell(
-                        onTap: () {
-                          if(controller.artisDetails[0].profilePhoto.toString() != 'null'){
-                            _dialogBuilder(context,'https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}');
-                          }
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image:controller.artisDetails[0].profilePhoto.toString() == 'null'? null :DecorationImage(
-                                image: NetworkImage(
-                                    'https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}'
-                                )
-                            ),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: AppColors.themeColorTwo,
-                              width: 3.0,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                  height: 38,
-                                  width: 38,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white54,
-                                    borderRadius: BorderRadius.circular(25)
-                                  ),
-                                  child: Center(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          _changeImage(context);
-                                        },
-                                        icon: Icon(Icons.camera_alt)),
-                                  ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              if(controller.artisDetails[0].profilePhoto.toString() != 'null'){
+                                _dialogBuilder(context,'https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}');
+                              }
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image:controller.artisDetails[0].profilePhoto.toString() == 'null'? null :DecorationImage(
+                                    image: NetworkImage(
+                                        'https://psbeauty.co.in/app/${controller.artisDetails[0].profilePhoto.toString()}'
+                                    ), fit: BoxFit.cover
                                 ),
-                              )
-                            ],
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: AppColors.themeColorTwo,
+                                  width: 3.0,
+                                ),
+                              ),
+                              //// _changeImage(context);
+
+                            ),
                           ),
-                        ),
+                          Container(
+                            width: 100,
+                            height: 30,
+                            child: Center(child: Text('Edit'))
+                          )
+                        ],
                       ),
                     ),
 

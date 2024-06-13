@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../styles/app_colors.dart';
 import 'image_full_view.dart';
+import 'notification_page.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({Key? key}) : super(key: key);
@@ -92,6 +93,7 @@ class _ServicesPageState extends State<ServicesPage> {
 
   @override
   Widget build(BuildContext context) {
+    int counter = 0;
     var box = GetStorage();
     print('get service:- ${box.read('userId')+", "+box.read('location')}');
     return Scaffold(
@@ -103,11 +105,42 @@ class _ServicesPageState extends State<ServicesPage> {
 
           leading: Image.asset('assets/images/app_icon.png',fit: BoxFit.cover),
           titleSpacing: 0,
+
           actions: [
-            IconButton(onPressed: () {
-              Get.offAll(SplashView());
-            }, icon: Icon(Icons.refresh_outlined)),
-            SizedBox(width: 15,)
+            Stack(
+              children: <Widget>[
+                new IconButton(icon: Icon(Icons.notifications), onPressed: () {
+                  setState(() {
+                    counter = 0;
+                  });
+                  Get.to(()=>NotificationPage());
+
+                }),
+                counter != 0 ? new Positioned(
+                  left: 5,
+                  top: 10,
+                  child: new Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: new BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 14,
+                      minHeight: 14,
+                    ),
+                    child: Text(
+                      '$counter',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ) : new Container()
+              ],
+            ),
           ],
         ),
         body: GetX<ServiceListController>(initState: (context) {
@@ -117,256 +150,265 @@ class _ServicesPageState extends State<ServicesPage> {
           //if (controller.isLoading.value || controller.isLoading1.value) {
             return Container(
               margin: EdgeInsets.all(5),
-              child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-                  serviceListController.portfolioLoading.value?
-                  Container(
-                      height: 5,
-                      width: 50,
-                      child: LinearProgressIndicator()):
-                  GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // Adjust the number of columns
-                    ),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:  controller.artisImages.length>9?9:controller.artisImages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                          onTap: () {
-                            _dialogBuilder(context,controller.artisImages[index].photo);
-                          },
-                          child: Container(
-                            height: 20,width: 20,
-                            margin:const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)),
-
-                          )
-
-                        //Image.network(uploadedImages[index]),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          style: elevatedButtonStyleThemeColor,
-                          onPressed: (){
-                            Get.to(()=> const PortfolioPage());
-                          }, child: MyWidgets.textView('Manage your portfolio', AppColors.white, 12)),
-                      // ElevatedButton(
-                      //     style: elevatedButtonStyleStripe,
-                      //     onPressed: (){
-                      //       Get.to(()=> const PortfolioPage());
-                      //     }, child: MyWidgets.textView('View all Images', AppColors.white, 12)),
-                    ],
-                  ),
-                  serviceListController.serviceList.isEmpty?
-                  SizedBox():
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(onPressed: () {
-                        Get.to(()=> ServiceViewMore(serviceListController: serviceListController));
-                      }, child: const Text('View more')),
-                      const SizedBox(width: 20)
-                    ],
-                  ),
-                  serviceListController.serviceList.length <= 4?
-                  serviceListController.serviceLoading.value?
-                  SizedBox(
-                      height: 5,
-                      width: 10,
-                      child: const LinearProgressIndicator()):
-                  GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Adjust the number of columns
-                      crossAxisSpacing: 5,
-                      childAspectRatio:  0.54
-                    ),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:  serviceListController.serviceList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 4),
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 3,
-                              offset: Offset(
-                                0,
-                                3,
-                              ),
-                            )
-                          ],
-                          color: AppColors.themeColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height/3.5,
+              child: RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    serviceListController.portfolioLoading.value?
+                    Container(
+                        height: 5,
+                        width: 50,
+                        child: LinearProgressIndicator()):
+                    GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, // Adjust the number of columns
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:  controller.artisImages.length>9?9:controller.artisImages.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                            onTap: () {
+                              _dialogBuilder(context,controller.artisImages[index].photo);
+                            },
+                            child: Container(
+                              height: 20,width: 20,
+                              margin:const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: Colors.white,
-                                image:controller.imageService[index] == ''?
-                                null:
-                                DecorationImage(
-                                    image: NetworkImage(
-                                        controller.imageService[index].toString()
-                                    )),),
-                              child:
-                              Stack(
+                                  color: Colors.white,
+                                  image: DecorationImage(image: NetworkImage(controller.artisImages[index].photo), fit: BoxFit.cover)),
+
+                            )
+
+                          //Image.network(uploadedImages[index]),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            style: elevatedButtonStyleThemeColor,
+                            onPressed: (){
+                              Get.to(()=> const PortfolioPage());
+                            }, child: MyWidgets.textView('Manage your portfolio', AppColors.white, 12)),
+                        // ElevatedButton(
+                        //     style: elevatedButtonStyleStripe,
+                        //     onPressed: (){
+                        //       Get.to(()=> const PortfolioPage());
+                        //     }, child: MyWidgets.textView('View all Images', AppColors.white, 12)),
+                      ],
+                    ),
+                    serviceListController.serviceList.isEmpty?
+                    SizedBox():
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(onPressed: () {
+                          Get.to(()=> ServiceViewMore(serviceListController: serviceListController));
+                        }, child: const Text('View more')),
+                        const SizedBox(width: 20)
+                      ],
+                    ),
+                    serviceListController.serviceList.length <= 4?
+                    serviceListController.serviceLoading.value?
+                    SizedBox(
+                        height: 5,
+                        width: 10,
+                        child: const LinearProgressIndicator()):
+                    GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Adjust the number of columns
+                        crossAxisSpacing: 5,
+                        childAspectRatio:  0.54
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:  serviceListController.serviceList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 4),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 3,
+                                offset: Offset(
+                                  0,
+                                  3,
+                                ),
+                              )
+                            ],
+                            color: AppColors.themeColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height/3.3,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Colors.white,
+                                  image:controller.imageService[index] == ''?
+                                  null:
+                                  DecorationImage(
+                                      image: NetworkImage(
+                                          controller.imageService[index].toString(),
+                                      ), fit: BoxFit.cover),),
+                                child:
+                                Stack(
+                                  children: [
+                                    Positioned(
+                                      right: 0,
+                                      child: IconButton(
+                                          color:Colors.black,
+                                          onPressed: () {
+                                            _serviceDel(context,controller.serviceList[index].serviceId);
+                                          }, icon: const Icon(Icons.cancel_outlined)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Row(
                                 children: [
-                                  Positioned(
-                                    right: 0,
-                                    child: IconButton(
-                                        color:Colors.black,
-                                        onPressed: () {
-                                          _serviceDel(context,controller.serviceList[index].serviceId);
-                                        }, icon: const Icon(Icons.cancel_outlined)),
-                                  ),
+                                  SizedBox(width: 5),
+                                  Icon(Icons.location_on_outlined, size: 15,),
+                                  Text('${controller.serviceList[index].place}'),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(width: 5),
-                                Icon(Icons.location_on_outlined, size: 15,),
-                                Text('${controller.serviceList[index].place}'),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].subcategoryName}',
-                                  maxLines :1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].about}',
-                                  maxLines :2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 13,)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].description}',
-                                  maxLines :2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 12,color: Colors.black45)),
-                            ),
-                            Text('  ₹ ${controller.serviceList[index].price}',style:const TextStyle(fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                      );
-                    },
-                  )
-                      :
-                  serviceListController.serviceLoading.value?
-                  LinearProgressIndicator():
-                  GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Adjust the number of columns
-                      crossAxisSpacing: 5,
-                      childAspectRatio:  0.54
-                    ),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount:  4,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 4),
-                        decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 3,
-                              offset: Offset(
-                                0,
-                                3,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Text('${controller.serviceList[index].subcategoryName}',
+                                    maxLines :1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:const TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
                               ),
-                            )
-                          ],
-                          color: AppColors.themeColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height/3.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: Colors.white,
-                                image:controller.imageService[index] == ''?
-                                null:
-                                DecorationImage(
-                                    image: NetworkImage(
-                                        controller.imageService[index].toString()
-                                    )),),
-                              child:
-                              Stack(
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                              //   child: Text('${controller.serviceList[index].about}',
+                              //       maxLines :2,
+                              //       overflow: TextOverflow.ellipsis,
+                              //       style:const TextStyle(fontSize: 13,)),
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Text('${controller.serviceList[index].description}',
+                                    maxLines :2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:const TextStyle(fontSize: 12,color: Colors.black45)),
+                              ),
+                              Text('  ₹ ${controller.serviceList[index].price}',style:const TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                        :
+                    serviceListController.serviceLoading.value?
+                    LinearProgressIndicator():
+                    GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // Adjust the number of columns
+                        crossAxisSpacing: 5,
+                        childAspectRatio:  0.54
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:  4,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: EdgeInsets.only(top: 4),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 3,
+                                offset: Offset(
+                                  0,
+                                  3,
+                                ),
+                              )
+                            ],
+                            color: AppColors.themeColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height/3.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Colors.white,
+                                  image:controller.imageService[index] == ''?
+                                  null:
+                                  DecorationImage(
+                                      image: NetworkImage(
+                                          controller.imageService[index].toString()
+                                      )),),
+                                child:
+                                Stack(
+                                  children: [
+                                    Positioned(
+                                      right: 0,
+                                      child: IconButton(
+                                          color:Colors.black,
+                                          onPressed: () {
+                                            _serviceDel(context,controller.serviceList[index].serviceId);
+                                          }, icon: const Icon(Icons.cancel_outlined)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
                                 children: [
-                                  Positioned(
-                                    right: 0,
-                                    child: IconButton(
-                                        color:Colors.black,
-                                        onPressed: () {
-                                          _serviceDel(context,controller.serviceList[index].serviceId);
-                                        }, icon: const Icon(Icons.cancel_outlined)),
-                                  ),
+                                  SizedBox(width: 5),
+                                  Icon(Icons.location_on_outlined, size: 15,),
+                                  Text('${controller.serviceList[index].place}'),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(width: 5),
-                                Icon(Icons.location_on_outlined, size: 15,),
-                                Text('${controller.serviceList[index].place}'),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].serviceName}',
-                                  maxLines :1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].about}',
-                                  maxLines :2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 11)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                              child: Text('${controller.serviceList[index].description}',
-                                  maxLines :1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:const TextStyle(fontSize: 11,color: Colors.black45)),
-                            ),
-                            Text('  ₹ ${controller.serviceList[index].price}',style:const TextStyle(fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 50,)
-                ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Text('${controller.serviceList[index].serviceName}',
+                                    maxLines :1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:const TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Text('${controller.serviceList[index].about}',
+                                    maxLines :2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:const TextStyle(fontSize: 11)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Text('${controller.serviceList[index].description}',
+                                    maxLines :1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:const TextStyle(fontSize: 11,color: Colors.black45)),
+                              ),
+                              Text('  ₹ ${controller.serviceList[index].price}',style:const TextStyle(fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 50,)
+                  ],
+                ),
               ),
             );
         }));
+  }
+
+  Future<void> _pullRefresh() async {
+    serviceListController.getServices();
+    serviceListController.getPortfolioDetails();
   }
 }
 /*

@@ -49,7 +49,7 @@ class _DashboardState extends State<Dashboard> {
       ),
     )??false; //if showDialog had returned null, then return false
   }
-
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -58,13 +58,48 @@ class _DashboardState extends State<Dashboard> {
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
           index: 0,
-          items: const [
+          items:  [
             CurvedNavigationBarItem(
               child: Icon(Icons.home_repair_service),
               label: 'Services',
             ),
             CurvedNavigationBarItem(
-              child: Icon(Icons.list),
+              child: Stack(
+                children: <Widget>[
+                  new IconButton(icon: Icon(Icons.list), onPressed: () {
+                    setState(() {
+                      counter = 0;
+                    });
+                  }),
+                  //counter != 0 ? new
+
+                  Positioned(
+                    left: 6,
+                    top: 5,
+                    child: new Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: new BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child: Text(
+                        '$counter',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+
+                      //: new Container()
+                ],
+              ),
               label: 'Leads',
             ),
             CurvedNavigationBarItem(

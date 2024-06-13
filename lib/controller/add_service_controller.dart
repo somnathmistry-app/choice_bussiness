@@ -17,7 +17,7 @@ class AddServiceController extends GetxController{
 
   TextEditingController price = TextEditingController();
   TextEditingController description = TextEditingController();
-  TextEditingController about = TextEditingController();
+  //TextEditingController about = TextEditingController();
   String? subCategory;
 
 
@@ -25,7 +25,7 @@ class AddServiceController extends GetxController{
   void onInit() {
     price.clear();
     description.clear();
-    about.clear();
+   // about.clear();
     subCategory = null;
     selectedLocation = null;
     super.onInit();
@@ -35,13 +35,13 @@ class AddServiceController extends GetxController{
 
     print('my id :${box.read('userId')}, cat id: ${box.read('registeredCategoryID')},'
         ' subcat : $subCategory, businessname: ${box.read('businessName')} price : ${price.text}, selectedlocation : $selectedLocation,  '
-        'des : ${description.text}, about : ${about.text}'
+        'des : ${description.text}'
     );
     print(box.read('registeredCategoryID'));
     print(price.text);
     print(selectedLocation);
     print(description.text);
-    print(about.text);
+    print('about');
     MyAlertDialog.circularProgressDialog();
     var apiResponse = await ApiEndPath.addService(
         box.read('userId'),
@@ -51,7 +51,7 @@ class AddServiceController extends GetxController{
         price.text,
         selectedLocation,
         description.text,
-        about.text
+        'about'
     );
 
     if(apiResponse!=null){
@@ -63,7 +63,7 @@ class AddServiceController extends GetxController{
         Get.off(()=> UploadMedia(apiResponse.serviceId.toString()));
         price.clear();
         description.clear();
-        about.clear();
+        //about.clear();
         subCategory = null;
         selectedLocation = null;
       }

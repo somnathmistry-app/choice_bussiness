@@ -1,0 +1,1 @@
+String rozpay_key = "uVmVtthlb7jlrq9OW7DqjmAK";

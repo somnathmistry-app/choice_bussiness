@@ -65,7 +65,7 @@ class ServiceViewMore extends StatelessWidget {
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  Container(
-                   height: 230,
+                   height: MediaQuery.of(context).size.height/3.3,
                    decoration: BoxDecoration(
                      borderRadius: BorderRadius.circular(4),
                      color: Colors.white,
@@ -74,7 +74,7 @@ class ServiceViewMore extends StatelessWidget {
                      DecorationImage(
                          image: NetworkImage(
                              serviceListController.imageService[index].toString()
-                         )),),
+                         ), fit: BoxFit.cover),),
                    child:
                    Stack(
                      children: [
@@ -89,6 +89,7 @@ class ServiceViewMore extends StatelessWidget {
                      ],
                    ),
                  ),
+                 SizedBox(height: 10),
                  Row(
                    children: [
                      SizedBox(width: 5),
@@ -103,13 +104,13 @@ class ServiceViewMore extends StatelessWidget {
                        overflow: TextOverflow.ellipsis,
                        style:const TextStyle(fontSize: 15,fontWeight: FontWeight.bold)),
                  ),
-                 Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                   child: Text('${serviceListController.serviceList[index].about}',
-                       maxLines :2,
-                       overflow: TextOverflow.ellipsis,
-                       style:const TextStyle(fontSize: 13,)),
-                 ),
+                 // Padding(
+                 //   padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                 //   child: Text('${serviceListController.serviceList[index].about}',
+                 //       maxLines :2,
+                 //       overflow: TextOverflow.ellipsis,
+                 //       style:const TextStyle(fontSize: 13,)),
+                 // ),
                  Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
                    child: Text('${serviceListController.serviceList[index].description}',

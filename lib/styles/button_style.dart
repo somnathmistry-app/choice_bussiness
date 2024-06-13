@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 
 final ButtonStyle elevatedButtonStyleThemeColor = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: AppColors.themeColor,
+  foregroundColor: Colors.black87, backgroundColor: AppColors.themeColor,
   minimumSize: const Size(150, 40),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -13,8 +12,7 @@ final ButtonStyle elevatedButtonStyleThemeColor = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle elevatedButtonStyleThemeColorTow = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: AppColors.themeColorTwo,
+  foregroundColor: Colors.black87, backgroundColor: AppColors.themeColorTwo,
   minimumSize: const Size(150, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -23,8 +21,7 @@ final ButtonStyle elevatedButtonStyleThemeColorTow = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle elevatedButtonStyleWhiteCurve = ElevatedButton.styleFrom(
-  onPrimary: Colors.green,
-  primary: AppColors.white,
+  foregroundColor: Colors.green, backgroundColor: AppColors.white,
   minimumSize: const Size(150, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -33,8 +30,7 @@ final ButtonStyle elevatedButtonStyleWhiteCurve = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle textButtonStyleWhite = TextButton.styleFrom(
-  primary: Colors.black87,
-  minimumSize: const Size(88, 36),
+  foregroundColor: Colors.black87, minimumSize: const Size(88, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16.0),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.0)),
@@ -42,8 +38,7 @@ final ButtonStyle textButtonStyleWhite = TextButton.styleFrom(
 );
 
 final ButtonStyle curveButtonStyleThemeColorTow = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: AppColors.themeColorTwo,
+  foregroundColor: Colors.black87, backgroundColor: AppColors.themeColorTwo,
   minimumSize: const Size(150, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -52,8 +47,7 @@ final ButtonStyle curveButtonStyleThemeColorTow = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle curveButtonStyleThemeColor = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: AppColors.themeColor,
+  foregroundColor: Colors.black87, backgroundColor: AppColors.themeColor,
   minimumSize: const Size(150, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -62,8 +56,7 @@ final ButtonStyle curveButtonStyleThemeColor = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle elevatedButtonStyleStripe = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: Colors.deepPurpleAccent,
+  foregroundColor: Colors.black87, backgroundColor: Colors.deepPurpleAccent,
   minimumSize: const Size(150, 40),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(
@@ -72,8 +65,7 @@ final ButtonStyle elevatedButtonStyleStripe = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle elevatedCurveButtonStyleRed = ElevatedButton.styleFrom(
-  onPrimary: Colors.black87,
-  primary: Colors.redAccent,
+  foregroundColor: Colors.black87, backgroundColor: Colors.redAccent,
   minimumSize: const Size(150, 36),
   padding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const RoundedRectangleBorder(

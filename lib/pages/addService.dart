@@ -278,7 +278,7 @@ class _AddServiceState extends State<AddService> {
                           //  icon: const Icon(Icons.keyboard_arrow_down_outlined),
                           suffixIcon: Icon(
                             Icons.arrow_drop_down,color: AppColors.themeColorTwo,),
-                          hintText: 'Please select your location',
+                          hintText: 'Add Service Area',
                           hintStyle: TextStyle(fontSize: 16,color: AppColors.themeColorTwo),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -344,12 +344,12 @@ class _AddServiceState extends State<AddService> {
                             color: AppColors.themeColorTwo, fontSize: 18),
                         controller: addServiceController.description,
                         validator: (value) =>
-                            value!.isEmpty ? 'Please enter description' : null,
+                            value!.isEmpty ? 'Service description' : null,
                         decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 16, horizontal: 14),
                             enabled: true,
-                            labelText: 'Please enter description',
+                            labelText: 'Service description',
                             labelStyle: TextStyle(
                               fontSize: 16,
                               color: AppColors.themeColorTwo,
@@ -373,40 +373,40 @@ class _AddServiceState extends State<AddService> {
                             errorBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.red)))),
                     const SizedBox(height: 20),
-                    TextFormField(
-                        controller: addServiceController.about,
-                        style: TextStyle(
-                            color: AppColors.themeColorTwo, fontSize: 18),
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter about your business'
-                            : null,
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 14),
-                            enabled: true,
-                            labelText: 'Enter About your business',
-                            labelStyle: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.themeColorTwo,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            errorStyle: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.red,
-                              fontWeight: FontWeight.w600,
-                              // light
-                              fontStyle: FontStyle.normal,
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.themeColor)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.themeColorTwo)),
-                            errorBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red)))),
+                    // TextFormField(
+                    //     controller: addServiceController.about,
+                    //     style: TextStyle(
+                    //         color: AppColors.themeColorTwo, fontSize: 18),
+                    //     validator: (value) => value!.isEmpty
+                    //         ? 'Please enter about your business'
+                    //         : null,
+                    //     decoration: InputDecoration(
+                    //         contentPadding: const EdgeInsets.symmetric(
+                    //             vertical: 16, horizontal: 14),
+                    //         enabled: true,
+                    //         labelText: 'Enter About your business',
+                    //         labelStyle: TextStyle(
+                    //           fontSize: 16,
+                    //           color: AppColors.themeColorTwo,
+                    //           fontWeight: FontWeight.w600,
+                    //           // light
+                    //           fontStyle: FontStyle.normal,
+                    //         ),
+                    //         errorStyle: const TextStyle(
+                    //           fontSize: 16,
+                    //           color: Colors.red,
+                    //           fontWeight: FontWeight.w600,
+                    //           // light
+                    //           fontStyle: FontStyle.normal,
+                    //         ),
+                    //         border: OutlineInputBorder(
+                    //             borderSide:
+                    //                 BorderSide(color: AppColors.themeColor)),
+                    //         enabledBorder: OutlineInputBorder(
+                    //             borderSide:
+                    //                 BorderSide(color: AppColors.themeColorTwo)),
+                    //         errorBorder: const OutlineInputBorder(
+                    //             borderSide: BorderSide(color: Colors.red)))),
                     const SizedBox(height: 20),
                     ElevatedButton(
                         style: elevatedButtonStyleWhiteCurve,

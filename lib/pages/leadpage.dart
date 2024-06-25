@@ -72,40 +72,35 @@ class _LeadsPageState extends State<LeadsPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              controller.leadList[index].photo==null?SizedBox():InkWell(
-                                onTap:(){
-                                  Get.to(ImageView('${ApiEndPath.imageURL}${controller.leadList[index].photo.toString()}'));
+                          controller.leadList[index].photo==null?SizedBox():InkWell(
+                            onTap:(){
+                              Get.to(ImageView('${ApiEndPath.imageURL}${controller.leadList[index].photo.toString()}'));
 
-                                },
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image:controller.leadList[index].photo == 'null'? null :DecorationImage(
-                                        image: NetworkImage(
-                                            '${ApiEndPath.imageURL}${controller.leadList[index].photo.toString()}'
-                                        ),fit: BoxFit.cover
-                                    ),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: AppColors.themeColor,
-                                      width: 1.0,
-                                    ),
-                                  ),
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image:controller.leadList[index].photo == 'null'? null :DecorationImage(
+                                    image: NetworkImage(
+                                        '${ApiEndPath.imageURL}${controller.leadList[index].photo.toString()}'
+                                    ),fit: BoxFit.cover
+                                ),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: AppColors.themeColor,
+                                  width: 1.0,
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              MyWidgets.textView(controller.leadList[index].name!.toString(), AppColors.black, 14),
-                            ],
+                            ),
                           ),
-                          controller.leadList[index].location==null?SizedBox():MyWidgets.textView('From - '+controller.leadList[index].location.toString(), AppColors.black, 14),
+                          SizedBox(width: 10),
+                          controller.leadList[index].name==null?Text('Name not available'):MyWidgets.textView(controller.leadList[index].name!.toString(), AppColors.black, 14),
                         ],
                       ),
 
@@ -122,7 +117,7 @@ class _LeadsPageState extends State<LeadsPage> {
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset('assets/images/call.png', scale: 14),
+                                  child: Image.asset('assets/images/call.png', scale: 16),
                                 ),
                               ),
                               InkWell(
@@ -130,8 +125,8 @@ class _LeadsPageState extends State<LeadsPage> {
                                   _launchWhatsApp(controller.leadList[index].phone!.toString());
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset('assets/images/wp_icon.png', scale: 14),
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Image.asset('assets/images/wp_icon.png', scale: 16),
                                 ),
                               ),
                             ],
@@ -195,6 +190,7 @@ class _LeadsPageState extends State<LeadsPage> {
                               ],
                             ),
                             SizedBox(height: 6),
+                            controller.leadList[index].location==null?SizedBox():MyWidgets.textView('From - '+controller.leadList[index].location.toString(), AppColors.black, 13),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

@@ -155,6 +155,7 @@ class ApiEndPath{
 
 
   static Future<LeadModel> getLead(String artistId) async {
+    print('artistId in lead: $artistId');
     var response = await client.get(Uri.parse('${baseurl}lead-entry?artist_id=$artistId'));
     //print('base url: $baseurl, response: ${response.statusCode}');
 

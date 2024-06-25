@@ -15,6 +15,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../controller/portfolio_controller.dart';
 import '../styles/button_style.dart';
+import 'image_details_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -249,10 +250,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             ),
                           ),
-                          Container(
-                            width: 100,
-                            height: 30,
-                            child: Center(child: Text('Edit'))
+                          InkWell(
+                            onTap: (){
+                              _changeImage(context);
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 30,
+                              child: Center(child: Text('Edit'))
+                            ),
                           )
                         ],
                       ),
@@ -423,7 +429,9 @@ Get.to(Subscription());
                     itemBuilder: (BuildContext context, int index) {
                       // Generate other items as needed
                       return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(()=>ImageDetialsViewList(controller.artisImages, index));
+                          },
                           child: Container(
                             height: 20,
                             width: 20,
